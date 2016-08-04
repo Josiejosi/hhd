@@ -102,10 +102,6 @@
                                     Pretoria West, 200 Kraai<br>
                                     102 Bloekenhout hof<br>
 
-                                    <strong class="block mt-20">Phone:</strong>
-                                    CEO: +27 73 358 3588<br>
-                                    Support: +3783 694 6289
-
                                     <strong class="block mt-20">Email:</strong>
                                     <a href="#">info@prestigewallet.com</a><br>
                                     <a href="#">support@prestigewallet.com</a>

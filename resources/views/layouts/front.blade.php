@@ -85,7 +85,6 @@
                                     <strong>Headquarters</strong><br>
                                     Pretoria West, 200 Kraai<br>
                                     102 Bloekenhout hof<br/><br/>
-                                    <strong>Phone:</strong> +2783 3532301<br>
                                     <strong>Email:</strong> <a href="info@prestigewallet.com">info@prestigewallet.com</a><br>
                                 </address>
                             </div>

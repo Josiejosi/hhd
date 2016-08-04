@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('front.index');
 });
 
-Route::get('/login', function () {
+Route::get('/signin', function () {
     return view('front.login');
 });
 
