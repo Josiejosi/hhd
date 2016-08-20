@@ -10,12 +10,26 @@
 
                 <h3><i class="fa fa-unlock"></i> Login to your account</h3>
 
-                <form>
+                @if (Session::has('account_not_found'))
+                    <span class="alert alert-warning">
+                        <strong>{{ Session::get('account_not_found') }}</strong>
+                    </span>
+                @endif
+
+                <form action="{{url('/signin')}}" method="post">
+
+                    {!! csrf_field() !!}
+                    
                     <div class="row">
 
                         <div class="form-group col-md-12">
                             <label for="username">Username</label>
-                            <input name="username" type="text" class="form-control myInput" id="username" required>
+                            <input 
+                                name="username" 
+                                type="text" 
+                                class="form-control myInput" 
+                                value="{{ old('username') }}"
+                                id="username" required>
                         </div>
 
                         <div class="form-group col-md-12">
@@ -25,14 +39,14 @@
 
                         <div class="col-md-12">
                             <button type="submit" class="myBtn myBtn-rounded myBtn-dark m-0 mt-10">Login</button>
-                            <a href="#" class="pull-right">Forgot Password?</a>
+                            <a href="{{url('/forgot')}}" class="pull-right">Forgot Password?</a>
                         </div>
 
                     </div>
                 </form>
 
                 <div class="header-line mt-40">
-                    <h4>Or Create new account</h4>
+                    <h4><a href="{{url('/signup')}}">Or Create new account</a></h4>
                 </div>
 
 

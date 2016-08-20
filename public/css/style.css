@@ -508,7 +508,7 @@ blockquote p {
 #header,
 #header-wrap,
 #branding img {
-  height: 110px;
+  height: 80px !important;
   -webkit-transition: height 0.4s ease, opacity 0.3s ease;
   -moz-transition: height 0.4s ease, opacity 0.3s ease;
   transition: height 0.4s ease, opacity 0.3s ease;
@@ -531,7 +531,7 @@ blockquote p {
 #header.sticky-header #main-navbar,
 #header.sticky-header #main-navbar > ul,
 #header.sticky-header #main-navbar > ul > li > a {
-  height: 60px;
+  height: 50px;
 }
 
 #header.sticky-header #header-wrap {
@@ -4082,4 +4082,9 @@ a.desaturate:hover > img {
   .w-3xl {
     width: auto;
   }
+}
+
+
+#header, #header-wrap, #branding img {
+    height: 80px;
 }

@@ -54,8 +54,9 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
+    //'info@prestigewallet.com', 'PrestigeWallet'
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'info@prestigewallet.com', 'name' => 'PrestigeWallet'],
 
     /*
     |--------------------------------------------------------------------------

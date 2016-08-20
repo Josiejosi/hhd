@@ -17,6 +17,7 @@
     <script type="text/javascript" src="{{asset('js/jquery-1.11.2.min.js')}}"></script>
 
     <link rel="stylesheet" href="{{asset('css/style.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{asset('css/custom.min.css')}}" type="text/css" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <!--[if lt IE 9]>
@@ -140,6 +141,14 @@
     <div id="gotoTop" class="fa fa-angle-up hidden-md"></div>
 
 
+<!-- BEGIN JIVOSITE CODE {literal} -->
+<script type='text/javascript'>
+(function(){ var widget_id = '6FwdOEmOrp';
+var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
+<!-- {/literal} END JIVOSITE CODE -->
+
+
+    <script type="text/javascript" src="{{asset('js/jquery-1.11.2.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/superfish.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/jRespond.min.js')}}"></script>

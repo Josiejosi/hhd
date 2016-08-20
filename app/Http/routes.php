@@ -14,19 +14,34 @@ git push -u origin master
 |
 */
 
-Route::get('/', function () {
-    return view('front.index');
-});
 
-Route::get('/signin', function () {
-    return view('front.login');
-});
-
-Route::get('/register', function () {
-    return view('front.register');
-});
-
-Route::get('/contactus', function () {
-    return view('front.contactus');
-});
+/**
+	Frond Pages
+ */
+Route::get(  '/', 				'FrontController@home' ) ;
+Route::get(  '/signin', 		'FrontController@signin' );
+Route::post( '/signin', 		'AuthenticationController@signin' );
+Route::get(  '/signup', 		'FrontController@signup' );
+Route::post( '/signup', 		'AuthenticationController@signup' );
+Route::get(  '/forgot', 		'FrontController@forgot' );
+Route::post( '/forgot', 		'AuthenticationController@forgot' );
+Route::get(	 '/contactus', 		'FrontController@contactus');
+Route::post( '/contactus', 		'FrontController@post_contactus');
+Route::get(	 '/warning', 		'FrontController@warning');
+Route::get(  '/logout', 		'AuthenticationController@logout' );
+/**
+	End Frond Pages
+	============================================================
+	Start Of Back Controllers
+ */
+Route::get(	 '/home', 			'HomeController@index') ;
+Route::post( '/get_donar', 		'HomeController@get_donar' );
+Route::post( '/assign_donar',	'HomeController@assign_donar' );
+Route::get(	 '/profile', 		'ProfileController@index') ;
+Route::get(	 '/schedules', 		'ScheduledController@index') ;
+Route::get(	 '/transactions', 	'TransactionController@index') ;
+/**
+	End Back Controllers
+	============================================================
+ */
 

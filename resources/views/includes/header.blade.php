@@ -18,8 +18,8 @@
                 <nav id="main-navbar">
                     <ul>
                         <li class="active"><a href="{{url('/')}}">Home</a></li>
-                        <li><a href="{{url('/signin')}}">Login</a></li>
-                        <li><a href="{{url('/register')}}">Register</a></li>
+                        <li><a href="{{url('/signin')}}">Sign In</a></li>
+                        <li><a href="{{url('/signup')}}">Sign Up</a></li>
                         <li><a href="{{url('/contactus')}}">Contact Us</a></li>
 
                     </ul>
