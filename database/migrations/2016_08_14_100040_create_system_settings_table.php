@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 class CreateSystemSettingsTable extends Migration
 {
     /**
-     * Run the migrations. //xngyjmvfotxvbrmb
+     * Run the migrations. //xngyjmvfotxvbrmb reserves
      *
      * @return void
      */
@@ -16,6 +16,10 @@ class CreateSystemSettingsTable extends Migration
             $table->increments('id');
             $table->float("percentage");
             $table->integer("days");
+            $table->integer("daily_reserves");
+            $table->integer("expiry_hours");
+            $table->time("start_help_time");
+            $table->time("end_help_time");
             $table->boolean("is_active");
         });
     }

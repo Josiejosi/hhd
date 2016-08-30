@@ -14,17 +14,29 @@ class SystemSettingTableSeeder extends Seeder
     {
         DB::table('system_settings')->insert([
     		"percentage"=>30,
-    		"days"=>3,
+            "days"=>3,
+            "daily_reserves"=>2,
+            "expiry_hours"=>4,
+            "start_help_time"=>"10:00:00",
+    		"end_help_time"=>"10:30:00",
     		"is_active"=>1,
         ]);
         DB::table('system_settings')->insert([
     		"percentage"=>60,
-    		"days"=>3,
+            "days"=>3,
+    		"daily_reserves"=>2,
+            "expiry_hours"=>4,
+            "start_help_time"=>"03:00:00",
+            "end_help_time"=>"00:00:00",
     		"is_active"=>0,
         ]);
         DB::table('system_settings')->insert([
     		"percentage"=>100,
-    		"days"=>12,
+            "days"=>12,
+    		"daily_reserves"=>2,
+            "expiry_hours"=>4,
+            "start_help_time"=>"03:00:00",
+            "end_help_time"=>"00:00:00",
     		"is_active"=>0,
         ]);
     }

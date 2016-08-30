@@ -4,16 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model
+class Notifications extends Model
 {
-    protected $table 		= 'accounts' ;
+    protected $table 		= 'notification' ;
     public $timestamps 		= false;
     protected $fillable 	= [
-    	"branch_code",
-    	"bank",
-    	"account_number",
-        "active_account",
     	"user_id",
+    	"message",
+    	"type",
     ];
 
     public function user()

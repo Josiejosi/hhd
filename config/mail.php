@@ -56,7 +56,7 @@ return [
     */
     //'info@prestigewallet.com', 'PrestigeWallet'
 
-    'from' => ['address' => 'info@prestigewallet.com', 'name' => 'PrestigeWallet'],
+    'from' => ['address' => 'prestigewallet@gmail.com', 'name' => 'PrestigeWallet'],
 
     /*
     |--------------------------------------------------------------------------

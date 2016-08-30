@@ -19,9 +19,14 @@
                         <p class="text-default lt lead">the page you are looking for cannot be found</p>
 
                         <div class="mt-40">
-                            <button class="myBtn myBtn-sm myBtn-3d"><i class="fa fa-refresh"></i> Try again</button>
-                            <button class="myBtn myBtn-sm myBtn-3d myBtn-dark"><i class="fa fa-home"></i> Return to home</button>
-                            <button class="myBtn myBtn-sm myBtn-3d myBtn-lightred"><i class="fa fa-envelope-o"></i> Contact support</button>
+                            <a href="{{url('/')}}" class="myBtn myBtn-sm myBtn-3d myBtn-dark">
+                                <i class="fa fa-home"></i> Return to home
+                            </a>
+                            <a 
+                                href="{{url('/contactus')}}" 
+                                class="myBtn myBtn-sm myBtn-3d myBtn-lightred">
+                                <i class="fa fa-envelope-o"></i> Contact support
+                            </a>
                         </div>
 
                     </div>

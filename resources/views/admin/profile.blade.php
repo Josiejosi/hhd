@@ -7,30 +7,40 @@
 
 @endsection
 
+@section ('title', 'Profile')
+
 @section ('content')
 
 <div class="row">
     <div class="col-md-12">
-        <!-- BEGIN PROFILE SIDEBAR -->
+
+        
+        @if (Session::has('account_creation_error'))
+            <span class="alert alert-warning">
+                <strong>{{ Session::get('account_creation_error') }}</strong>
+            </span>
+        @endif
+            <span class="alert alert-warning">
+                <strong>{{ Session::get('account_creation_error') }}</strong>
+            </span>        
         <div class="profile-sidebar">
-            <!-- PORTLET MAIN -->
+            
             <div class="portlet light profile-sidebar-portlet bordered">
-                <!-- SIDEBAR USERPIC -->
+                
                 <div class="profile-userpic">
                     <img src="{{asset('imgs/avatar/avatar.png')}}" class="img-responsive" alt=""> 
                 </div>
-                <!-- END SIDEBAR USERPIC -->
-                <!-- SIDEBAR USER TITLE -->
+
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name"> Marcus Doe </div>
-                    <div class="profile-usertitle-job"> Developer </div>
+                    <div class="profile-usertitle-name"> 
+                        {{Auth::user()->first_name}} {{Auth::user()->last_name}}
+                    </div>
                 </div>
-                <!-- END SIDEBAR USER TITLE -->
+                
             </div>
-            <!-- END PORTLET MAIN -->
+            
         </div>
-        <!-- END BEGIN PROFILE SIDEBAR -->
-        <!-- BEGIN PROFILE CONTENT -->
+
         <div class="profile-content">
             <div class="row">
                 <div class="col-md-12">
@@ -54,42 +64,27 @@
                         </div>
                         <div class="portlet-body">
                             <div class="tab-content">
-                                <!-- PERSONAL INFO TAB -->
+                                
                                 <div class="tab-pane active" id="tab_1_1">
                                     <form role="form" action="#">
                                         <div class="form-group">
                                             <label class="control-label">First Name</label>
-                                            <input type="text" placeholder="John" class="form-control"> </div>
+                                            <input type="text" value="{{Auth::user()->first_name}}" placeholder="John" class="form-control"> </div>
                                         <div class="form-group">
                                             <label class="control-label">Last Name</label>
-                                            <input type="text" placeholder="Doe" class="form-control"> </div>
+                                            <input type="text" value="{{Auth::user()->last_name}}" placeholder="Doe" class="form-control"> </div>
                                         <div class="form-group">
                                             <label class="control-label">Mobile Number</label>
-                                            <input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control"> </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Interests</label>
-                                            <input type="text" placeholder="Design, Web etc." class="form-control"> </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Occupation</label>
-                                            <input type="text" placeholder="Web Developer" class="form-control"> </div>
-                                        <div class="form-group">
-                                            <label class="control-label">About</label>
-                                            <textarea class="form-control" rows="3" placeholder="We are KeenThemes!!!"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Website Url</label>
-                                            <input type="text" placeholder="http://www.mywebsite.com" class="form-control"> </div>
+                                            <input type="text" value="{{Auth::user()->cell_phone}}" placeholder="27833532301" class="form-control"> </div>
                                         <div class="margiv-top-10">
                                             <a href="javascript:;" class="btn green"> Save Changes </a>
                                             <a href="javascript:;" class="btn default"> Cancel </a>
                                         </div>
                                     </form>
                                 </div>
-                                <!-- END PERSONAL INFO TAB -->
-                                <!-- CHANGE AVATAR TAB -->
+
                                 <div class="tab-pane" id="tab_1_2">
-                                    <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                        eiusmod. </p>
+                                    <p> </p>
                                     <form action="#" role="form">
                                         <div class="form-group">
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -115,8 +110,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <!-- END CHANGE AVATAR TAB -->
-                                <!-- CHANGE PASSWORD TAB -->
+ 
                                 <div class="tab-pane" id="tab_1_3">
                                     <form action="#">
                                         <div class="form-group">
@@ -134,14 +128,14 @@
                                         </div>
                                     </form>
                                 </div>
-                                <!-- END CHANGE PASSWORD TAB -->
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- END PROFILE CONTENT -->
+        
     </div>
 </div>
 

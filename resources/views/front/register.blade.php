@@ -199,6 +199,35 @@
                                     </span>
                                 @endif
                             </div>
+                            @if (Request::is('signup/*'))
+                            <div class="form-group col-md-12">
+                                <label for="referral_key">Referral Key <span class="text-lightred" style="font-size: 15px">*</span></label>
+                                <input name="referral_key" 
+                                        type="text" 
+                                        class="form-control myInput" 
+                                        id="referral_key"
+                                        value="{{$referral_key}}">
+                                @if ($errors->has('first_name'))
+                                    <span class="help-block error-message">
+                                        <strong>{{ $errors->first('referral_key') }}</strong>
+                                    </span>
+                                @endif 
+                            </div> 
+                            @else
+                            <div class="form-group col-md-12">
+                                <label for="referral_key">Referral Key <span class="text-lightred" style="font-size: 15px">*</span></label>
+                                <input name="referral_key" 
+                                        type="text" 
+                                        class="form-control myInput" 
+                                        id="referral_key"
+                                        value="{{ old('referral_key') }}">
+                                @if ($errors->has('first_name'))
+                                    <span class="help-block error-message">
+                                        <strong>{{ $errors->first('referral_key') }}</strong>
+                                    </span>
+                                @endif 
+                            </div> 
+                            @endif
 
 
                             <div class="form-group col-md-12">

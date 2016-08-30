@@ -8,6 +8,8 @@
         <meta content="width=device-width, initial-scale=1" name="viewport" />
 
         <meta name="csrf_token" content="{{ csrf_token() }}" />
+        <meta name="secondary_level_token" content="{{ Auth::user()->id }}" />
+        <meta name="fallback_url" content="{{env('SOCKET_URL')}}" />
         
         <link href="//fonts.googleapis.com/css?family=Oswald:400,300,700" rel="stylesheet" type="text/css" />
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -35,6 +37,8 @@
         @yield('css')
 
         <link rel="shortcut icon" href="imgs/favicon.ico" /> 
+
+        <script src="{{asset('js/jquery-1.11.2.min.js')}}" type="text/javascript"></script>
     </head>
     <!-- END HEAD -->
 
@@ -52,12 +56,12 @@
                             <!-- BEGIN GROUP NOTIFICATION -->
                             <div class="btn-group-notification btn-group" id="header_notification_bar">
                                 <button type="button" class="btn md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <span class="badge">9</span>
+                                    <span class="badge">0</span>
                                 </button>
                                 <ul class="dropdown-menu-v2">
                                     <li class="external">
                                         <h3>
-                                            <span class="bold">12 pending</span> notifications</h3>
+                                            <span class="bold">0 pending</span> notifications</h3>
                                         <a href="#">view all</a>
                                     </li>
                                     <li>
@@ -223,14 +227,14 @@
                                 </a>
                             </li>
                             <li class="nav-item start ">
-                                <a href="{{url('/transactions')}}" class="nav-link nav-toggle">
-                                    <i class="icon-diamond"></i>
-                                    <span class="title">Transactions</span>
+                                <a href="{{url('/accounts')}}" class="nav-link nav-toggle">
+                                    <i class="icon-credit-card"></i>
+                                    <span class="title">Accounts</span>
                                 </a>
                             </li> 
                             <li class="nav-item start ">
                                 <a href="{{url('/schedules')}}" class="nav-link nav-toggle">
-                                    <i class="icon-calender"></i>
+                                    <i class="icon-notebook"></i>
                                     <span class="title">Scheduled</span>
                                 </a>
                             </li>                            
@@ -265,7 +269,7 @@
         <script src="../assets/global/plugins/excanvas.min.js"></script> 
         <![endif]-->
         <!-- BEGIN CORE PLUGINS -->
-        <script src="{{asset('js/jquery-1.11.2.min.js')}}" type="text/javascript"></script>
+        
         <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/bootstrap-hover-dropdown.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
@@ -277,7 +281,12 @@
         <script src="{{asset('js/quick-sidebar.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/jquery.countdown.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/bootbox.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/modavication.js')}}" type="text/javascript"></script>
+        <!--        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js" type="text/javascript"></script>
+        <script src="{{asset('js/push-notification.js')}}" type="text/javascript"></script> 
+        -->
         
 
         @yield('js')

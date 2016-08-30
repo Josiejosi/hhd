@@ -21,7 +21,9 @@ class User extends Authenticatable
         'is_special_user', 
         'is_verified', 
         'verification_code', 
+        'refferal_key', 
         'password',
+        'is_active',
     ];
 
     /**
@@ -36,5 +38,15 @@ class User extends Authenticatable
     public function accounts()
     {
         return $this->hasMany('App\Models\Account');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany('App\Models\Notifications');
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany('App\Models\Notifications');
     }
 }

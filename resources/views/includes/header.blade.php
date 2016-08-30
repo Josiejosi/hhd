@@ -18,8 +18,12 @@
                 <nav id="main-navbar">
                     <ul>
                         <li class="active"><a href="{{url('/')}}">Home</a></li>
+                        @if ( Auth::check() )
+                        <li><a href="{{url('/home')}}">Logged in: Back Dash?</a></li>
+                        @else
                         <li><a href="{{url('/signin')}}">Sign In</a></li>
                         <li><a href="{{url('/signup')}}">Sign Up</a></li>
+                        @endif
                         <li><a href="{{url('/contactus')}}">Contact Us</a></li>
 
                     </ul>

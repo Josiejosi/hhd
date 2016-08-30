@@ -8,10 +8,13 @@ class SystemSetting extends Model
 {
     protected $table 		= 'system_settings' ;
     public $timestamps 		= false;
-    //protected $dates 		= ['schedule_at', 'schedule_for'];
     protected $fillable 	= [
     	"percentage",
     	"days",
+    	"daily_reserves",
+        "expiry_hours",
+        "start_help_time",
+    	"end_help_time",
     	"is_active",
     ];
 }

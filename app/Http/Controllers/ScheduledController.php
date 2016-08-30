@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Auth ;
+use App\Models\ScheduledDonation ;
+
 class ScheduledController extends Controller
 {
     public function __construct() {
@@ -13,6 +16,9 @@ class ScheduledController extends Controller
     }
 
     public function index() {
-    	return view('admin.schedules') ;
+    	$data = [
+    		'scheduled'=>ScheduledDonation::where('user_id',Auth::user()->id)->get()
+    	] ;
+    	return view('admin.schedules',$data) ;
     }
 }

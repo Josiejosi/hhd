@@ -4,16 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model
+class Referral extends Model
 {
-    protected $table 		= 'accounts' ;
+    protected $table 		= 'referrals' ;
     public $timestamps 		= false;
+    protected $dates 		= ['join_at'];
     protected $fillable 	= [
-    	"branch_code",
-    	"bank",
-    	"account_number",
-        "active_account",
-    	"user_id",
+    	"referrer_id",
+    	"referred_id",
+    	"join_at",
     ];
 
     public function user()

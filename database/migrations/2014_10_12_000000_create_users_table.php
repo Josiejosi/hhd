@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->boolean('is_special_user');
             $table->boolean('is_verified');
             $table->string('verification_code');
+            $table->string('refferal_key');
+            $table->boolean('is_active');
             $table->rememberToken();
             $table->timestamps();
         });

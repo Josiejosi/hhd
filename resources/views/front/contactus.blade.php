@@ -12,14 +12,15 @@
 
                         <div class="col-md-8">
 
+                            @if (Session::has('account_not_found'))
+                                <span class="alert alert-warning">
+                                    <strong>{{ Session::get('account_not_found') }}</strong>
+                                </span>
+                            @endif
+
                             <div class="heading-block mb-60">
                                 <h2 class="text-uppercase"><span class="text-theme">Give us</span> a line</h2>
 
-                                @if (Session::has('account_not_found'))
-                                    <span class="alert alert-warning">
-                                        <strong>{{ Session::get('account_not_found') }}</strong>
-                                    </span>
-                                @endif
                             </div>
 
                             <form id="contactForm"  action="{{url('/contactus')}}" method="post">

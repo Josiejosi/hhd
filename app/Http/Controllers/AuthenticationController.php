@@ -9,6 +9,7 @@ use App\Http\Requests;
 use Auth ;
 use App\Models\User ;
 use App\Models\Account ;
+use App\Models\Referral ;
 
 use Validator ;
 use Session ;
@@ -21,15 +22,15 @@ class AuthenticationController extends Controller
     public function signup( Request $request ) {
 
         $validator 						= Validator::make($request->all(), [
-            'first_name' 				=> 'required|alpha',
-            'last_name'		 			=> 'required|alpha',
+            'first_name' 				=> 'required',
+            'last_name'		 			=> 'required',
             'email' 					=> 'required|unique:users|max:255|email',
             'cell_phone' 				=> 'required|unique:users|digits_between:10,15',
             'password' 					=> 'required|confirmed|max:15|min:6',
             'password_confirmation' 	=> 'required',
             'account_number' 			=> 'required|unique:accounts|digits_between:5,20',
             'account_name' 				=> 'required',
-            'branch_code' 				=> 'required|integer',
+            'branch_code' 				=> 'required',
         ]);
 
 
@@ -39,7 +40,8 @@ class AuthenticationController extends Controller
                         ->withInput();
         }
 
-        $verification_code 				= rand( 111111, 999999 ) ;
+        $verification_code              = mt_rand( 111111, 999999 ) ;
+        $refferal_key    				= mt_rand( 111111, 999999 ) ;
 
         $user  							= User::create([
 
@@ -51,8 +53,10 @@ class AuthenticationController extends Controller
 	        'timezone'					=> "Africa/Johannesburg", 
 	        'is_special_user'			=> 0, 
 	        'is_verified'				=> 0, 
-	        'verification_code'			=> $verification_code, 
-	        'password'					=> bcrypt($request->password)
+            'verification_code'         => $verification_code, 
+	        'refferal_key'			    => $refferal_key, 
+	        'password'					=> bcrypt($request->password),
+            'is_active'                 => 1,
 
         ]) ; 							
 
@@ -65,9 +69,31 @@ class AuthenticationController extends Controller
 		    	"user_id"				=> $user->id,
         	]) ;
 
+            //check if user was referred.
+            if ( isset( $request->referral_key ) ) {
+                $user_referred = User::where('refferal_key', $request->referral_key)->count() ;
+
+                if ( $user_referred == 1 ) {
+                    //get referral code.
+                    $referred_user = User::where('refferal_key', $request->referral_key)->first() ;
+                    $key = $referred_user->refferal_key ;
+                    $new_user_from_referred = $referred_user->id ;
+
+                    if ( Referral::where('referrer_id', $user->id)->where('referred_id', $new_user_from_referred)->count() == 0 ) {
+                        Referral::create([
+                            "referrer_id" => $user->id,
+                            "referred_id"   => $new_user_from_referred,
+                            "join_at"   => Carbon::now(),
+                        ]) ;
+                    }
+                }
+            }
+
+
+
 		    if ( Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
 	            
-				$job = (new UserHasRegistered($user))->onQueue('UserHasRegistered');
+				$job = (new UserHasRegistered($user, $verification_code, $refferal_key, $request->password))->onQueue('UserHasRegistered');
 		        $this->dispatch($job);
 
 		    	return redirect()->intended( 'home' ) ;

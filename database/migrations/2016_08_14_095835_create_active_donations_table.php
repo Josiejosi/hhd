@@ -18,6 +18,7 @@ class CreateActiveDonationsTable extends Migration
             $table->integer('sender');
             $table->float('amount');
             $table->datetime('created_at');
+            $table->datetime('booked_at');
             $table->float('donation_percentage');
             $table->integer('donation_days');
             $table->integer('donation_status');
