@@ -10,8 +10,8 @@
 		        <div class="center-block less-width text-center clearfix">
 		            <img class="mb-40" src="{{asset('imgs/logo-lg.png')}}" alt="">
 		            <h1>Hello! Ready to try <span class="text-greensea">PrestigeWallet</span>?</h1>
-		            <a href="{{url('/signin')}}" class="myBtn myBtn-3d myBtn-dark myBtn-lg ">Login</a>
-		            <a href="{{url('/signup')}}" class="myBtn myBtn-3d myBtn-lg">Register</a>
+		            <a href="{{url('/signin')}}" class="myBtn myBtn-3d myBtn-dark myBtn-lg ">Sign IN</a>
+		            <a href="{{url('/join')}}" class="myBtn myBtn-3d myBtn-lg">Sign UP</a>
 		        </div>
 
 		        <div class="line"></div>
@@ -39,7 +39,7 @@
 		                        <br />Our gift to you.
 		                    </p>
 
-		                    <a href="{{url('/register')}}" class="myBtn myBtn-border myBtn-light myBtn-rounded myBtn-lg">Try US</a>
+		                    <a href="{{url('/join')}}" class="myBtn myBtn-border myBtn-light myBtn-rounded myBtn-lg">Try US</a>
 		                </div>
 
 		                <div class="col-md-6">

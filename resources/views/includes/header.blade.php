@@ -22,7 +22,7 @@
                         <li><a href="{{url('/home')}}">Logged in: Back Dash?</a></li>
                         @else
                         <li><a href="{{url('/signin')}}">Sign In</a></li>
-                        <li><a href="{{url('/signup')}}">Sign Up</a></li>
+                        <li><a href="{{url('/join')}}">Sign Up</a></li>
                         @endif
                         <li><a href="{{url('/contactus')}}">Contact Us</a></li>
 

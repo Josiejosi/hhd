@@ -21,8 +21,8 @@ git push -u origin master
 Route::get(  '/', 						'FrontController@home' ) ;
 Route::get(  '/signin', 				'FrontController@signin' );
 Route::post( '/signin', 				'AuthenticationController@signin' );
-Route::get(  '/signup', 				'FrontController@signup' );
-Route::get(  '/signup/{referral_key}', 	'FrontController@signup_referral' );
+Route::get(  '/join', 				'FrontController@signup' );
+Route::get(  '/join/{referral_key}', 	'FrontController@signup_referral' );
 Route::post( '/signup', 				'AuthenticationController@signup' );
 Route::get(  '/forgot', 				'FrontController@forgot' );
 Route::post( '/forgot', 				'AuthenticationController@forgot' );
