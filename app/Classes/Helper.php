@@ -272,7 +272,7 @@
 					ActiveDonation::where('id', $id)->update([
 						'is_processed'		=>1,
 						'donation_status'	=>1, 
-						'sender'			=>$active_donations->receiver
+						'sender'			=>$user_id
 					]) ;
 					
 					//check if user has not made donation to this user before.

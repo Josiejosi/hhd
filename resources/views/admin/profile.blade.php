@@ -75,7 +75,7 @@
                                             <input type="text" value="{{Auth::user()->last_name}}" placeholder="Doe" class="form-control"> </div>
                                         <div class="form-group">
                                             <label class="control-label">Mobile Number</label>
-                                            <input type="text" value="{{Auth::user()->cell_phone}}" placeholder="27833532301" class="form-control"> </div>
+                                            <input type="text" value="{{Auth::user()->cell_phone}}" readonly="true" placeholder="27833532301" class="form-control"> </div>
                                         <div class="margiv-top-10">
                                             <a href="javascript:;" class="btn green"> Save Changes </a>
                                             <a href="javascript:;" class="btn default"> Cancel </a>
