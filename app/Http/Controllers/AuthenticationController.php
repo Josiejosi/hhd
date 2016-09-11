@@ -128,11 +128,13 @@ class AuthenticationController extends Controller
 
     		$password 					= rand( 111111, 666666 ) ;
 
-	        $user  						= User::where( 'email', $request->email )->update([
+            $user                       = User::where('email',$request->email)->first() ;
+
+	        $user_affected  			= User::where( 'email', $request->email )->update([
 		        'password'				=> bcrypt($password)
 	        ]) ;
 
-		    if ( $user ) {
+		    if ( $user_affected ) {
 		    	Helper::send_mail( 
 		    		$request->email, 
 		    		"Password Changed", 
