@@ -23,7 +23,7 @@
                     <div class="row">
 
                         <div class="form-group col-md-12">
-                            <label for="email">Username</label>
+                            <label for="email">Email Address</label>
                             <input 
                                 name="email" 
                                 type="text" 
