@@ -35,75 +35,66 @@ class AuthenticationController extends Controller
 
 
         if ($validator->fails()) {
-            return redirect('signup')
+            return redirect('join')
                         ->withErrors($validator)
                         ->withInput();
         }
 
-        $verification_code              = mt_rand( 111111, 999999 ) ;
-        $refferal_key    				= mt_rand( 111111, 999999 ) ;
+        $verification_code                  = mt_rand( 111111, 999999 ) ;
+        $refferal_key    				    = mt_rand( 111111, 999999 ) ;
 
-        $user  							= User::create([
+        $user  							    = User::create([
 
-	        'first_name'				=> $request->first_name, 
-	        'last_name'					=> $request->last_name, 
-	        'email'						=> $request->email, 
-	        'cell_phone'				=> $request->cell_phone, 
-	        'avatar'					=> "avatar.png", 
-	        'timezone'					=> "Africa/Johannesburg", 
-	        'is_special_user'			=> 0, 
-	        'is_verified'				=> 0, 
-            'verification_code'         => $verification_code, 
-	        'refferal_key'			    => $refferal_key, 
-	        'password'					=> bcrypt($request->password),
-            'is_active'                 => 1,
+	        'first_name'				    => $request->first_name, 
+	        'last_name'					    => $request->last_name, 
+	        'email'						    => $request->email, 
+	        'cell_phone'				    => $request->cell_phone, 
+	        'avatar'					    => "avatar.png", 
+	        'timezone'					    => "Africa/Johannesburg", 
+	        'is_special_user'			    => 0, 
+	        'is_verified'				    => 0, 
+            'verification_code'             => $verification_code, 
+	        'refferal_key'			        => $refferal_key, 
+            'ip_address'                    => $request->ip(), 
+            'user_agent'                    => $request->header('User-Agent'), 
+	        'password'					    => bcrypt($request->password),
+            'is_active'                     => 1,
 
         ]) ; 							
 
         if ( $user ) {
-        	$account 					= Account::create([
-		   		"branch_code"			=> $request->branch_code,
-		    	"bank"					=> $request->account_name,
-		    	"account_number"		=> $request->account_number,
-		    	"active_account"		=> 1,
-		    	"user_id"				=> $user->id,
+        	$account 					     = Account::create([
+		   		"branch_code"			     => $request->branch_code,
+		    	"bank"					     => $request->account_name,
+		    	"account_number"		     => $request->account_number,
+		    	"active_account"		     => 1,
+		    	"user_id"				     => $user->id,
         	]) ;
 
-            //check if user was referred.
             if ( isset( $request->referral_key ) ) {
-                $user_referred = User::where('refferal_key', $request->referral_key)->count() ;
+                $user_referred              = User::where('refferal_key', $request->referral_key)->count() ;
 
                 if ( $user_referred == 1 ) {
-                    //get referral code.
-                    $referred_user = User::where('refferal_key', $request->referral_key)->first() ;
-                    $key = $referred_user->refferal_key ;
+                    $referred_user          = User::where('refferal_key', $request->referral_key)->first() ;
+                    $key                    = $referred_user->refferal_key ;
                     $new_user_from_referred = $referred_user->id ;
 
                     if ( Referral::where('referrer_id', $user->id)->where('referred_id', $new_user_from_referred)->count() == 0 ) {
                         Referral::create([
-                            "referrer_id" => $user->id,
+                            "referrer_id"   => $user->id,
                             "referred_id"   => $new_user_from_referred,
-                            "join_at"   => Carbon::now(),
+                            "join_at"       => Carbon::now(),
                         ]) ;
                     }
                 }
             }
 
-
-
 		    if ( Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
-	            
 				$job = (new UserHasRegistered($user, $verification_code, $refferal_key, $request->password))->onQueue('UserHasRegistered');
 		        $this->dispatch($job);
-
 		    	return redirect()->intended( 'home' ) ;
+	        }
 
-	        }/* else {
-	        	Session::flash('account_not_found', 'Account not found on our system');
-	        	return redirect()->back()->withInput() ;
-	        }*/
-
-	        Session::flash('account_not_found', 'Account not found on our system');
 	        return redirect()->back()->withInput() ;
         }
     	

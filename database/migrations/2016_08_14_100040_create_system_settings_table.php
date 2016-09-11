@@ -20,6 +20,7 @@ class CreateSystemSettingsTable extends Migration
             $table->integer("expiry_hours");
             $table->time("start_help_time");
             $table->time("end_help_time");
+            $table->integer("count_down_hours");
             $table->boolean("is_active");
         });
     }

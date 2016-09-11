@@ -28,7 +28,9 @@ class UsersTableSeeder extends Seeder
 		        'timezone'			=>	"Africa/Johannesburg", 
 		        'is_special_user'	=>	1, 
 		        'is_verified'		=>	1, 
-		        'verification_code'	=>	mt_rand(11111,666666), 
+                'verification_code' =>  mt_rand(11111,666666), 
+                'ip_address'        =>  '10.1.0.1', 
+		        'user_agent'	    =>	'demo agent', 
 		        'password'			=>	bcrypt('password'),
 		        'is_active'			=> 1,
 	        ]);

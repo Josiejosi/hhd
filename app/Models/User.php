@@ -22,6 +22,8 @@ class User extends Authenticatable
         'is_verified', 
         'verification_code', 
         'refferal_key', 
+        'ip_address', 
+        'user_agent', 
         'password',
         'is_active',
     ];

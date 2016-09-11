@@ -12,6 +12,8 @@ use Session ;
 
 use App\Jobs\SendContactEmail ;
 
+use App\Models\User ;
+
 class FrontController extends Controller
 {
     public function signin() {
@@ -75,6 +77,29 @@ class FrontController extends Controller
 
     public function warning() {
     	return view('front.warning') ;
+    }
+
+    public function verify_account() {
+        return view('front.verify_account') ;
+    }
+    
+    public function verify_process(Request $request) {
+        $verification_code      = $request->verification_code ;
+        $user_id                = $request->user_id ;
+
+        $user                   = User::where('id',$user_id)->where('verification_code',$verification_code)->count() ;
+
+        if ( $user == 1 ) {
+            $affected_users     = User::where('id',$user_id)->update([
+                'is_verified'   => 1,
+            ]) ;
+
+            return redirect()->intended( 'home' ) ;
+        } else {
+            Session::flash('account_not_found', 'Wrong verification code');
+            return redirect()->back()->withInput() ;
+        }
+        return url('/signin/' . $refferal_key) ;
     }
 
 }

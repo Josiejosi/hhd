@@ -166,5 +166,7 @@
     <script type="text/javascript" src="{{asset('js/global.js')}}"></script>
 
 
+    @yield('js')
+
 </body>
 </html>

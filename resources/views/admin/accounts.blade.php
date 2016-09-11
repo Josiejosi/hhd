@@ -10,7 +10,7 @@
 
     <div class="m-heading-1 border-green m-bordered">
         <h3>Manage my accounts</h3>
-        <p> PLEASE NOTE: Only one account can be the active account per donation, and you can only add 3 account</p>
+        <p> PLEASE NOTE: Only one account can be the active account per donation, and you can only add 3 accounts</p>
     </div>
     <div class="row">
         <div class="col-md-12">

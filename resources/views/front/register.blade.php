@@ -138,41 +138,17 @@
                                     <option>Please select</option>
                                     <option value="Absa Bank" @if ( old('account_name') == "Absa Bank" ) selected="selected" @endif >Absa Bank</option>
                                     <option value="African Bank" @if ( old('account_name') == "African Bank" ) selected="selected" @endif >African Bank</option> 
-                                    <option value="alBaraka Bank" @if ( old('account_name') == "alBaraka Bank" ) selected="selected" @endif >alBaraka Bank</option>
-                                    <option value="Bank of Baroda" @if ( old('account_name') == "Bank of Baroda" ) selected="selected" @endif >Bank of Baroda</option>
-                                    <option value="Bank of China" @if ( old('account_name') == "Bank of China" ) selected="selected" @endif >Bank of China</option>
-                                    <option value="Bank of Taiwan" @if ( old('account_name') == "Bank of Taiwan" ) selected="selected" @endif >Bank of Taiwan</option>
                                     <option value="Bitvest Bank" @if ( old('account_name') == "Bitvest Bank" ) selected="selected" @endif >Bitvest Bank</option>
-                                    <option value="BNP Paribas" @if ( old('account_name') == "BNP Paribas" ) selected="selected" @endif >BNP Paribas</option>
                                     <option value="Capitec Bank" @if ( old('account_name') == "Capitec Bank" ) selected="selected" @endif >Capitec Bank</option>
-                                    <option value="China Construction Bank" @if ( old('account_name') == "China Construction Bank" ) selected="selected" @endif >China Construction Bank</option>
-                                    <option value="Citibank N.A" @if ( old('account_name') == "Citibank N.A" ) selected="selected" @endif >Citibank N.A</option>
-                                    <option value="Deutsche Bank AG" @if ( old('account_name') == "Deutsche Bank AG" ) selected="selected" @endif >Deutsche Bank AG</option>
-                                    <option value="FinBond Mutual Bank" @if ( old('account_name') == "FinBond Mutual Bank" ) selected="selected" @endif >FinBond Mutual Bank</option>
                                     <option value="First National Bank" @if ( old('account_name') == "First National Bank" ) selected="selected" @endif >First National Bank</option>
                                     <option value="FirstRand Bank" @if ( old('account_name') == "FirstRand Bank" ) selected="selected" @endif >FirstRand Bank</option>
-                                    <option value="GBS Mutual Bank" @if ( old('account_name') == "GBS Mutual Bank" ) selected="selected" @endif >GBS Mutual Bank</option>
-                                    <option value="Grindrod Bank" @if ( old('account_name') == "Grindrod Bank" ) selected="selected" @endif >Grindrod Bank</option>
-                                    <option value="Habib Overseas Bank" @if ( old('account_name') == "Habib Overseas Bank" ) selected="selected" @endif >Habib Overseas Bank</option>
-                                    <option value="HBZ Bank" @if ( old('account_name') == "HBZ Bank" ) selected="selected" @endif >HBZ Bank</option>
-                                    <option value="HSBC Bank" @if ( old('account_name') == "HSBC Bank" ) selected="selected" @endif >HSBC Bank</option>
                                     <option value="Investec Bank" @if ( old('account_name') == "Investec Bank" ) selected="selected" @endif >Investec Bank</option>
-                                    <option value="Habib Overseas Bank" @if ( old('account_name') == "Habib Overseas Bank" ) selected="selected" @endif >Habib Overseas Bank</option>
-                                    <option value="HBZ Bank" @if ( old('account_name') == "HBZ Bank" ) selected="selected" @endif >HBZ Bank</option>
-                                    <option value="HSBC Bank" @if ( old('account_name') == "HSBC Bank" ) selected="selected" @endif >HSBC Bank</option>
-                                    <option value="Investec Bank" @if ( old('account_name') == "Investec Bank" ) selected="selected" @endif >Investec Bank</option>
-                                    <option value="Ithala" @if ( old('account_name') == "Ithala" ) selected="selected" @endif >Ithala </option>
-                                    <option value="JP Morgan Chase" @if ( old('account_name') == "JP Morgan Chase" ) selected="selected" @endif >JP Morgan Chase</option>
-                                    <option value="Mercantile Bank" @if ( old('account_name') == "Mercantile Bank" ) selected="selected" @endif >Mercantile Bank</option>
                                     <option value="Nedbank" @if ( old('account_name') == "Nedbank" ) selected="selected" @endif >Nedbank</option>
-                                    <option value="Sasfin Bank" @if ( old('account_name') == "Sasfin Bank" ) selected="selected" @endif >Sasfin Bank</option>
                                     <option value="Societe Generale JHB" @if ( old('account_name') == "Societe Generale JHB" ) selected="selected" @endif >Societe Generale JHB</option>
-                                    <option value="Standard Chartered Bank" @if ( old('account_name') == "Standard Chartered Bank" ) selected="selected" @endif >Standard Chartered Bank</option>
-                                    <option value="State Bank of India" @if ( old('account_name') == "State Bank of India" ) selected="selected" @endif >State Bank of India</option>
                                     <option value="SA Bank of Athens" @if ( old('account_name') == "SA Bank of Athens" ) selected="selected" @endif >SA Bank of Athens</option>
                                     <option value="Standard Bank" @if ( old('account_name') == "Standard Bank" ) selected="selected" @endif >Standard Bank</option>
                                     <option value="UBank" @if ( old('account_name') == "UBank" ) selected="selected" @endif >UBank</option>
-                                    <option value="VBS Mutual Bank" @if ( old('account_name') == "VBS Mutual Bank" ) selected="selected" @endif >VBS Mutual Bank</option>
+                                    
 
                                 </select>
                                 @if ($errors->has('account_name'))
@@ -181,8 +157,6 @@
                                     </span>
                                 @endif
                             </div>
-
-
 
                             <div class="form-group col-md-12">
                                 <label for="branch_code">Branch Code <span class="text-lightred" style="font-size: 15px">*</span></label>
@@ -215,9 +189,9 @@
                             </div> 
                             @else
                             <div class="form-group col-md-12">
-                                <label for="referral_key">Referral Key <span class="text-lightred" style="font-size: 15px">*</span></label>
+                                
                                 <input name="referral_key" 
-                                        type="text" 
+                                        type="hidden" 
                                         class="form-control myInput" 
                                         id="referral_key"
                                         value="{{ old('referral_key') }}">
@@ -232,13 +206,13 @@
 
                             <div class="form-group col-md-12">
                                 <label>
-                                    <div class="checker"><span><input type="checkbox"></span></div> 
+                                    <div class="checker"><span><input type="checkbox" id="accepted_disclimar"></span></div> 
                                     Having read the <a href="{{url('/warning')}}">WARNING</a> , I am well aware fully of the risks. Being in sound mind, I have decided to become a member of PrestigeWallet. 
                                 </label>
                             </div>
 
                             <div class="col-md-12">
-                                <button type="submit" class="myBtn myBtn-rounded myBtn-dark m-0 mt-10">Register Now</button>
+                                <button type="submit" id="submit_btn" class="myBtn myBtn-rounded myBtn-dark m-0 mt-10">Register Now</button>
                             </div>
 
                         </div>
@@ -250,4 +224,20 @@
         </div>
     </section>
 
+@endsection
+
+@section ('js')
+
+    <script type="text/javascript">
+
+        $(function(){
+            $("#submit_btn").hide() ;
+        }) ;
+        
+        $("#accepted_disclimar").on("click", function() {
+            $("#submit_btn").show() ;
+        }) ;
+
+    </script>
+    
 @endsection

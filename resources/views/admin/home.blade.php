@@ -43,10 +43,16 @@
 	<div class="row">
 		
 		<div class="col-md-8 col-sm-8">
+			<div class="row">
+				<div id='count_down'>
+
+
+				</div>
+			</div>
 
 			@if ( $max_reserves_allowed == false)
 				<div class="note note-info">
-					<h5 class="block"><strong>You have reached your max Dream limit, thank you.</strong></h5>
+					<h5 class="block"><strong>You have reached your max Donation limit, thank you.</strong></h5>
 				</div>
 			@endif
 
@@ -228,17 +234,17 @@
 @section ('js')
 
 	<script src="{{asset('js/ion.rangeSlider.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('js/jquery.countdown.min.js')}}" type="text/javascript"></script>
 	<script type="text/javascript">
 
-		$(function(){
-/*			var countdown1 = new Date(); 
-			var countdown2 = new Date(); 
-			//var countdown2 = new Date(2016, 08, 18, 12, 45, 00, 00);
-			//countdown = new Date(countdown.getFullYear() + 1, 1 - 1, 1); 
-			$('#payment1').countdown({until: countdown1.addHours(3)}); 
-			$('#payment2').countdown({until: countdown2}); */
+		$( function() {
+	      //var time            = '2016/09/07 11:30' ;
+	      //var now             = add_stop_minute( time ) ;
+
 		});
-	
+
+		var secondary_level_token 	= $('meta[name="secondary_level_token"]').attr('content') ;
+		
 
         $("#small_investment").ionRangeSlider({
             type: "double",
@@ -280,12 +286,23 @@
 			        	max 	: data.to,
 			        }, success: function( data ) {
 
-			            $("#assignment_div_big").html(data) ;
+			            $("#assignment_div_big").html(data.message) ;
+
+			            if ( data.message == "found") {
+			            	var min = data.min ;
+			            	var max = data.max ;
+			            	$("#assignment_div_big").html("We found a suitable member to match you with") ;
+			            	$("#assignment_div_big").append(
+			            		"<br /><br /><butto id='reserve_order' class='btn btn-info' onclick=\"assign_me('"+min+"','"+max+"')\">Assigned Me</button>"
+			            	) ;
+			            } else {
+			            	$("#assignment_div_big").html(data.message) ;
+			            }
 
 			        }, error: function( data ) {
 			        	var message = 'No member\'s for the selected range, please try a different range.' ;
 			        	$("#assignment_div_big").html(message) ;
-			            toast_notification('danger', message) ;
+			            //toast_notification('danger', message) ;
 			        }
 			    });
 		    },
@@ -350,13 +367,14 @@
 		    }
         });
 
+		var count_countdowns = 1 ;
 
-        var assign_me = function(id) {
+
+        var assign_me = function( min, max ) {
         	var remaining_hours = new Date(); 
         	remaining_hours = remaining_hours.addHours(4) ;
-
+        	console.log("Clicked") ;
         	$('#reserve_order').button('loading');
-
 
 		    $.ajax({
 		        url: "/assign_donar",
@@ -365,18 +383,21 @@
 		            var token 	= $('meta[name="csrf_token"]').attr('content') ;
 		            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
 		        }, data: { 
-		        	id:id
+		        	min:min,
+		        	max:max
 		        }, success: function( data ) {
-		        	console.log(data) ;
-		        	if ( data == "success" ) {
+		        	console.log(data.message) ;
+		        	if ( data.message == "success" ) {
 			            $( "#assignment_div_big" ).html( 
 							"Successfully reserved" +
-        				  	" Help, Please make a payment before "+
+        				  	" Please make a payment before "+
         				  	remaining_hours.getHours()+":"+
         				  	remaining_hours.getMinutes()+":"+
         				  	remaining_hours.getSeconds()+
         				  	" and await their approval"
 			             ) ;
+			            create_countdown_timer( data.bank, 60*4, count_countdowns, "red") ;
+			            count_countdowns++ ;
 			            //toast_notification( "info", message ) ;		        		
 		        	} else if( data == 'failed') {
 		        		var message = "This message might be because a donation was reserved before you, please try a different range" ;
@@ -394,20 +415,6 @@
 		        }
 		    });
         };
-
-
-		var secondary_level_token 	= $('meta[name="secondary_level_token"]').attr('content') ;
-		var fallback_url 			= $('meta[name="fallback_url"]').attr('content') ;
-		var individual_channel 		= "user"+secondary_level_token ;
-
-/*		var socket = io.connect("http://192.168.10.10:8000") ;
-
-		socket.on(individual_channel+":App\\Events\\YouHaveBeenReserved", function(message) {
-
-			console.log('Client can get this:') ;
-			console.log('--------------------') ;
-			console.log(message) ;
-		});*/
 
 		var feedUpdate = function() {
 			clearInterval(updateFeeds) ;
@@ -487,6 +494,65 @@
 		        }
 		    });
 		};
+
+		var add_stop_minute = function( minutes ) {
+			var now         = new Date() ;
+			now.setMinutes(now.getMinutes() + minutes) ;
+			var days        = now.getDate() ;
+
+			if ( days.lenght == 1 )
+			  days        = "0" + days ;
+
+			var months      = ( parseInt(now.getMonth()) + 1 ) ;
+			if ( months.lenght == 1 )
+			  months      = "0" + minutes ;
+
+			var hours       = now.getHours() ;
+			if ( hours.lenght == 1 )
+			  hours       = "0" + hours ;
+
+			var minutes     = now.getMinutes() ;
+			if ( minutes.lenght == 1 )
+			  minutes     = "0" + minutes ;
+
+			var seconds     = now.getSeconds() ;
+			if ( seconds.lenght == 1 )
+			  seconds     = "0" + seconds ;
+
+			return now.getFullYear() + "-" + months + "-" + days + " " + hours + ":" + minutes + ":" + seconds ;
+		} ;
+
+		var create_countdown_timer = function(bank, minutes, number, color) {
+			var string_timer 	   = "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>" +
+									 "<a class='dashboard-stat dashboard-stat-v2 "+color+"' href='#'>" +
+									 "<div class='visual'>" +
+									 "<i class='fa fa-clock-o'></i>" +
+									 "</div>" +
+									 "<div class='details'>" +
+									 "<div class='number'>" +
+									 "<span data-counter='counterup'>" +
+									 "<div class='countdown"+number+"'></div>" +
+									 "</span>" +
+									 "</div>" +
+									 "<div class='desc'>"+bank+" Deposit</div>"+
+									 "</div>" +
+									 "</a>" +
+									 "</div>" ;
+
+			$("#count_down").append(string_timer) ;
+
+			var now             = add_stop_minute( minutes ) ;
+
+			$( ".countdown"+number ).countdown( now, function(event) {
+			     $(this).text(event.strftime('%D:%H:%M:%S'));
+			});
+
+		} ;
+
+		var clear_countdown 		= function(div_countdown) {
+
+		} ;
+
 
 	</script>
 

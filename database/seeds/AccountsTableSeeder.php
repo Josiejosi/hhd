@@ -28,7 +28,7 @@ class AccountsTableSeeder extends Seeder
                 "bank"               => $bank[mt_rand(0, count($bank)-1)],
                 "account_number"     => mt_rand(111111111,666666666),
                 "active_account"     => 1,
-                "user_id"            => $i
+                "user_id"            => $receiver
             ]);
         }
     }

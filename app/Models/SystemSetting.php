@@ -14,7 +14,8 @@ class SystemSetting extends Model
     	"daily_reserves",
         "expiry_hours",
         "start_help_time",
-    	"end_help_time",
+        "end_help_time",
+    	"count_down_hours",
     	"is_active",
     ];
 }
