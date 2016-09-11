@@ -39,7 +39,6 @@ class UserHasRegistered extends Job implements ShouldQueue
             $this->user->first_name . " " . $this->user->last_name , 
             "We hope your doing well, here are your".
             "<br />Username: " . $this->user->email . "<br />Password: " . $this->password .
-            "<br /><br />Referral Key : $refferal_key<br /><br />" . 
             "<br /><br />Referral URL : <a href='$url'>$url</a><br /><br />", 
             "emails.confirm"
         ) ;

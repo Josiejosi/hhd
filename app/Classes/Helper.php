@@ -270,8 +270,8 @@
 					$receiver_id 			= $active_donations->receiver ;
 					
 					ActiveDonation::where('id', $id)->update([
-						'is_processed'		=>2,
-						'donation_status'	=>2, 
+						'is_processed'		=>1,
+						'donation_status'	=>1, 
 						'sender'			=>$active_donations->receiver
 					]) ;
 					

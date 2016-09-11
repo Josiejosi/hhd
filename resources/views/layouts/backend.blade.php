@@ -166,7 +166,6 @@
                                     <li>
                                         <a href="{{url('/profile')}}">
                                             <i class="icon-user"></i> My Profile
-                                            <span class="badge badge-danger">1</span>
                                         </a>
                                     </li>
                                     <li>

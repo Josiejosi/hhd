@@ -86,7 +86,7 @@ class TransactionController extends Controller
 
 		    	$user_reserved_info 	= [
 		    		'to_email'			=> $user->email,
-		    		'subject'			=> "HELP has been approved",
+		    		'subject'			=> "Donation has been approved",
 		    		'to_name'			=> $user->first_name ." ". $user->last_name,
 		    		'message'			=> $message,
                     'cell_phone'        => $user->cell_phone,

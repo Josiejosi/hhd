@@ -202,7 +202,7 @@
 			
 		</div>
 
-		<div class="col-md-12 col-sm-12">
+<!-- 		<div class="col-md-12 col-sm-12">
 		    <div class="portlet light bordered">
 		        <div class="portlet-title">
 		            <div class="caption">
@@ -224,7 +224,7 @@
 		            </div>
 		        </div>
 		    </div>
-		</div>
+		</div> -->
 		</div>
 	</div>
 	
@@ -389,7 +389,7 @@
 		        	console.log(data.message) ;
 		        	if ( data.message == "success" ) {
 			            $( "#assignment_div_big" ).html( 
-							"Successfully reserved" +
+							"Successfully reserved, an SMS will be send to you shortly with member details," +
         				  	" Please make a payment before "+
         				  	remaining_hours.getHours()+":"+
         				  	remaining_hours.getMinutes()+":"+
@@ -429,14 +429,14 @@
 		        	id:id
 		        }, success: function( data ) {
 		        	$("#divFeeds").html(data) ;
-		        	updateFeeds = setInterval( feedUpdate, 30000 ) ;
+		        	updateFeeds = setInterval( feedUpdate, 5000 ) ;
 		        }, error: function( data ) {
 		        	console.log("Error") ;
 		        }
 		    });
 		}
 
-		var updateFeeds = setInterval( feedUpdate, 30000 ) ;
+		var updateFeeds = setInterval( feedUpdate, 5000 ) ;
 
 		var approve = function( num, id) {
         	$('#approve'+num).button('loading');
@@ -552,6 +552,10 @@
 		var clear_countdown 		= function(div_countdown) {
 
 		} ;
+
+		var load_countdowns 		= function() {
+			
+		}
 
 
 	</script>
