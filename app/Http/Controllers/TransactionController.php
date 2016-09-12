@@ -10,6 +10,8 @@ use App\Models\ActiveDonation ;
 use App\Models\ScheduledDonation ;
 use App\Models\User ;
 
+use App\Classes\Helper ;
+
 use Auth ;
 
 use Carbon\Carbon ;
@@ -33,9 +35,12 @@ class TransactionController extends Controller
     }
 
     public function approve_order( Request $request ) {
+
     	$id 							= $request->id ;
     	
     	$active_donation 				= ActiveDonation::where('id',$id)->first() ;
+
+        $expiry_hours                   = Helper::expiry_hours() ;
     	//echo $id ;
     	$donation_percentage 			= $active_donation->donation_percentage ;
     	$donation_days 					= $active_donation->donation_days ;
@@ -60,10 +65,8 @@ class TransactionController extends Controller
     			$scheduled_at 			= Carbon::now()->addDays($expiry_hours)->setToStringFormat('jS \o\f F, Y g:i a') ;
     			$scheduled_amount 		= ( $amount * $donation_percentage ) + $amount ;
     			//$user 					= User::find(Auth::user()->id) ;
-    			$scheduled_for 			= $user->first_name . "" . $user->last_name ;
-		    	$message 				= "
-		    							
-		    								<br />
+    			$scheduled_for 			= Carbon::now()->addDays($donation_days) ;
+		    	$message 				= "<br />
 		    								<p>Your donation has been approved you are scheduled for: $scheduled_for<br/>:
 		    								<br />
 		    								<table border=0 cellpadding=5 cellspacing=0>
@@ -75,14 +78,10 @@ class TransactionController extends Controller
 
 		    								<br /><br />
 		    								Warm Regards,<br />
-		    								PrestigeWallet.com
+		    								PrestigeWallet.com" ;
 
-		    							  " ;
-
-                $sms_message            = "
-                                            Your donation has been approved you are scheduled for: $scheduled_for:  
-                                            Amount: R $scheduled_amount
-                                          " ;
+                $sms_message            = "Your donation has been approved you are scheduled for: $scheduled_for:  
+                                            Amount: R $scheduled_amount" ;
 
 		    	$user_reserved_info 	= [
 		    		'to_email'			=> $user->email,

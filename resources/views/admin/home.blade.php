@@ -126,81 +126,157 @@
 		</div>
 
 		<div class="col-md-4 col-sm-4">
-		<div class="col-md-12 col-sm-12">
-			
-			<div class="portlet light bordered">
-			    <div class="portlet-title tabbable-line">
-			        <div class="caption">
-			            <i class="icon-globe font-dark hide"></i>
-			            <span class="caption-subject font-dark bold uppercase">Updates</span>
-			        </div>
-			        <ul class="nav nav-tabs">
-			            <li class="active">
-			                <a href="#tab_1_1" class="active" data-toggle="tab" aria-expanded="true"> Donations </a>
-			            </li>
-			        </ul>
-			    </div>
-			    <div class="portlet-body">
-			        <!--BEGIN TABS-->
-			        <div class="tab-content">
-			            <div class="tab-pane active" id="tab_1_1">
-			                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 239px;"><div class="scroller" style="height: 339px; overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible="0" data-initialized="1">
+			<div class="col-md-12 col-sm-12">
+				
+				<div class="portlet light bordered">
+				    <div class="portlet-title tabbable-line">
+				        <div class="caption">
+				            <i class="icon-globe font-dark hide"></i>
+				            <span class="caption-subject font-dark bold uppercase">Updates</span>
+				        </div>
+				        <ul class="nav nav-tabs">
+				            <li class="active">
+				                <a href="#tab_1_1" class="active" data-toggle="tab" aria-expanded="true"> Donations </a>
+				            </li>
+				        </ul>
+				    </div>
+				    <div class="portlet-body">
+				        <!--BEGIN TABS-->
+				        <div class="tab-content">
+				            <div class="tab-pane active" id="tab_1_1">
+				                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 239px;"><div class="scroller" style="height: 339px; overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible="0" data-initialized="1">
 
-			                    <ul class="feeds" id="divFeeds">
+				                    <ul class="feeds" id="divFeeds">
 
-			                    	@if ( count($transactions) > 0 )
-			                    	<?php $i=1 ; ?>
-			                    	@foreach ( $transactions as $transaction )
+				                    	@if ( count($transactions) > 0 )
+				                    	<?php $i=1 ; ?>
+				                    	@foreach ( $transactions as $transaction )
 
-		                         	<?php
-		                         		$user_count = \App\Models\User::where('id',$transaction->sender)->count() ;
-		                         		$name = '' ;
-		                         		if ( $user_count == 1 ) {
-		                         			$user = \App\Models\User::where('id',$transaction->sender)->first() ;
-		                         			$name = $user->first_name . " " . $user->last_name ;
-		                         		}
-		                         	?>
-			                        <li>
-			                            <div class="col1">
-			                                <div class="cont">
-			                                    <div class="cont-col2">
-			                                        <div class="desc"> 
-			                                        	{{$name}}, R {{$transaction->amount}}
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <div class="col2">
-			                                <button 
-			                                	class="btn btn-sx btn-success"
-			                                	id="approve{{$i}}"
-			                                	onclick="approve( {{$i}}, {{ $transaction->id }})">
-			                                Approve</button>
-			                            </div>
-			                        </li>
-			                        <?php $i++ ; ?>
-			                        @endforeach
+			                         	<?php
+			                         		$user_count = \App\Models\User::where('id',$transaction->sender)->count() ;
+			                         		$name = '' ;
+			                         		if ( $user_count == 1 ) {
+			                         			$user = \App\Models\User::where('id',$transaction->sender)->first() ;
+			                         			$name = $user->first_name . " " . $user->last_name ;
+			                         		}
+			                         	?>
+				                        <li>
+				                            <div class="col1">
+				                                <div class="cont">
+				                                    <div class="cont-col2">
+				                                        <div class="desc"> 
+				                                        	{{$name}}, R {{$transaction->amount}}
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <div class="col2">
+				                                <button 
+				                                	class="btn btn-sx btn-success"
+				                                	id="approve{{$i}}"
+				                                	onclick="approve( {{$i}}, {{ $transaction->id }})">
+				                                Approve</button>
+				                            </div>
+				                        </li>
+				                        <?php $i++ ; ?>
+				                        @endforeach
 
-			                        @else
+				                        @else
 
-			                        <li>
-			                            <div class="col1">
-	                                        <div class="desc"> 
-	                                        	No donations to approve.
-	                                        </div>
-	                                    </div>
-			                        </li>
+				                        <li>
+				                            <div class="col1">
+		                                        <div class="desc"> 
+		                                        	No donations to approve.
+		                                        </div>
+		                                    </div>
+				                        </li>
 
-			                        @endif
-			                    </ul>
-			                </div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 173.859px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div></div>
-			            </div>
-			        </div>
-			        <!--END TABS-->
-			    </div>
+				                        @endif
+				                    </ul>
+				                </div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 173.859px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div></div>
+				            </div>
+				        </div>
+				        <!--END TABS-->
+				    </div>
+				</div>
+				
+			</div>		
+
+			<div class="col-md-12 col-sm-12">
+				
+				<div class="portlet light bordered">
+				    <div class="portlet-title tabbable-line">
+				        <div class="caption">
+				            <i class="icon-globe font-dark hide"></i>
+				            <span class="caption-subject font-dark bold uppercase">Recent</span>
+				        </div>
+				        <ul class="nav nav-tabs">
+				            <li class="active">
+				                <a href="#tab_1_1" class="active" data-toggle="tab" aria-expanded="true"> Activity </a>
+				            </li>
+				        </ul>
+				    </div>
+				    <div class="portlet-body">
+				        <!--BEGIN TABS-->
+				        <div class="tab-content">
+				            <div class="tab-pane active" id="tab_1_1">
+				                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 239px;"><div class="scroller" style="height: 339px; overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible="0" data-initialized="1">
+
+				                    <ul class="feeds" id="divFeeds">
+
+				                    	@if ( count($alltransactions) > 0 )
+				                    	<?php $i=1 ; ?>
+				                    	@foreach ( $alltransactions as $alltransaction )
+
+				                    		@if ( $alltransaction->sender == Auth::user()->id)
+				                        <li>
+				                            <div class="col1">
+				                                <div class="cont">
+				                                    <div class="cont-col2">
+				                                    	<div><i class="fa fa-hand-o-right" aria-hidden="true"></i></div>
+				                                        <div class="desc"> 
+				                                        	R {{$alltransaction->amount}}
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </li>
+				                        	@else
+				                        <li>
+				                            <div class="col1">
+				                                <div class="cont">
+				                                    <div class="cont-col2">
+				                                    	<div><i class="fa fa-hand-o-left" aria-hidden="true"></i></div>
+				                                        <div class="desc"> 
+				                                        	R {{$alltransaction->amount}}
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </li>
+				                        	@endif
+				                        @endforeach
+
+				                        @else
+
+				                        <li>
+				                            <div class="col1">
+		                                        <div class="desc"> 
+		                                        	No new activities.
+		                                        </div>
+		                                    </div>
+				                        </li>
+
+				                        @endif
+				                    </ul>
+				                </div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 173.859px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div></div>
+				            </div>
+				        </div>
+				        <!--END TABS-->
+				    </div>
+				</div>
+				
 			</div>
-			
-		</div>
 
 <!-- 		<div class="col-md-12 col-sm-12">
 		    <div class="portlet light bordered">
@@ -396,7 +472,7 @@
         				  	remaining_hours.getSeconds()+
         				  	" and await their approval"
 			             ) ;
-			            create_countdown_timer( data.bank, 60*4, count_countdowns, "red") ;
+			            create_countdown_timer( data.bank, 60*4, count_countdowns, "red", account, branch) ;
 			            count_countdowns++ ;
 			            //toast_notification( "info", message ) ;		        		
 		        	} else if( data == 'failed') {
@@ -534,7 +610,9 @@
 									 "<div class='countdown"+number+"'></div>" +
 									 "</span>" +
 									 "</div>" +
-									 "<div class='desc'>"+bank+" Deposit</div>"+
+									 "<div class='desc'>"+bank+"</div>"+
+									 "<div>"+account+"</div>"+
+									 "<div>"+branch+"</div>"+
 									 "</div>" +
 									 "</a>" +
 									 "</div>" ;

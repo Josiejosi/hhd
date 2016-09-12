@@ -34,6 +34,11 @@ class HomeController extends Controller
     	$help_time 						= Helper::help_time() ;
     	$max_reserves_allowed 			= Helper::reached_max_donations(Auth::user()->id) ;
     	$max_reserves_limit 			= Helper::max_reserves() ;
+    	$pending_donations 				= Helper::getPendingTime(Auth::user()->id);
+    	$alltransactions 				= Helper::getAllMyTransctions(Auth::user()->id) ;
+    	$now							= Carbon::now() ;
+
+    	dump($pending_donations);
 
     	$transactions 					= ActiveDonation::where( 'receiver', Auth::user()->id )->where('donation_status',1)->get() ;
 
@@ -42,7 +47,9 @@ class HomeController extends Controller
     		'help_time'					=> $help_time,
     		'max_reserves_limit'		=> $max_reserves_limit,
     		'max_reserves_allowed'		=> $max_reserves_allowed,
-    		'transactions'				=> $transactions
+    		'transactions'				=> $transactions,
+    		'alltransactions'			=> $alltransactions,
+    		'now'						=> $now,
     	] ;
 
     	return view( 'admin.home', $data ) ;
@@ -81,7 +88,7 @@ class HomeController extends Controller
 		    		return [
 		    			'message' 		=> 'found',
 		    			'min'			=> $request->min,
-		    			'max'			=> $request->max
+		    			'max'			=> $request->max,
 		    		] ;
 		    	}
 	    	} 
@@ -107,7 +114,13 @@ class HomeController extends Controller
     	if ( $max_reserves_allowed == "add" ) {
 			Helper::assignMember( Auth::user()->id, $min, $max ) ;
 			$account 				= Helper::get_user_active_account( Auth::user()->id ) ;
-			return ['message'=>'success', 'bank'=> $account->bank ] ;   		
+			return [
+				'message'		=> 'success', 
+				'bank'			=> $account->bank 
+				'account'		=> $account->account_number, 
+				'branch'		=> $account->branch_code, 
+			] ;  
+
     	} else {
     		return [
     			'message'=>"Sorry you already have reached your daily donation limit of $max_reserves_limit, please wait for approval from assigned members to create a new one." 

@@ -49,17 +49,23 @@
 			$active_donation 		= ActiveDonation::where('sender',$id)
 									                ->where('is_processed',1)->count() ;
 			
-			if ( $active_donation >= self::max_reserves() ) 
-				return 'stop' ;
-			else 
+			//if ( $active_donation >= self::max_reserves() ) 
+			//	return 'stop' ;
+			//else 
 				return 'add' ;
 
 		}
 
+		public static function getAllMyTransctions($user_id) {
+			return ActiveDonation::where('sender',$user_id)->whereOr('receiver',$user_id)->get() ;			
+		}
+
 		public static function max_reserves() {
+
 			$settings = SystemSetting::where('is_active',1)->first() ;
 
 			return (int)$settings->daily_reserves ;
+
 		}
 
 		public static function expiry_hours() {
@@ -76,10 +82,18 @@
 		}
 
 		public static function getPendingTime($user_id) {
-			return  ActiveDonation::where('sender',$user_id)
+
+			$now 				= Carbon::now("Africa/Johannesburg") ;
+
+			$pending 			=  ActiveDonation::where('sender',$user_id)
 									->where('donation_status', 1)
 									->where('is_processed', 1)
-									->get() ;			
+									->get() ;
+
+			if ( count( $pending ) > 0 ) {
+				
+			}	
+			return $pending->created_at ;
 		}
 
 		public static function removeUsersNotDonated48hour() {
@@ -162,27 +176,32 @@
 					$email 			= $user->email ;
 					$first_name 	= $user->first_name ;
 					$last_name 		= $user->last_name ;
+					$is_active 		= $user->is_active ;
 
-					$usr_affacted 	= User::where('id',$user_id)->update(['is_active'=>0]) ;
+					if ( $is_active == 1 ) {
 
-					if ( $usr_affacted > 0 ) {
+						$usr_affacted 	= User::where('id',$user_id)->update(['is_active'=>0]) ;
 
-						$info 			= [
-							'to_email'	=> $email,
-							'subject'	=> "PrestigeWallet Blocked Account",
-							'to_name'	=> $first_name . " " . $last_name,
-							'message'	=> "Hi $first_name $last_name,
-											<br/>
-											We have blocked your account for not being part of donation process for 48 hours.
-											<br/>
-											<br/>
-											Warm Regards<br />PrestigeWallet.com
-										   "
-						] ;
+						if ( $usr_affacted > 0 ) {
 
-						//notify user their account has been
-						$job = (new BlockedUser($info))->onQueue('BlockedUser') ;
-				        dispatch($job) ;						
+							$info 			= [
+								'to_email'	=> $email,
+								'subject'	=> "PrestigeWallet Blocked Account",
+								'to_name'	=> $first_name . " " . $last_name,
+								'message'	=> "Hi $first_name $last_name,
+												<br/>
+												We have blocked your account for not being part of donation process for 48 hours.
+												<br/>
+												<br/>
+												Warm Regards<br />PrestigeWallet.com
+											   "
+							] ;
+
+							//notify user their account has been
+							$job = (new BlockedUser($info))->onQueue('BlockedUser') ;
+					        dispatch($job) ;						
+						}
+
 					}
 
 				} 
@@ -238,9 +257,7 @@
 			$bank 						= $account->bank ;
 
 			$account_users_count 		= Account::where( 'bank', $bank )->distinct()->select('user_id')->count() ;
-			\Log::info( "account found: " . $account_users_count ) ;
-			\Log::info( "bank: " . $bank ) ;
-			//i need 1 user.
+
 			if ( $account_users_count > 0 ) {
 
 				$account_users 			= Account::where( 'bank',$bank )->distinct()->select('user_id')->get() ;
@@ -278,85 +295,86 @@
 					//check if user has not made donation to this user before.
 		    		$account 				= Account::where( 'user_id', $active_donations->receiver )->where('active_account',1)->first() ;
 		    		$user 					= User::find($active_donations->receiver) ;
-		    		\Log::info( "receiver ID" . $active_donations->receiver) ;
-		    		\Log::info( "accounts: " . $account) ;
-		    		\Log::info( "found accounts: " . count($active_donations) ) ;
+
 		    		$name 					= $user->first_name . " " . $user->last_name ;
 		    		$email 					= $user->email ;
 		    		$cell_phone 			= $user->cell_phone ;
-		    		$account_number 		= $account->account_number ;
-		    		$bank 					= $account->bank ;
-		    		$branch_code 			= $account->branch_code ;
-		    		$amount 				= $active_donations->amount ;
+		    		if ( count($account) > 0 ) {
+			    		$account_number 		= $account->account_number ;
+			    		$bank 					= $account->bank ;
+			    		$branch_code 			= $account->branch_code ;
+			    		$amount 				= $active_donations->amount ;
 
-			    	$message 				= "
-			    								<br />
-			    								You have successfully being assigned to donate, details are as follows:<br/><br/>
-			    								<br />
-			    								<table border=0 cellpadding=5 cellspacing=0>
-			    								<tr>
-			    									<td align=right bgcolor=#E0FFFF>Account Holder</td>
-			    									<td align=right> : $name</td>
-			    								</tr>
-			    								<tr>
-			    									<td align=right bgcolor=#E0FFFF>Holder' Email</td>
-			    									<td align=right> : $email</td>
-			    								</tr>
-			    								<tr>
-			    									<td align=right bgcolor=#E0FFFF>Holder's Cell Phone</td>
-			    									<td align=right> : $cell_phone</td>
-			    								</tr>
-			    								<tr>
-			    									<td align=right bgcolor=#E0FFFF>Bank</td>
-			    									<td align=right> : $bank</td>
-			    								</tr>
-			    								<tr>
-			    									<td align=right bgcolor=#E0FFFF>Account Number</td>
-			    									<td align=right> : $account_number</td>
-			    								</tr>
-			    								<tr>
-			    									<td align=right bgcolor=#E0FFFF>Branch Code</td>
-			    									<td align=right> : $branch_code</td>
-			    								</tr>
-			    								<tr>
-			    									<td align=right bgcolor=#E0FFFF>Amount</td>
-			    									<td align=right> : R $amount</td>
-			    								</tr>
-			    								</table>
-			    								<strong>NOTE: Failure to make payment before, This member will be unassigned to you and failure to make payment to 2 assigned members will result in your account blocked for 3 months</strong>
-			    								<br /><br />
-			    								Warm Regards,<br />
-			    								PrestigeWallet.com
+				    	$message 				= "<br />
+				    								You have successfully being assigned to donate, details are as follows:<br/><br/>
+				    								<br />
+				    								<table border=0 cellpadding=5 cellspacing=0>
+				    								<tr>
+				    									<td align=right bgcolor=#E0FFFF>Account Holder</td>
+				    									<td align=right> : $name</td>
+				    								</tr>
+				    								<tr>
+				    									<td align=right bgcolor=#E0FFFF>Holder' Email</td>
+				    									<td align=right> : $email</td>
+				    								</tr>
+				    								<tr>
+				    									<td align=right bgcolor=#E0FFFF>Holder's Cell Phone</td>
+				    									<td align=right> : $cell_phone</td>
+				    								</tr>
+				    								<tr>
+				    									<td align=right bgcolor=#E0FFFF>Bank</td>
+				    									<td align=right> : $bank</td>
+				    								</tr>
+				    								<tr>
+				    									<td align=right bgcolor=#E0FFFF>Account Number</td>
+				    									<td align=right> : $account_number</td>
+				    								</tr>
+				    								<tr>
+				    									<td align=right bgcolor=#E0FFFF>Branch Code</td>
+				    									<td align=right> : $branch_code</td>
+				    								</tr>
+				    								<tr>
+				    									<td align=right bgcolor=#E0FFFF>Amount</td>
+				    									<td align=right> : R $amount</td>
+				    								</tr>
+				    								</table>
+				    								<strong>NOTE: Failure to make payment before, This member will be unassigned to you and failure to make payment to 2 assigned members will result in your account blocked for 3 months</strong>
+				    								<br /><br />
+				    								Warm Regards,<br />
+				    								PrestigeWallet.com
 
-			    							  " ;
+				    							  " ;
 
-			    	$sms_message 			= "You have successfully being assigned to donate," ;
-			    	$sms_message 			.= " details are as follows, Account Holder: $name," ;
-			    	$sms_message 			.= " Cell Phone: $cell_phone, Bank: $bank," ;
-			    	$sms_message 			.= " Account Number: $account_number," ;
-			    	$sms_message 			.= " Branch Code: $branch_code, Amount: R $amount" ;
+				    	$sms_message 			= "You have successfully being assigned to donate," ;
+				    	$sms_message 			.= " details are as follows, Account Holder: $name," ;
+				    	$sms_message 			.= " Cell Phone: $cell_phone, Bank: $bank," ;
+				    	$sms_message 			.= " Account Number: $account_number," ;
+				    	$sms_message 			.= " Branch Code: $branch_code, Amount: R $amount" ;
 
-			    	$user_details 			= User::where('id', $user_id)->first() ;
-			    	$user_reserved_info 	= [
-			    		'to_email'			=> $user_details->email,
-			    		'subject'			=> "PrestigeWallet.com Donations",
-			    		'to_name'			=> $user_details->first_name . " " . $user_details->last_name,
-			    		'message'			=> $message,
-			    		'cell_phone'		=> $user_details->cell_phone,
-			    		'sms_message'		=> $sms_message,
-			    	] ;
+				    	$user_details 			= User::where('id', $user_id)->first() ;
+				    	$user_reserved_info 	= [
+				    		'to_email'			=> $user_details->email,
+				    		'subject'			=> "PrestigeWallet.com Donations",
+				    		'to_name'			=> $user_details->first_name . " " . $user_details->last_name,
+				    		'message'			=> $message,
+				    		'cell_phone'		=> $user_details->cell_phone,
+				    		'sms_message'		=> $sms_message,
+				    	] ;
 
-					$job = (new SendDonationDetails($user_reserved_info))->onQueue('SendDonationDetails') ;
-			        dispatch($job) ;
+						$job = (new SendDonationDetails($user_reserved_info))->onQueue('SendDonationDetails') ;
+				        dispatch($job) ;
 
-			        self::alertReceiver( 
-			        	$name, 
-			        	$email, 
-			        	$cell_phone, 
-			        	$user_details->first_name . " " . $user_details->last_name, 
-			        	$amount 
-			        ) ;
-			        \Log::info($user_reserved_info) ;
+				        self::alertReceiver( 
+				        	$name, 
+				        	$email, 
+				        	$cell_phone, 
+				        	$user_details->first_name . " " . $user_details->last_name, 
+				        	$amount 
+				        ) ;
+			    	} else {
+			    		return "Please try a different amount" ;
+			    	}
+			        //\Log::info($user_reserved_info) ;
 				} else {
 					\Log::info("Could not reserve user.") ;
 				}

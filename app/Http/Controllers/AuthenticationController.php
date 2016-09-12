@@ -103,11 +103,16 @@ class AuthenticationController extends Controller
     public function signin(Request $request) {
 
 	    if ( Auth::attempt(['email' => $request->username, 'password' => $request->password]) ) {
+            //return Auth::user()->is_active ;
+            if ( Auth::user()->is_active == 0 ) {
+                Session::flash('account_not_found', 'Your account has been blocked, please contact support for more info.') ;
+                return redirect()->back()->withInput() ;
+            }
 
 	    	return redirect()->intended( 'home' ) ;
 
         } else {
-        	Session::flash('account_not_found', 'Wrong login credentials, please try again');
+        	Session::flash('account_not_found', 'Wrong login credentials, please try again') ;
         	return redirect()->back()->withInput() ;
         }
     }
@@ -121,7 +126,7 @@ class AuthenticationController extends Controller
 
 
         if ($validator->fails()) {
-            return redirect('/forgot')->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
     	if ( User::where('email',$request->email)->count() == 1 ) {
@@ -135,22 +140,25 @@ class AuthenticationController extends Controller
 	        ]) ;
 
 		    if ( $user_affected ) {
-		    	Helper::send_mail( 
-		    		$request->email, 
-		    		"Password Changed", 
-		    		$user->first_name . " " . $user->last_name , 
-		    		"We have noticed you change your password:<br />Username: " . $request->email . "<br />New Password: " . $password, 
-		    		"emails.confirm",
-		    		true 
-		    	) ;
-		    	Session::flash('account_not_found', 'Please check your emails for a new pasword') ;
-		    	return redirect('/forgot') ;
+	    	Helper::send_mail( 
+	    		$request->email, 
+	    		"Password Changed", 
+	    		$user->first_name . " " . $user->last_name , 
+	    		"We have noticed you change your password:<br />Username: " . $request->email . "<br />New Password: " . $password, 
+	    		"emails.confirm",
+	    		true 
+	    	) ;
+	    	Session::flash('account_not_found', 'Please check your emails for a new pasword') ;
+	    	return redirect()->back() ;
 	        } else {
 	        	Session::flash('account_not_found', 'Not a valid email you provided') ;
-	        	return redirect('/forgot') ;
+	        	return redirect()->back();
 	        }
 
-    	}
+    	} else {
+            Session::flash('account_not_found', 'Sorry we dont have this account on our system, please try to register with it.') ;
+            return redirect()->back() ;           
+        }
 
     }
 

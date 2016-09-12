@@ -31,5 +31,7 @@ class DonationHasBeenAcceptedByReceiver extends Job implements ShouldQueue
         ) ;
 
         Helper::send_sms($this->info['sms_message'], $this->info['cell_phone']) ;
+
+        \Log::info($this->info) ;
     }
 }
