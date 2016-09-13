@@ -93,7 +93,7 @@
 			if ( count( $pending ) > 0 ) {
 				
 			}	
-			return $pending->created_at ;
+			//return $pending->created_at ;
 		}
 
 		public static function removeUsersNotDonated48hour() {
@@ -254,7 +254,10 @@
 
 			$account 					= self::get_user_active_account( $user_id ) ;
 
-			$bank 						= $account->bank ;
+			$bank 						= "" ;
+
+			if ( $account != false )
+				$bank 					= $account->bank ;
 
 			$account_users_count 		= Account::where( 'bank', $bank )->distinct()->select('user_id')->count() ;
 

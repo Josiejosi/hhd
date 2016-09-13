@@ -303,6 +303,8 @@
 		</div> -->
 		</div>
 	</div>
+
+	<input type="hidden" value="" id="user_id">
 	
 
 @endsection
@@ -367,6 +369,7 @@
 			            if ( data.message == "found") {
 			            	var min = data.min ;
 			            	var max = data.max ;
+			            	$("#user_id").val(data.user_id) ;
 			            	$("#assignment_div_big").html("We found a suitable member to match you with") ;
 			            	$("#assignment_div_big").append(
 			            		"<br /><br /><butto id='reserve_order' class='btn btn-info' onclick=\"assign_me('"+min+"','"+max+"')\">Assigned Me</button>"
@@ -460,7 +463,8 @@
 		            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
 		        }, data: { 
 		        	min:min,
-		        	max:max
+		        	max:max,
+		        	user_id:$("#user_id").val()
 		        }, success: function( data ) {
 		        	console.log(data.message) ;
 		        	if ( data.message == "success" ) {
@@ -472,7 +476,7 @@
         				  	remaining_hours.getSeconds()+
         				  	" and await their approval"
 			             ) ;
-			            create_countdown_timer( data.bank, 60*4, count_countdowns, "red", account, branch) ;
+			            create_countdown_timer( data.bank, data.account, data.branch, 60*4, count_countdowns, "red" ) ;
 			            count_countdowns++ ;
 			            //toast_notification( "info", message ) ;		        		
 		        	} else if( data == 'failed') {
@@ -598,7 +602,7 @@
 			return now.getFullYear() + "-" + months + "-" + days + " " + hours + ":" + minutes + ":" + seconds ;
 		} ;
 
-		var create_countdown_timer = function(bank, minutes, number, color) {
+		var create_countdown_timer = function(bank, account, branch, minutes, number, color) {
 			var string_timer 	   = "<div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>" +
 									 "<a class='dashboard-stat dashboard-stat-v2 "+color+"' href='#'>" +
 									 "<div class='visual'>" +
@@ -611,8 +615,8 @@
 									 "</span>" +
 									 "</div>" +
 									 "<div class='desc'>"+bank+"</div>"+
-									 "<div>"+account+"</div>"+
-									 "<div>"+branch+"</div>"+
+									 "<div class='desc'>"+account+"</div>"+
+									 "<div class='desc'>"+branch+"</div>"+
 									 "</div>" +
 									 "</a>" +
 									 "</div>" ;

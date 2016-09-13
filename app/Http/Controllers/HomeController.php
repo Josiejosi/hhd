@@ -38,8 +38,6 @@ class HomeController extends Controller
     	$alltransactions 				= Helper::getAllMyTransctions(Auth::user()->id) ;
     	$now							= Carbon::now() ;
 
-    	dump($pending_donations);
-
     	$transactions 					= ActiveDonation::where( 'receiver', Auth::user()->id )->where('donation_status',1)->get() ;
 
     	$data 							= [
@@ -89,6 +87,7 @@ class HomeController extends Controller
 		    			'message' 		=> 'found',
 		    			'min'			=> $request->min,
 		    			'max'			=> $request->max,
+		    			'user_id'		=> $user->id
 		    		] ;
 		    	}
 	    	} 
@@ -107,18 +106,22 @@ class HomeController extends Controller
     public function assign_donar( Request $request ) {
     	$min 							= $request->min ;
     	$max 							= $request->max ;
+    	$user_id 						= $request->user_id ;
 
     	$max_reserves_allowed 			= Helper::reached_max_donations(Auth::user()->id) ;
     	$max_reserves_limit 			= Helper::max_reserves() ;
 
     	if ( $max_reserves_allowed == "add" ) {
+
 			Helper::assignMember( Auth::user()->id, $min, $max ) ;
-			$account 				= Helper::get_user_active_account( Auth::user()->id ) ;
+
+			$account 					= Helper::get_user_active_account( $user_id ) ;
+			
 			return [
-				'message'		=> 'success', 
-				'bank'			=> $account->bank 
-				'account'		=> $account->account_number, 
-				'branch'		=> $account->branch_code, 
+				'message'				=> 'success', 
+				'bank'					=> $account->bank, 
+				'account'				=> $account->account_number, 
+				'branch'				=> $account->branch_code, 
 			] ;  
 
     	} else {
