@@ -21,7 +21,8 @@ class ScheduledController extends Controller
     public function index() {
         $avatar                         = Helper::userAvatar( Auth::user()->id ) ;
     	$data = [
-    		'scheduled'                 => ScheduledDonation::where('user_id',Auth::user()->id)->get()
+    		'scheduled'                 => ScheduledDonation::where('user_id',Auth::user()->id)->get(),
+            'avatar'                    => $avatar,
     	] ;
     	return view('admin.schedules',$data) ;
     }
