@@ -14,6 +14,8 @@ use App\Jobs\SendContactEmail ;
 
 use App\Models\User ;
 
+use App\Classes\Helper ;
+
 class FrontController extends Controller
 {
     public function signin() {
@@ -93,6 +95,8 @@ class FrontController extends Controller
             $affected_users     = User::where('id',$user_id)->update([
                 'is_verified'   => 1,
             ]) ;
+
+            Helper::add_notification( "Your account is verified welcome to prestigewallet.com", $user_id, 0 ) ;
 
             return redirect()->intended( 'home' ) ;
         } else {

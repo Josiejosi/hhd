@@ -11,6 +11,7 @@
 	use App\Models\ActiveDonation ;
 	use App\Models\SystemSetting ;
 	use App\Models\ScheduledDonation ;
+	use App\Models\Notifications ;
 
 	use App\Jobs\DonationReachedCountDown ;
 	use App\Jobs\BlockedUser ;
@@ -25,6 +26,15 @@
 			$user 					= User::find( $user_id ) ;
 			return $user->timezone ;
 
+		}
+
+		public static function userAvatar( $user_id ) {
+			$user 					= User::find( $user_id ) ;
+			$avatar 				= $user->avatar ;
+
+			$avatar_path 			= url("/imgs/avatar/") . "/" . $avatar ;
+
+			return $avatar_path ;
 		}
 
 		public static function get_user_active_account( $user_id ) {
@@ -47,17 +57,42 @@
 		public static function reached_max_donations ($id) {
 
 			$active_donation 		= ActiveDonation::where('sender',$id)
-									                ->where('is_processed',1)->count() ;
+											->where('is_processed',1)
+											->where('donation_status',1)
+											->count() ;
+			$daily_maximum 			= self::max_reserves() ;
+
+			$allowed_donations 		= 0 ;
+
+			$permission 			= "add" ;
+
+			$ex_hours 				= [] ;
+
+			if ( $active_donation > 0 ) {
+				$donations 			= ActiveDonation::where('sender',$id)
+										->where('is_processed',1)
+										->where('donation_status',1)
+										->get() ;
+
+				$now 				= Carbon::now("Africa/Johannesburg") ;
+
+				foreach ( $donations as $donation ) {
+					$hours_pending 	= $now->diffInSeconds($donation->booked_at) ;
+					if ( $hours_pending > 0 ) {
+						$allowed_donations++ ;
+					}
+				}
+			}
 			
-			//if ( $active_donation >= self::max_reserves() ) 
-			//	return 'stop' ;
-			//else 
-				return 'add' ;
+			if ( $allowed_donations == $daily_maximum ) 
+				return 'stop' ; 
+
+			return 'add' ;
 
 		}
 
 		public static function getAllMyTransctions($user_id) {
-			return ActiveDonation::where('sender',$user_id)->whereOr('receiver',$user_id)->get() ;			
+			return ActiveDonation::where('sender',$user_id)->orWhere('receiver',$user_id)->get() ;			
 		}
 
 		public static function max_reserves() {
@@ -74,6 +109,12 @@
 			return (int)$settings->daily_reserves ;
 		}
 
+		public static function expiryHour() {
+			$settings = SystemSetting::where('is_active',1)->first() ;
+
+			return (int)$settings->expiry_hours ;
+		}
+
 		public static function has_pending_timers($user_id) {
 			return  ActiveDonation::where('sender',$user_id)
 									->where('donation_status', 1)
@@ -83,17 +124,36 @@
 
 		public static function getPendingTime($user_id) {
 
-			$now 				= Carbon::now("Africa/Johannesburg") ;
+			$now 							= Carbon::now("Africa/Johannesburg") ;
 
-			$pending 			=  ActiveDonation::where('sender',$user_id)
-									->where('donation_status', 1)
-									->where('is_processed', 1)
-									->get() ;
+			$pendings 						=  ActiveDonation::where('sender',$user_id)
+													->where('donation_status', 1)
+													->where('is_processed', 1)
+													->get() ;
 
-			if ( count( $pending ) > 0 ) {
-				
+			$data 							= [] ;
+
+			$expiry_hour 					= self::expiryHour() ;
+
+
+			if ( !empty( $pendings ) ) {
+				$data 						= [] ;
+				foreach ( $pendings as $pending ) {
+					$donee 					= $pending->receiver ;
+
+					$account 				= Account::where('user_id', $donee)->where('active_account', 1)->first() ;
+					$data[] 				= [
+						'donee_id'			=> $donee,
+						'remaining_time'	=> $pending->booked_at->addHours($expiry_hour)->diffInMinutes($now),
+						'bank'				=> $account->bank,
+						'account_number'	=> $account->account_number,
+						'branch_code'		=> $account->branch_code,
+					] ;
+				}
+			} else {
+				$data 						= [ 'message' => 'not'] ;
 			}	
-			//return $pending->created_at ;
+			return [ 'message' => 'found', 'data' => $data ] ;
 		}
 
 		public static function removeUsersNotDonated48hour() {
@@ -248,151 +308,164 @@
 
 		}
 
-		public static function assignMember( $user_id, $min_amount, $max_amount ) {
+		public static function getActiveDoneeUnderSameAccount($user_id, $min_amount, $max_amount) {
+	    	$account 						= self::get_user_active_account( $user_id ) ;
+	    	$my_active_bank_account 		= $account->bank ;
+	    	//find users with same bank account.
+	    	//
+	    	$account_users_count 			= Account::where( 'bank', $my_active_bank_account )->where('user_id','<>',$user_id)->distinct()->select('user_id')->count() ;
 
-			$now 						= Carbon::now("Africa/Johannesburg") ;
-
-			$account 					= self::get_user_active_account( $user_id ) ;
-
-			$bank 						= "" ;
-
-			if ( $account != false )
-				$bank 					= $account->bank ;
-
-			$account_users_count 		= Account::where( 'bank', $bank )->distinct()->select('user_id')->count() ;
-
-			if ( $account_users_count > 0 ) {
-
-				$account_users 			= Account::where( 'bank',$bank )->distinct()->select('user_id')->get() ;
-				$user_ids 				= [] ;
-				$i 						= 0 ;
+	    	if ( $account_users_count > 0 ) {
+	    		$account_users 				= Account::where( 'bank',$my_active_bank_account)->where('user_id','<>',$user_id)->distinct()->select('user_id')->get() ;
+				$user_ids 					= [] ;
+				$i 							= 0 ;
 
 				foreach( $account_users as $account_user) {
 					
-					$user_ids[$i] = $account_user->user_id ;
+					$user_ids[$i] 			= $account_user->user_id ;
 					$i++ ;	
 
 				}
-
 				$active_count 				= ActiveDonation::whereBetween('amount',[$min_amount,$max_amount])
-														->whereBetween('receiver', [$user_ids[0],$user_ids[count($user_ids)-1]])
+														->whereIn('receiver', $user_ids)
 														->where('is_processed',0)
+														->where('sender','<>', $user_id)
 														->count() ;
 				
 				if ( $active_count > 0 ) {
 					$active_donations 		= ActiveDonation::whereBetween('amount',[$min_amount,$max_amount])
-														->whereBetween('receiver', [$user_ids[0],$user_ids[count($user_ids)-1]])
+														->whereIn('receiver', $user_ids)
 														->where('is_processed',0)
+														->where('sender','<>', $user_id)
 														->get()
 														->random(1) ;
 
-					$id 					= $active_donations->id ;
-					$receiver_id 			= $active_donations->receiver ;
-					
-					ActiveDonation::where('id', $id)->update([
-						'is_processed'		=>1,
-						'donation_status'	=>1, 
-						'sender'			=>$user_id
-					]) ;
-					
-					//check if user has not made donation to this user before.
-		    		$account 				= Account::where( 'user_id', $active_donations->receiver )->where('active_account',1)->first() ;
-		    		$user 					= User::find($active_donations->receiver) ;
+					$id 					= $active_donations->id ; 
+					$amount 				= $active_donations->amount ; 
+					$user_id 				= $active_donations->receiver ;
 
-		    		$name 					= $user->first_name . " " . $user->last_name ;
-		    		$email 					= $user->email ;
-		    		$cell_phone 			= $user->cell_phone ;
-		    		if ( count($account) > 0 ) {
-			    		$account_number 		= $account->account_number ;
-			    		$bank 					= $account->bank ;
-			    		$branch_code 			= $account->branch_code ;
-			    		$amount 				= $active_donations->amount ;
+					return [ 
+						'message' 			=> 'found', 
+						'tid'	 			=> $id, 
+						'amount'			=>$amount, 
+						'user_id'			=>$user_id 
+					] ;
 
-				    	$message 				= "<br />
-				    								You have successfully being assigned to donate, details are as follows:<br/><br/>
-				    								<br />
-				    								<table border=0 cellpadding=5 cellspacing=0>
-				    								<tr>
-				    									<td align=right bgcolor=#E0FFFF>Account Holder</td>
-				    									<td align=right> : $name</td>
-				    								</tr>
-				    								<tr>
-				    									<td align=right bgcolor=#E0FFFF>Holder' Email</td>
-				    									<td align=right> : $email</td>
-				    								</tr>
-				    								<tr>
-				    									<td align=right bgcolor=#E0FFFF>Holder's Cell Phone</td>
-				    									<td align=right> : $cell_phone</td>
-				    								</tr>
-				    								<tr>
-				    									<td align=right bgcolor=#E0FFFF>Bank</td>
-				    									<td align=right> : $bank</td>
-				    								</tr>
-				    								<tr>
-				    									<td align=right bgcolor=#E0FFFF>Account Number</td>
-				    									<td align=right> : $account_number</td>
-				    								</tr>
-				    								<tr>
-				    									<td align=right bgcolor=#E0FFFF>Branch Code</td>
-				    									<td align=right> : $branch_code</td>
-				    								</tr>
-				    								<tr>
-				    									<td align=right bgcolor=#E0FFFF>Amount</td>
-				    									<td align=right> : R $amount</td>
-				    								</tr>
-				    								</table>
-				    								<strong>NOTE: Failure to make payment before, This member will be unassigned to you and failure to make payment to 2 assigned members will result in your account blocked for 3 months</strong>
-				    								<br /><br />
-				    								Warm Regards,<br />
-				    								PrestigeWallet.com
-
-				    							  " ;
-
-				    	$sms_message 			= "You have successfully being assigned to donate," ;
-				    	$sms_message 			.= " details are as follows, Account Holder: $name," ;
-				    	$sms_message 			.= " Cell Phone: $cell_phone, Bank: $bank," ;
-				    	$sms_message 			.= " Account Number: $account_number," ;
-				    	$sms_message 			.= " Branch Code: $branch_code, Amount: R $amount" ;
-
-				    	$user_details 			= User::where('id', $user_id)->first() ;
-				    	$user_reserved_info 	= [
-				    		'to_email'			=> $user_details->email,
-				    		'subject'			=> "PrestigeWallet.com Donations",
-				    		'to_name'			=> $user_details->first_name . " " . $user_details->last_name,
-				    		'message'			=> $message,
-				    		'cell_phone'		=> $user_details->cell_phone,
-				    		'sms_message'		=> $sms_message,
-				    	] ;
-
-						$job = (new SendDonationDetails($user_reserved_info))->onQueue('SendDonationDetails') ;
-				        dispatch($job) ;
-
-				        self::alertReceiver( 
-				        	$name, 
-				        	$email, 
-				        	$cell_phone, 
-				        	$user_details->first_name . " " . $user_details->last_name, 
-				        	$amount 
-				        ) ;
-			    	} else {
-			    		return "Please try a different amount" ;
-			    	}
-			        //\Log::info($user_reserved_info) ;
 				} else {
-					\Log::info("Could not reserve user.") ;
+					return ['message' => "We have not found any match donee on your active ($my_active_bank_account) account, please add a different bank account under accounts and try again or your could try a different amount range." ] ;
 				}
+	    	} else {
+	    		return ['message' => "We have not found any match donee on your active ($my_active_bank_account) account, please add a different bank account under accounts and try again or your could try a different amount range." ] ;
+	    	}
+		}
 
-			}
+		public static function assignMember( $donar_id, $order_id, $donee_id, $amount ) {
+
+			self::add_notification( "You have been successfully assigned a member for R $amount", $donar_id, 0 ) ;
+			self::add_notification( "A member was assigned to you to make a donation of R $amount", $donee_id, 0 ) ;
+
+			$now 						= Carbon::now("Africa/Johannesburg") ;
+	
+			ActiveDonation::where('id', $order_id)->update([
+				'is_processed'		=> 1,
+				'donation_status'	=> 1, 
+				'sender'			=> $donar_id,
+				'booked_at'			=> $now,
+			]) ;
+			
+			//check if user has not made donation to this user before.
+    		$account 				= Account::where( 'user_id', $donee_id )->where('active_account',1)->first() ;
+    		$user 					= User::find($donee_id) ;
+
+    		$name 					= $user->first_name . " " . $user->last_name ;
+    		$email 					= $user->email ;
+    		$cell_phone 			= $user->cell_phone ;
+    		if ( count($account) > 0 ) {
+	    		$account_number 		= $account->account_number ;
+	    		$bank 					= $account->bank ;
+	    		$branch_code 			= $account->branch_code ;
+	    		//$amount 				= $account->amount ;
+
+		    	$message 				= "<br />
+		    								You have successfully being assigned to make a donation, details are as follows:<br/><br/>
+		    								<br />
+		    								<table border=0 cellpadding=5 cellspacing=0>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Account Holder</td>
+		    									<td align=right> : $name</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Holder' Email</td>
+		    									<td align=right> : $email</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Holder's Cell Phone</td>
+		    									<td align=right> : $cell_phone</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Bank</td>
+		    									<td align=right> : $bank</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Account Number</td>
+		    									<td align=right> : $account_number</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Branch Code</td>
+		    									<td align=right> : $branch_code</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Amount</td>
+		    									<td align=right> : R $amount</td>
+		    								</tr>
+		    								</table>
+		    								<strong>NOTE: Failure to make payment before, This member will be unassigned to you and failure to make payment to 2 assigned members will result in your account blocked for 3 months</strong>
+		    								<br /><br />
+		    								Warm Regards,<br />
+		    								PrestigeWallet.com
+
+		    							  " ;
+
+		    	$sms_message 			= "You have successfully being assigned to make a donation," ;
+		    	$sms_message 			.= " details of the donee are as follows, Account Holder: $name," ;
+		    	$sms_message 			.= " Cell Phone: $cell_phone, Bank: $bank," ;
+		    	$sms_message 			.= " Account Number: $account_number," ;
+		    	$sms_message 			.= " Branch Code: $branch_code, Amount: R $amount" ;
+
+		    	$user_details 			= User::where('id', $donar_id)->first() ;
+		    	$user_reserved_info 	= [
+		    		'to_email'			=> $user_details->email,
+		    		'subject'			=> "PrestigeWallet.com Donations",
+		    		'to_name'			=> $user_details->first_name . " " . $user_details->last_name,
+		    		'message'			=> $message,
+		    		'cell_phone'		=> $user_details->cell_phone,
+		    		'sms_message'		=> $sms_message,
+		    	] ;
+
+				$job = (new SendDonationDetails($user_reserved_info))->onQueue('SendDonationDetails') ;
+		        dispatch($job) ;
+
+		        $alert_donee = self::alertReceiver( 
+		        	$name, 
+		        	$email, 
+		        	$cell_phone, 
+		        	$user_details->first_name . " " . $user_details->last_name, 
+		        	$amount 
+		        ) ;
+		        return $alert_donee ;
+	    	} else {
+	    		return "Please try a different amount" ;
+	    	}
 
 		}
 
 		public static function alertReceiver( $receiver_name, $receiver_email, $receiver_cell, $sender_name, $amount ) {
+			//self::add_notification( $message, $user_id, $type ) ;
 
-	    	$message 				= "Hi $receiver_name
-	    								<br /><br />
-	    								$sender_name was assigned to you for an amount of R $amount, 
+	    	$message 				= "<br /><br />
+	    								$sender_name was assigned to you for, 
 	    								Please ensure you go to the On-line App to accept their Donation once the 
-	    								money reflects on your account.
+	    								money reflects on your account.<br /><br />
 	    								<strong>NOTE: Failure to accept payments will result in your account 
 	    								blocked for 3 months, if the Donor reports you for delaying 
 	    								acknowledgment of receiving payments</strong>
@@ -402,7 +475,7 @@
 	    							  " ;
 
 	    	$sms_message 			= "Hi $receiver_name," ;
-	    	$sms_message 			.= "$sender_name was assigned to you for an amount of R $amount, " ;
+	    	$sms_message 			.= "$sender_name was assigned to you" ;
 	    	$sms_message 			.= "Please ensure you go to the On-line App to accept their Donation once the money reflects on your account." ;
 
 	    	$user_reserved_info 	= [
@@ -415,13 +488,19 @@
 	    	] ;
 			$job = (new UserMadeDonation($user_reserved_info))->onQueue('UserMadeDonation') ;
 	        dispatch($job) ;
+
+	        return "success" ;
+		}
+
+		public static function alertDonee($receiver_name, $receiver_email, $receiver_cell, $sender_name, $amount) {
+
 		}
 
 		public static function maxDonationsPayBig($user_id) {
 
 		}
 
-		public static function pending_timers($user_id) {
+		public static function pendingDonations($user_id) {
 			$active_donations 		= ActiveDonation::where('sender',$user_id)
 										->where('donation_status', 1)
 										->where('is_processed', 1)
@@ -543,8 +622,37 @@
 
 		}
 
-		public static function add_notification( $message, $user_id ) {
-			
+		public static function add_notification( $message, $user_id, $type ) {
+			$notification = Notifications::create([
+		    	"user_id"	=> $user_id,
+		    	"message"	=> $message,
+		    	"type"		=> $type,				
+			]) ;
+		}
+
+
+		public static function list_notifications( $user_id ) {
+			$notifications 	= User::find($user_id)->notifications()->where('type', 0)->get() ;
+
+			$notifications_count 	= count($notifications) ;
+
+			$front_noti 			= [] ;
+
+			$messages 				= [] ;
+
+
+			if ( $notifications_count > 0 ) {
+				foreach ( $notifications as $notification ) {
+					$messages[] 	= ['msg'=>$notification->message, 'id'=>$notification->id] ;
+				}
+			}
+
+			return ['noti_count'=>$notifications_count, 'messages'=>$messages ] ;
+		}
+
+		public static function notification_read( $id ) {
+			$notifications 			= Notifications::find( $id ) ;			
+			return $notifications->delete() ;
 		}
 
 		public static function send_sms($msg, $cellphone) {
@@ -565,5 +673,6 @@
 
 		    return true ;
 		}
+
 
 	}

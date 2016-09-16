@@ -34,6 +34,10 @@
 		.widget-thumb .widget-thumb-heading {
 		    font-size: 10px;
 		}
+
+		.dashboard-stat .details .desc {
+		    font-size: 12px;
+		}
 	</style>
 
 @endsection
@@ -303,8 +307,6 @@
 		</div> -->
 		</div>
 	</div>
-
-	<input type="hidden" value="" id="user_id">
 	
 
 @endsection
@@ -314,6 +316,8 @@
 	<script src="{{asset('js/ion.rangeSlider.min.js')}}" type="text/javascript"></script>
 	<script src="{{asset('js/jquery.countdown.min.js')}}" type="text/javascript"></script>
 	<script type="text/javascript">
+
+		var expiry_hour 			= {{ $expiry_hour }} ;
 
 		$( function() {
 	      //var time            = '2016/09/07 11:30' ;
@@ -367,12 +371,14 @@
 			            $("#assignment_div_big").html(data.message) ;
 
 			            if ( data.message == "found") {
-			            	var min = data.min ;
-			            	var max = data.max ;
-			            	$("#user_id").val(data.user_id) ;
-			            	$("#assignment_div_big").html("We found a suitable member to match you with") ;
+			            	var tid 		= data.tid ;
+			            	var user_id 	= data.user_id ;
+			            	var amount 		= data.amount ;
+
+			            	$("#assignment_div_big").html( "We found a suitable donee to match your amount range for: " ) ;
+			            	$("#assignment_div_big").append( "<br/>R " + amount ) ;
 			            	$("#assignment_div_big").append(
-			            		"<br /><br /><butto id='reserve_order' class='btn btn-info' onclick=\"assign_me('"+min+"','"+max+"')\">Assigned Me</button>"
+			            		"<br /><br /><button id='reserve_order' class='btn btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\">Assign me</button><br /><br />"
 			            	) ;
 			            } else {
 			            	$("#assignment_div_big").html(data.message) ;
@@ -449,9 +455,9 @@
 		var count_countdowns = 1 ;
 
 
-        var assign_me = function( min, max ) {
-        	var remaining_hours = new Date(); 
-        	remaining_hours = remaining_hours.addHours(4) ;
+        var assign_me 				= function( tid, user_id, amount ) {
+        	var remaining_hours 	= new Date(); 
+        	remaining_hours 		= remaining_hours.addHours(4) ;
         	console.log("Clicked") ;
         	$('#reserve_order').button('loading');
 
@@ -462,21 +468,21 @@
 		            var token 	= $('meta[name="csrf_token"]').attr('content') ;
 		            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
 		        }, data: { 
-		        	min:min,
-		        	max:max,
-		        	user_id:$("#user_id").val()
+		        	tid:tid,
+		        	amount:amount,
+		        	user_id:user_id
 		        }, success: function( data ) {
 		        	console.log(data.message) ;
 		        	if ( data.message == "success" ) {
 			            $( "#assignment_div_big" ).html( 
-							"Successfully reserved, an SMS will be send to you shortly with member details," +
+							"Successfully reserved, an SMS will be send to you shortly with member's details," +
         				  	" Please make a payment before "+
         				  	remaining_hours.getHours()+":"+
         				  	remaining_hours.getMinutes()+":"+
         				  	remaining_hours.getSeconds()+
         				  	" and await their approval"
 			             ) ;
-			            create_countdown_timer( data.bank, data.account, data.branch, 60*4, count_countdowns, "red" ) ;
+			            create_countdown_timer( data.bank, data.account, data.branch, 60*parseInt(expiry_hour), count_countdowns, "red" ) ;
 			            count_countdowns++ ;
 			            //toast_notification( "info", message ) ;		        		
 		        	} else if( data == 'failed') {
@@ -514,6 +520,7 @@
 		        	console.log("Error") ;
 		        }
 		    });
+		    load_countdowns() ;
 		}
 
 		var updateFeeds = setInterval( feedUpdate, 5000 ) ;
@@ -635,11 +642,30 @@
 
 		} ;
 
+		var colors 					= ['red', 'blue', 'green', 'yellow', 'orange'] ;
+
 		var load_countdowns 		= function() {
-			
+
+			$.getJSON('/pending_times', function( response ) {
+				
+				if ( response.message == "found" ) {
+					var number = 1 ;
+					$("#count_down").html("") ;
+					$.each( response.data, function(i, value) {
+						var minutes = value.remaining_time ;
+						var bank 	= value.bank ;
+						var account = value.account_number ;
+						var branch 	= value.branch_code ;
+						var color 	= colors[Math.floor((Math.random() * 4) + 0)] ; 
+						create_countdown_timer(bank, account, branch, minutes, number, color) ;
+						number++ ;
+						console.log(value) ;
+					}) ;
+				}
+			}) ;
 		}
 
-
+		load_countdowns() ;
 	</script>
 
 @endsection

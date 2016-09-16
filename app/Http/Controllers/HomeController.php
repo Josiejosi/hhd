@@ -34,8 +34,10 @@ class HomeController extends Controller
     	$help_time 						= Helper::help_time() ;
     	$max_reserves_allowed 			= Helper::reached_max_donations(Auth::user()->id) ;
     	$max_reserves_limit 			= Helper::max_reserves() ;
-    	$pending_donations 				= Helper::getPendingTime(Auth::user()->id);
+    	$avatar 						= Helper::userAvatar( Auth::user()->id ) ;
+    	
     	$alltransactions 				= Helper::getAllMyTransctions(Auth::user()->id) ;
+    	$expiry_hour 					= Helper::expiryHour() ;
     	$now							= Carbon::now() ;
 
     	$transactions 					= ActiveDonation::where( 'receiver', Auth::user()->id )->where('donation_status',1)->get() ;
@@ -48,74 +50,45 @@ class HomeController extends Controller
     		'transactions'				=> $transactions,
     		'alltransactions'			=> $alltransactions,
     		'now'						=> $now,
+    		'avatar'					=> $avatar,
+    		'expiry_hour'				=> $expiry_hour,
     	] ;
 
     	return view( 'admin.home', $data ) ;
     }
 
     public function get_donar( Request $request ) {
-    	$active_donation_count 			= ActiveDonation::where( 'is_processed', 0 )
-    										->where('receiver','!=', Auth::user()->id)
-    										->whereBetween('amount', [$request->min, $request->max])
-    										->orderBy('id')
-    										->count() ; 
-    	$active_donation 				= [] ; 
 
     	$max_reserves_allowed 			= Helper::reached_max_donations(Auth::user()->id) ;
     	$max_reserves_limit 			= Helper::max_reserves() ;
     	
     	if ( $max_reserves_allowed == 'add' ) {
-    		
-	    	if ( $active_donation_count > 1 ) {
-	    		$active_donation 		= ActiveDonation::where( 'is_processed', 0 )
-	    									->where('receiver','!=', Auth::user()->id)
-	    									->whereBetween('amount', [$request->min, $request->max])
-	    									->orderBy('id')
-	    									->get()->random(1) ;
-
-		    	$account 				= Helper::get_user_active_account( $active_donation->receiver ) ;
-
-		    	$user 					= User::find($active_donation->receiver) ;
-
-		    	$user_data 				= "" ;
-
-		    	$donation_id 			= $active_donation->id ;
-
-		    	if ( count($user) == 1 ) {
-
-		    		return [
-		    			'message' 		=> 'found',
-		    			'min'			=> $request->min,
-		    			'max'			=> $request->max,
-		    			'user_id'		=> $user->id
-		    		] ;
-		    	}
-	    	} 
-
+			$donations 					= Helper::getActiveDoneeUnderSameAccount( 
+											Auth::user()->id, 
+											$request->min, 
+											$request->max 
+			) ;
+			return $donations ;
 		} else {
     		return [
-		    	'message' 		=>  "Sorry you already have $max_reserves_limit donations made today, please wait for approval from assigned members to create a new one." 
+		    	'message' 				=>  "Sorry you already have $max_reserves_limit donations made today, please wait for approval from assigned members to create a new one." 
 		    ] ;
     	}
-
-    	return [
-		    'message' 		=>  "No results found between ( R ".$request->min." and R ".$request->max.")" 
-		] ;
     }
     //change to confirm
     public function assign_donar( Request $request ) {
-    	$min 							= $request->min ;
-    	$max 							= $request->max ;
-    	$user_id 						= $request->user_id ;
+    	$order_id 						= $request->tid ;
+    	$donee_id 						= $request->user_id ;
+    	$amount 						= $request->amount ;
 
     	$max_reserves_allowed 			= Helper::reached_max_donations(Auth::user()->id) ;
     	$max_reserves_limit 			= Helper::max_reserves() ;
 
     	if ( $max_reserves_allowed == "add" ) {
 
-			Helper::assignMember( Auth::user()->id, $min, $max ) ;
+			Helper::assignMember( Auth::user()->id, $order_id, $donee_id, $amount ) ;
 
-			$account 					= Helper::get_user_active_account( $user_id ) ;
+			$account 					= Helper::get_user_active_account( $donee_id ) ;
 			
 			return [
 				'message'				=> 'success', 
@@ -184,5 +157,9 @@ class HomeController extends Controller
 
     public function get_reffered_users_count() {
 
+    }
+
+    public function pending_times() {
+		return Helper::getPendingTime(Auth::user()->id) ;
     }
 }

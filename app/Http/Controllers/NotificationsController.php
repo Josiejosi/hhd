@@ -6,21 +6,22 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Classes\Helper ;
+
+use Auth ;
+
 class NotificationsController extends Controller
 {
-    public function index() {
-
-    }
 
     public function get_notifications() {
+    	return Helper::list_notifications( Auth::user()->id ) ;
+    }
+
+    public function add_notification(Request $request) {
 
     }
 
-    public function add_notification() {
-
-    }
-
-    public function hide_notification() {
-    	
+    public function hide_notification(Request $request) {
+    	Helper::notification_read( $request->noti_id ) ;
     }
 }

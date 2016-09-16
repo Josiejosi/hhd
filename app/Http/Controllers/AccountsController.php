@@ -9,6 +9,8 @@ use App\Http\Requests;
 use Auth ;
 use App\Models\Account ;
 
+use App\Classes\Helper ;
+
 class AccountsController extends Controller
 {
 
@@ -18,7 +20,14 @@ class AccountsController extends Controller
     }
 
     public function index() {
-    	return view( 'admin.accounts' ) ;
+
+        $avatar                         = Helper::userAvatar( Auth::user()->id ) ;
+
+        $data                           = [
+            'avatar'                    => $avatar,
+        ] ;
+
+    	return view( 'admin.accounts', $data ) ;
     }    
 
     public function get_account() {

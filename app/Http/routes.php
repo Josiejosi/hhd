@@ -19,6 +19,7 @@
 	Route::post( '/get_donar', 				'HomeController@get_donar' );
 	Route::post( '/assign_donar',			'HomeController@assign_donar' );
 	Route::post( '/get_latest_feed',		'HomeController@get_latest_feed' );
+	Route::get( '/pending_times',			'HomeController@pending_times' );
 	Route::get(	 '/profile', 				'ProfileController@index') ;
 	Route::get(	 '/schedules', 				'ScheduledController@index') ;
 	Route::get(	 '/transactions', 			'TransactionController@index') ;
@@ -29,3 +30,11 @@
 	Route::post( '/add_account', 			'AccountsController@addAccount' ) ;
 	Route::post( '/delete_account', 		'AccountsController@deleteAccount' ) ;
 	Route::post( '/activate_account', 		'AccountsController@updateAccount' ) ;
+
+	Route::post( '/update_profile', 		'ProfileController@update_profile' ) ;	
+	Route::post( '/change_password', 		'ProfileController@change_password' ) ;	
+	Route::post( '/update_avatar', 			'ProfileController@update_avatar' ) ;	
+
+	Route::get( '/list_notifications', 		'NotificationsController@get_notifications' ) ;
+	Route::post( '/add_notifications', 		'NotificationsController@add_notification' ) ;
+	Route::post( '/read_notifications', 	'NotificationsController@hide_notification' ) ;

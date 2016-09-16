@@ -9,6 +9,8 @@ use App\Http\Requests;
 use Auth ;
 use App\Models\ScheduledDonation ;
 
+use App\Classes\Helper ;
+
 class ScheduledController extends Controller
 {
     public function __construct() {
@@ -17,8 +19,9 @@ class ScheduledController extends Controller
     }
 
     public function index() {
+        $avatar                         = Helper::userAvatar( Auth::user()->id ) ;
     	$data = [
-    		'scheduled'=>ScheduledDonation::where('user_id',Auth::user()->id)->get()
+    		'scheduled'                 => ScheduledDonation::where('user_id',Auth::user()->id)->get()
     	] ;
     	return view('admin.schedules',$data) ;
     }

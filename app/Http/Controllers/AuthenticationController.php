@@ -90,6 +90,7 @@ class AuthenticationController extends Controller
             }
 
 		    if ( Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
+                Helper::add_notification( "You have successfully created a profile, one step left verify your phone number", $user->id, 0 ) ;
 				$job = (new UserHasRegistered($user, $verification_code, $refferal_key, $request->password))->onQueue('UserHasRegistered');
 		        $this->dispatch($job);
 		    	return redirect()->intended( 'home' ) ;
