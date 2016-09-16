@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             // Move scheduled to active
-            Helper::moveScheduledDonationsToActiveDonations() ;
+            //Helper::moveScheduledDonationsToActiveDonations() ;
             // Delete inactive users
             //Helper::inactivateNonDonor48hours() ;
             // Delete users with not play interest.
