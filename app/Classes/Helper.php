@@ -464,7 +464,7 @@
 
 	    	$message 				= "<br /><br />
 	    								$sender_name was assigned to you for an amount of R $amount, 
-	    								Please ensure you go to the On-line App to accept their Donation once the 
+	    								Please ensure you login to http://prestigewallet.com/signin to accept their Donation once the 
 	    								money reflects on your account.<br /><br />
 	    								<strong>NOTE: Failure to accept payments will result in your account 
 	    								blocked for 3 months, if the Donor reports you for delaying 
@@ -476,7 +476,7 @@
 
 	    	$sms_message 			= "Hi $receiver_name," ;
 	    	$sms_message 			.= "$sender_name was assigned to you fon an amount of R $amount" ;
-	    	$sms_message 			.= "Please ensure you go to the On-line App to accept their Donation once the money reflects on your account." ;
+	    	$sms_message 			.= "Please ensure you login to http://prestigewallet.com/signin to accept their Donation once the money reflects on your account." ;
 
 	    	$user_reserved_info 	= [
 	    		'to_email'			=> $receiver_email,
