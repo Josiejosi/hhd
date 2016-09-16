@@ -58,12 +58,12 @@ class TransactionController extends Controller
 		    	"schedule_at"			=> Carbon::now(),
 		    	"schedule_for"			=> Carbon::now()->addDays($donation_days),
 		    	"schedule_days"			=> $donation_days,
-		    	"amount"				=> ( $amount * ($donation_percentage/100) ) + $amount,
+		    	"amount"				=> ( $amount * ($donation_percentage / 100) ) + $amount,
     		]) ;
 
     		if ( $insert ) {
     			$scheduled_at 			= Carbon::now()->addDays($expiry_hours)->setToStringFormat('jS \o\f F, Y g:i a') ;
-    			$scheduled_amount 		= ( $amount * $donation_percentage ) + $amount ;
+    			$scheduled_amount 		= ( $amount * $donation_percentage / 100 ) + $amount ;
     			//$user 					= User::find(Auth::user()->id) ;
     			$scheduled_for 			= Carbon::now()->addDays($donation_days) ;
 		    	$message 				= "<br />

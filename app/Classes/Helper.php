@@ -463,7 +463,7 @@
 			//self::add_notification( $message, $user_id, $type ) ;
 
 	    	$message 				= "<br /><br />
-	    								$sender_name was assigned to you for, 
+	    								$sender_name was assigned to you for an amount of R $amount, 
 	    								Please ensure you go to the On-line App to accept their Donation once the 
 	    								money reflects on your account.<br /><br />
 	    								<strong>NOTE: Failure to accept payments will result in your account 
@@ -475,7 +475,7 @@
 	    							  " ;
 
 	    	$sms_message 			= "Hi $receiver_name," ;
-	    	$sms_message 			.= "$sender_name was assigned to you" ;
+	    	$sms_message 			.= "$sender_name was assigned to you fon an amount of R $amount" ;
 	    	$sms_message 			.= "Please ensure you go to the On-line App to accept their Donation once the money reflects on your account." ;
 
 	    	$user_reserved_info 	= [

@@ -9,6 +9,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Classes\Helper ;
 
+//sudo supervisorctl start UserMadeDonation:*
+
 class UserMadeDonation extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
