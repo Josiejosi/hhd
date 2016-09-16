@@ -23,6 +23,6 @@ class Kernel extends ConsoleKernel
             //Helper::inactivateNonDonor48hours() ;
             // Delete users with not play interest.
             //Helper::removeUsersNotDonated48hour() ;
-        })->hourly();
+        })->everyMinute() ;
     }
 }
