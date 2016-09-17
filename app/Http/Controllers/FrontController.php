@@ -29,8 +29,8 @@ class FrontController extends Controller
             'elite_members'         => User::where('is_special_user',1)->get(),
             'members'               => User::where('is_special_user',0)->count(),
             'scheduled'             => ScheduledDonation::count(),
-            'donation'             => ActiveDonation::count(),
-            'admin_name'            => Auth::user()->first_name
+            'donation'              => ActiveDonation::count(),
+            'admin_name'            => "Admin",
         ] ;
 
         return view( 'elite.dashboard', $data ) ;
