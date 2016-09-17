@@ -101,6 +101,12 @@
                                     <i class="icon-home"></i>
                                     <span class="title">Dashboard</span>
                                 </a>
+                            </li>                            
+                            <li class="nav-item start ">
+                                <a href="{{url('/admin/create/elite')}}" class="nav-link nav-toggle">
+                                    <i class="icon-plus icons"></i>
+                                    <span class="title">Add Elite</span>
+                                </a>
                             </li>
                             <li class="nav-item start ">
                                 <a href="{{url('/admin/members')}}" class="nav-link nav-toggle">

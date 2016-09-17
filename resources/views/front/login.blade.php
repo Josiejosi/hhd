@@ -5,7 +5,6 @@
     <section id="content">
         <div class="content-wrap">
 
-            <!-- ============ login ============ -->
             <div class="container clearfix w-3xl">
 
                 <h3><i class="fa fa-unlock"></i> Login to your account</h3>
@@ -50,7 +49,7 @@
                 </div>
 
 
-            </div><!-- /login -->
+            </div>
 
         </div>
     </section>

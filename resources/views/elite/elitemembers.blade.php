@@ -2,7 +2,7 @@
 
 @section ('css')
 
-@section ('title', 'Scheduled')
+@section ('title', 'Elite Members')
 
 @endsection
 
@@ -29,6 +29,7 @@
                                     <th> Name </th>
                                     <th> Email </th>
                                     <th> Cell </th>
+                                    <th> Member Since </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,6 +40,7 @@
         	                            <td> {{$member->first_name}} {{$member->last_name}} </td>
         	                            <td> {{ $member->email }} </td>
                                         <td> {{ $member->cell_phone }} </td>
+        	                            <td> {{ $member->created_at->diffForHumans() }} </td>
         	                        </tr>
         	                        <?php $i++ ; ?>
                                 	@endforeach

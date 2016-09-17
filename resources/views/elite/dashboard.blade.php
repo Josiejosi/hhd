@@ -99,6 +99,82 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="fa fa-calender-plus-o font-dark"></i>
+                        <span class="caption-subject bold uppercase">Add Member to Active Donation</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    @if (Session::has('message'))
+                        <span class="alert alert-warning">
+                            <strong>{{ Session::get('message') }}</strong>
+                        </span>
+                    @endif
+                    <form action="{{url('/admin/create/donation/elite')}}" method="post">
+
+                        {!! csrf_field() !!}
+
+                        <div class="row">
+
+                            <div class="form-group col-md-12">
+                                <label for="email">Email <span class="text-lightred" style="font-size: 15px">*</span></label>
+                                <select name="email" 
+                                        class="form-control myInput" 
+                                        id="email">
+                                    <option>Select Email</option>
+
+                                    @if ( !empty( $elite_members ) )
+
+                                        @foreach( $elite_members as $member )
+
+                                            <option value="{{ $member->id }}">
+                                               {{ $member->first_name }} {{ $member->last_name }}, {{ $member->email }}
+                                            </option>
+
+                                        @endforeach
+
+                                    @endif
+                                </select>
+                                @if ($errors->has('email'))
+                                    <span class="help-block error-message">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif 
+                            </div> 
+
+                            <div class="form-group col-md-12">
+                                <label for="amount">Amount <span class="text-lightred" style="font-size: 15px">*</span></label>
+                                <input name="amount" 
+                                        type="text" 
+                                        class="form-control myInput" 
+                                        id="email"
+                                        value="{{ old('amount') }}">
+                                @if ($errors->has('amount'))
+                                    <span class="help-block error-message">
+                                        <strong>{{ $errors->first('amount') }}</strong>
+                                    </span>
+                                @endif 
+                            </div>                           
+
+
+                            <div class="col-md-12">
+                                <button type="submit" id="submit_btn" class="btn btn-success">Add</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+               </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 

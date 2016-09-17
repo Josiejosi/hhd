@@ -492,14 +492,6 @@
 	        return "success" ;
 		}
 
-		public static function alertDonee($receiver_name, $receiver_email, $receiver_cell, $sender_name, $amount) {
-
-		}
-
-		public static function maxDonationsPayBig($user_id) {
-
-		}
-
 		public static function pendingDonations($user_id) {
 			$active_donations 		= ActiveDonation::where('sender',$user_id)
 										->where('donation_status', 1)

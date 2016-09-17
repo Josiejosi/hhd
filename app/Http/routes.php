@@ -47,4 +47,6 @@
 	Route::get( '/admin/scheduled', 		'AdminController@scheduled' ) ;
 	Route::get( '/admin/donations', 		'AdminController@donations' ) ;
 	Route::get( '/admin/settings', 			'AdminController@settings' ) ;
-	Route::post( '/admin/create/elite', 	'AdminController@create_elite' ) ;
+	Route::post( '/admin/create/elite', 	'AdminController@postElite' ) ;
+	Route::post( '/admin/create/donation/elite', 	'AdminController@postEliteDonation' ) ;
+	Route::get( '/admin/create/elite', 		'AdminController@create_elite' ) ;
