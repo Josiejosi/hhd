@@ -41,27 +41,6 @@ class AdminController extends Controller
         return view( 'elite.dashboard', $data ) ;
     }
 
-    public function login() {
-        return view( 'elite.login' ) ;
-    }
-
-    public function postLogin( Request $request ) {
-
-    	if ( Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
-
-            if ( Auth::user()->is_active == 0 ) {
-                return redirect()->back()->withInput()->with('account_not_found', 'Your account has been blocked, please contact support for more info.') ;
-            }
-            if ( Auth::user()->is_special_user != 1 ) {
-                return redirect()->back()->withInput()->with('account_not_found', 'Your account is not autherized fot this view, sorry dude.') ;
-            }
-
-    		return redirect()->intended('admin/dashboard') ;
-    	} else {
-            return redirect()->back()->withInput()->with('account_not_found', 'Invalid Credentials') ;
-        }
-    }
-
     public function users() {
         $data = [
             'members'               => User::where('is_special_user',0)->get(),

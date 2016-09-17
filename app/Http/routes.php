@@ -40,7 +40,7 @@
 	Route::post( '/read_notifications', 	'NotificationsController@hide_notification' ) ;
 
 	Route::get( '/admin/login', 			'FrontController@admin' ) ;
-	Route::post( '/admin/login', 			'AdminController@postLogin' ) ;
+	Route::post( '/admin/login', 			'FrontController@postLogin' ) ;
 	Route::get( '/admin/dashboard', 		'AdminController@index' ) ;
 	Route::get( '/admin/members', 			'AdminController@users' ) ;
 	Route::get( '/admin/elite', 			'AdminController@elite' ) ;
