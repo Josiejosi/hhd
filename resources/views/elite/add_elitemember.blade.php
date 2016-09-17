@@ -27,7 +27,7 @@
 	                        <strong>{{ Session::get('message') }}</strong>
 	                    </span>
 	                @endif
-                    <form action="{{url('/signup')}}" method="post">
+                    <form action="{{url('/admin/create/elite')}}" method="post">
 
                         {!! csrf_field() !!}
 

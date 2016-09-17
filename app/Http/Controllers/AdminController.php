@@ -10,6 +10,9 @@ use App\Models\User ;
 use App\Models\ActiveDonation ;
 use App\Models\ScheduledDonation ;
 use App\Models\SystemSetting ;
+use App\Models\Account ;
+
+use App\Jobs\UserHasRegistered ;
 
 use Validator ;
 
@@ -84,11 +87,11 @@ class AdminController extends Controller
 
     public function settings() {
         $data = [
-            'donations'             => ActiveDonation::all(),
+            'settings'             => SystemSetting::where('is_active', 1)->first(),
             'admin_name'            => Auth::user()->first_name
         ] ;
 
-    	return view( 'elite.transactions', $data ) ;
+    	return view( 'elite.system', $data ) ;
     }
 
     public function donations() {
@@ -124,9 +127,7 @@ class AdminController extends Controller
 
 
         if ($validator->fails()) {
-            return redirect('join')
-                        ->withErrors($validator)
-                        ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $verification_code                  = mt_rand( 111111, 999999 ) ;
@@ -187,6 +188,21 @@ class AdminController extends Controller
         ]);
 
         if ( $donation ) return redirect()->back()->with('message', 'Successfully added!') ;
+        else return redirect()->back()->withInput()->with('message', 'Failed!') ;
+    }
+
+    public function postSettings( Request $request ) {
+        $settings                =  SystemSetting::where('is_active',1)->update([
+            "percentage"        => $request->percentage,
+            "days"              => $request->days,
+            "daily_reserves"    => $request->daily_reserves,
+            "expiry_hours"      => $request->expiry_hours,
+            "start_help_time"   => $request->start_help_time,
+            "end_help_time"     => $request->end_help_time,
+            "count_down_hours"  => $request->count_down_hours,
+        ]);
+
+        if ( $settings ) return redirect()->back()->with('message', 'Successfully updated!') ;
         else return redirect()->back()->withInput()->with('message', 'Failed!') ;
     }
 }
