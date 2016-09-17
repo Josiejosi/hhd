@@ -23,6 +23,10 @@ use Auth ;
 
 class AdminController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth') ;
+    }
     public function index() {
     	$data = [
             'elite'                 => User::where('is_special_user',1)->count(),
@@ -68,7 +72,7 @@ class AdminController extends Controller
 
     public function elite() {
         $data = [
-            'settings'               => SystemSetting::where('is_active',1)->get(),
+            'settings'               => SystemSetting::where('is_special_user',1)->get(),
             'admin_name'            => Auth::user()->first_name
         ] ;
 
