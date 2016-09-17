@@ -32,6 +32,13 @@
             border-radius: 50%!important;
             -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFW…9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
         }
+
+        .page-header .topbar-actions .btn-group-img .btn {
+            color: #fff;
+            font-size: 18px;
+            padding: 10px;
+        }
+
         </style>
 
         @yield('css')

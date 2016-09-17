@@ -13,11 +13,29 @@ use Session ;
 use App\Jobs\SendContactEmail ;
 
 use App\Models\User ;
+use App\Models\ScheduledDonation ;
+use App\Models\ActiveDonation ;
+
+use Auth ;
 
 use App\Classes\Helper ;
 
 class FrontController extends Controller
 {
+
+    public function admin() {
+        $data = [
+            'elite'                 => User::where('is_special_user',1)->count(),
+            'elite_members'         => User::where('is_special_user',1)->get(),
+            'members'               => User::where('is_special_user',0)->count(),
+            'scheduled'             => ScheduledDonation::count(),
+            'donation'             => ActiveDonation::count(),
+            'admin_name'            => Auth::user()->first_name
+        ] ;
+
+        return view( 'elite.dashboard', $data ) ;
+    }
+
     public function signin() {
     	return view('front.login') ;
     }
