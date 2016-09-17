@@ -72,7 +72,7 @@ class AdminController extends Controller
 
     public function elite() {
         $data = [
-            'settings'               => SystemSetting::where('is_special_user',1)->get(),
+            'members'               => User::where('is_special_user',1)->get(),
             'admin_name'            => Auth::user()->first_name
         ] ;
 
