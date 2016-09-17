@@ -38,3 +38,13 @@
 	Route::get( '/list_notifications', 		'NotificationsController@get_notifications' ) ;
 	Route::post( '/add_notifications', 		'NotificationsController@add_notification' ) ;
 	Route::post( '/read_notifications', 	'NotificationsController@hide_notification' ) ;
+
+	Route::get( '/admin/login', 			'AdminController@login' ) ;
+	Route::post( '/admin/login', 			'AdminController@postLogin' ) ;
+	Route::get( '/admin/dashboard', 		'AdminController@index' ) ;
+	Route::get( '/admin/members', 			'AdminController@users' ) ;
+	Route::get( '/admin/elite', 			'AdminController@elite' ) ;
+	Route::get( '/admin/scheduled', 		'AdminController@scheduled' ) ;
+	Route::get( '/admin/donations', 		'AdminController@donations' ) ;
+	Route::get( '/admin/settings', 			'AdminController@settings' ) ;
+	Route::post( '/admin/create/elite', 	'AdminController@create_elite' ) ;

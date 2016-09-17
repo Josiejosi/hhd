@@ -52,31 +52,6 @@
                             <img src="{{asset('imgs/logo-sm.png')}}" alt="Logo"> 
                         </a>
                         <div class="topbar-actions">
-                            <div class="btn-group-notification btn-group" id="header_notification_bar">
-                                <button type="button" class="btn md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <span class="badge" id="notification_big_count">0</span>
-                                </button>
-                                <ul class="dropdown-menu-v2">
-                                    <li class="external">
-                                        <h3>
-                                            <span class="bold" id="notification_count">0 pending</span> notifications</h3>
-                                        <a href="#">view all</a>
-                                    </li>
-                                    <li>
-                                        <!--<i class="fa fa-eye-slash" aria-hidden="true"></i>-->
-                                        <!--<i class="fa fa-eye-slash" aria-hidden="true"></i>-->
-                                        <ul 
-                                            class="dropdown-menu-list scroller" 
-                                            style="height: 250px; padding: 0;" 
-                                            data-handle-color="#637283"
-                                            id="list_notifications">
-
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- END GROUP NOTIFICATION -->
-                            <!-- BEGIN USER PROFILE -->
                             <div class="btn-group-img btn-group">
                                 <button 
                                     type="button" 
@@ -84,14 +59,9 @@
                                     data-toggle="dropdown" 
                                     data-hover="dropdown" 
                                     data-close-others="true">
-                                    <img src="{{ $avatar }}" alt=""> 
+                                    {{$admin_name}}
                                 </button>
                                 <ul class="dropdown-menu-v2" role="menu">
-                                    <li>
-                                        <a href="{{url('/profile')}}">
-                                            <i class="icon-user"></i> My Profile
-                                        </a>
-                                    </li>
                                     <li>
                                         <a href="{{url('/logout')}}">
                                             <i class="icon-key"></i> Log Out 
@@ -127,27 +97,39 @@
                     <div class="page-sidebar navbar-collapse collapse">
                         <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-light " data-keep-expanded="true" data-auto-scroll="true" data-slide-speed="200">
                             <li class="nav-item start ">
-                                <a href="{{url('/home')}}" class="nav-link nav-toggle">
+                                <a href="{{url('/admin/dashboard')}}" class="nav-link nav-toggle">
                                     <i class="icon-home"></i>
-                                    <span class="title">Home</span>
+                                    <span class="title">Dashboard</span>
                                 </a>
                             </li>
                             <li class="nav-item start ">
-                                <a href="{{url('/accounts')}}" class="nav-link nav-toggle">
-                                    <i class="icon-credit-card"></i>
-                                    <span class="title">Accounts</span>
+                                <a href="{{url('/admin/members')}}" class="nav-link nav-toggle">
+                                    <i class="icon-user"></i>
+                                    <span class="title">Members</span>
                                 </a>
                             </li> 
                             <li class="nav-item start ">
-                                <a href="{{url('/schedules')}}" class="nav-link nav-toggle">
-                                    <i class="icon-notebook"></i>
-                                    <span class="title">Scheduled</span>
+                                <a href="{{url('/admin/elite')}}" class="nav-link nav-toggle">
+                                    <i class="icon-user-follow icons"></i>
+                                    <span class="title">Elite</span>
                                 </a>
                             </li>                            
                             <li class="nav-item start ">
-                                <a href="{{url('/profile')}}" class="nav-link nav-toggle">
-                                    <i class="icon-user"></i>
-                                    <span class="title">Profile</span>
+                                <a href="{{url('/admin/scheduled')}}" class="nav-link nav-toggle">
+                                    <i class="icon-calendar icons"></i>
+                                    <span class="title">All Scheduled</span>
+                                </a>
+                            </li>                            
+                            <li class="nav-item start ">
+                                <a href="{{url('/admin/donations')}}" class="nav-link nav-toggle">
+                                    <i class="icon-present icons"></i>
+                                    <span class="title">All Active Donations</span>
+                                </a>
+                            </li>                            
+                            <li class="nav-item start ">
+                                <a href="{{url('/admin/settings')}}" class="nav-link nav-toggle">
+                                    <i class="icon-settings icons"></i>
+                                    <span class="title">System Settings</span>
                                 </a>
                             </li>
                         </ul>

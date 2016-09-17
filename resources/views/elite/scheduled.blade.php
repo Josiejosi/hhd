@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('layouts.elite')
 
 @section ('css')
 
@@ -8,8 +8,7 @@
 
 @section ('content')
     <div class="m-heading-1 border-green m-bordered">
-        <h3>My Scheduled Donations</h3>
-        <p> PLEASE NOTE: Once a member has approved your payment, your scheduled donations will be in here, and moved to active donations once they reached maturity.</p>
+        <h3>Scheduled Donations</h3>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -23,28 +22,38 @@
                 </div>
                 <div class="portlet-body">
                     
-            	
+                
                         <table class="table table-striped table-hover" id="active_transactions">
                             <thead>
                                 <tr>
+                                    <th> User </th>
                                     <th> Percentage </th>
                                     <th> Scheduled For </th>
                                     <th> Amount </th>
                                 </tr>
                             </thead>
                             <tbody>
-                            	@if ( !empty($scheduled) )
-                            		<?php $i=1 ; ?>
-                            		@foreach ( $scheduled as $schedule )
-        	                         <tr>
-        	                            <td> {{$schedule->schedule_percentage}} % </td>
-        	                            <td> {{ $schedule->schedule_for->diffForHumans() }} </td>
-        	                            <td> R {{ $schedule->amount }} </td>
-        	                        </tr>
-        	                        <?php $i++ ; ?>
-                                	@endforeach
+                                @if ( !empty($scheduled) )
+                                    <?php $i=1 ; ?>
+                                    @foreach ( $scheduled as $schedule )
+                                     <tr>
+                                        <td> 
+                                            <?php
+                                                $user_id = $schedule->user_id ;
+
+                                                $user       = App\Models\User::where('id', $user_id)->first() ;
+
+                                                echo  $user->first_name . " " . $user->last_name ;
+                                            ?>
+                                        </td>
+                                        <td> {{$schedule->schedule_percentage}} % </td>
+                                        <td> {{ $schedule->schedule_for->diffForHumans() }} </td>
+                                        <td> R {{ $schedule->amount }} </td>
+                                    </tr>
+                                    <?php $i++ ; ?>
+                                    @endforeach
                                 @else
-        						<tr>
+                                <tr>
                                     <td colspan="3">Nothing approved yet.</td>
                                 </tr>                        
                                 @endif

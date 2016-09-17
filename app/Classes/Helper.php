@@ -475,7 +475,7 @@
 	    							  " ;
 
 	    	$sms_message 			= "Hi $receiver_name," ;
-	    	$sms_message 			.= "$sender_name was assigned to you fon an amount of R $amount" ;
+	    	$sms_message 			.= "$sender_name was assigned to you fon an amount of R $amount, " ;
 	    	$sms_message 			.= "Please ensure you login to http://prestigewallet.com/signin to accept their Donation once the money reflects on your account." ;
 
 	    	$user_reserved_info 	= [

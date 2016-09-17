@@ -104,7 +104,7 @@ class AuthenticationController extends Controller
     public function signin(Request $request) {
 
 	    if ( Auth::attempt(['email' => $request->username, 'password' => $request->password]) ) {
-            //return Auth::user()->is_active ;
+            
             if ( Auth::user()->is_active == 0 ) {
                 Session::flash('account_not_found', 'Your account has been blocked, please contact support for more info.') ;
                 return redirect()->back()->withInput() ;
