@@ -17,6 +17,8 @@ use App\Models\User ;
 
 use App\Classes\Helper ;
 
+use Auth ;
+
 class FrontController extends Controller
 {
 
