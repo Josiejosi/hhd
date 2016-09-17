@@ -28,6 +28,19 @@ class AdminController extends Controller
         $this->middleware('auth') ;
     }
 
+    public function index() {
+        $data = [
+            'elite'                 => User::where('is_special_user',1)->count(),
+            'elite_members'         => User::where('is_special_user',1)->get(),
+            'members'               => User::where('is_special_user',0)->count(),
+            'scheduled'             => ScheduledDonation::count(),
+            'donation'              => ActiveDonation::count(),
+            'admin_name'            => "Admin",
+        ] ;
+
+        return view( 'elite.dashboard', $data ) ;
+    }
+
     public function login() {
         return view( 'elite.login' ) ;
     }
