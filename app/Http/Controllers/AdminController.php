@@ -35,7 +35,7 @@ class AdminController extends Controller
             'members'               => User::where('is_special_user',0)->count(),
             'scheduled'             => ScheduledDonation::count(),
             'donation'              => ActiveDonation::count(),
-            'admin_name'            => "Admin",
+            'admin_name'            => Auth::user()->first_name,
         ] ;
 
         return view( 'elite.dashboard', $data ) ;

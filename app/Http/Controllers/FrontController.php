@@ -29,7 +29,6 @@ class FrontController extends Controller
     public function postLogin( Request $request ) {
 
         if ( Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
-
             if ( Auth::user()->is_active == 0 ) {
                 return redirect()->back()->withInput()->with('account_not_found', 'Your account has been blocked, please contact support for more info.') ;
             }
