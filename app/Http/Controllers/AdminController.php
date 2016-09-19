@@ -160,7 +160,7 @@ class AdminController extends Controller
 
     public function postEliteDonation( Request $request ) {
 
-        if ( isset($request->email) || isset($request->amount) ) {
+        if ( $request->has('email') || $request->has('amount') ) {
             $donation                =  ActiveDonation::create([
                 "receiver"           => $request->email,
                 "sender"             => 0,
