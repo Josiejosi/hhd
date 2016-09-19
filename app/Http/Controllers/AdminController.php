@@ -173,10 +173,14 @@ class AdminController extends Controller
                 "is_processed"       => 0,
             ]);
 
-            if ( $donation ) return redirect()->back()->with('message', 'Successfully added!') ;
-            else return redirect()->back()->withInput()->with('message', 'Failed!') ;
+            if ( $donation ) {
+                return redirect()->back()->with('message', 'Successfully added!') ;
+            } else {
+                return redirect()->back()->withInput()->with('message', 'Failed!') ;
+            }
+
         } else {
-           else return redirect()->back()->withInput()->with('error', 'Please select a member and assign an amount to member.') ; 
+          return redirect()->back()->withInput()->with('error', 'Please select a member and assign an amount to member.') ; 
         }
     }
 
