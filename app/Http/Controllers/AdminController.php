@@ -159,20 +159,25 @@ class AdminController extends Controller
     }
 
     public function postEliteDonation( Request $request ) {
-        $donation                =  ActiveDonation::create([
-            "receiver"           => $request->email,
-            "sender"             => 0,
-            "amount"             =>  ( $request->amount + ( $request->amount * ( Helper::getActiveSetting()->percentage / 100 ) ) ),
-            "created_at"         => Carbon::now(),
-            "booked_at"          => "",
-            "donation_percentage"=> Helper::getActiveSetting()->percentage,
-            "donation_days"      => Helper::getActiveSetting()->days,
-            "donation_status"    => 0,
-            "is_processed"       => 0,
-        ]);
 
-        if ( $donation ) return redirect()->back()->with('message', 'Successfully added!') ;
-        else return redirect()->back()->withInput()->with('message', 'Failed!') ;
+        if ( isset($request->email) || isset($request->amount) ) {
+            $donation                =  ActiveDonation::create([
+                "receiver"           => $request->email,
+                "sender"             => 0,
+                "amount"             => $request->amount,
+                "created_at"         => Carbon::now(),
+                "booked_at"          => "",
+                "donation_percentage"=> Helper::getActiveSetting()->percentage,
+                "donation_days"      => Helper::getActiveSetting()->days,
+                "donation_status"    => 0,
+                "is_processed"       => 0,
+            ]);
+
+            if ( $donation ) return redirect()->back()->with('message', 'Successfully added!') ;
+            else return redirect()->back()->withInput()->with('message', 'Failed!') ;
+        } else {
+           else return redirect()->back()->withInput()->with('error', 'Please select a member and assign an amount to member.') ; 
+        }
     }
 
     public function postSettings( Request $request ) {

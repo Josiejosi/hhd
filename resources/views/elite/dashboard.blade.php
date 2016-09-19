@@ -112,8 +112,13 @@
                 <div class="portlet-body">
 
                     @if (Session::has('message'))
-                        <span class="alert alert-warning">
-                            <strong>{{ Session::get('message') }}</strong>
+                        <span class="alert alert-success">
+                            <strong>{{ session('message') }}</strong>
+                        </span>
+                    @endif
+                    @if (Session::has('error'))
+                        <span class="alert alert-success">
+                            <strong>{{ session('error') }}</strong>
                         </span>
                     @endif
                     <form action="{{url('/admin/create/donation/elite')}}" method="post">
