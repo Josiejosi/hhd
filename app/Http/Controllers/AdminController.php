@@ -160,6 +160,16 @@ class AdminController extends Controller
 
     public function postEliteDonation( Request $request ) {
 
+        $validator                      = Validator::make($request->all(), [
+            'email'                     => 'required',
+            'amount'                    => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput() ;
+        }
+
         if ( $request->has('email') || $request->has('amount') ) {
             $donation                =  ActiveDonation::create([
                 "receiver"           => $request->email,
