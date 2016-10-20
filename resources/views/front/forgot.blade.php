@@ -11,9 +11,9 @@
                 <h3><i class="fa fa-unlock"></i> Login to your account</h3>
 
                 @if (Session::has('account_creation_error'))
-                    <span class="alert alert-warning">
+                    <div class="alert alert-warning">
                         <strong>{{ Session::get('account_not_found') }}</strong>
-                    </span>
+                    </div>
                 @endif
 
                 <form action="{{url('/forgot')}}" method="post">

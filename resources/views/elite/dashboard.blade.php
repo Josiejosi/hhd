@@ -122,14 +122,14 @@
                     @endif
 
                     @if (Session::has('message'))
-                        <span class="alert alert-success">
+                        <div class="alert alert-success">
                             <strong>{{ session('message') }}</strong>
-                        </span>
+                        </div>
                     @endif
                     @if (Session::has('error'))
-                        <span class="alert alert-success">
+                        <div class="alert alert-success">
                             <strong>{{ session('error') }}</strong>
-                        </span>
+                        </div>
                     @endif
                     <form action="{{url('/admin/create/donation/elite')}}" method="post">
 

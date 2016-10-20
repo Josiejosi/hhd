@@ -26,9 +26,9 @@
                                 <div class="alert alert-info">An SMS was send to your phone, please provide the verification code to continue using the app</div>
                                 @endif
                                 @if (Session::has('account_not_found'))
-                                    <span class="alert alert-warning">
+                                    <div class="alert alert-warning">
                                         <strong>{{ Session::get('account_not_found') }}</strong>
-                                    </span>
+                                    </div>
                                 @endif
                                 <div class="form-group col-sm-12">
                                     <label for="verification_code">Enter Verification code <span class="text-lightred" style="font-size: 15px">*</span></label>

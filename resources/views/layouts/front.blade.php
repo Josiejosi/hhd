@@ -1,172 +1,273 @@
 <!DOCTYPE html>
-<html>
-<head>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>HHD - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="HHD, holding hands donations" />
+    <meta name="keywords" content="HHD, holding hands donations" />
+    <meta name="author" content="FREEHTML5.CO" />
 
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico">
 
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic|Raleway:300,400,500,600,700" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{asset('css/animate.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{asset('css/flexslider.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{asset('css/magnific-popup.css')}}" type="text/css" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+    
+    <link rel="stylesheet" href="{{asset('css/animate.css')}}">
 
-    <link rel="stylesheet" type="text/css" href="{{asset('css/settings.css')}}" media="screen" />
+    <link rel="stylesheet" href="{{asset('css/icomoon.css')}}">
 
-    <link rel="stylesheet" href="{{asset('css/animsition.css')}}">
-    <script type="text/javascript" src="{{asset('js/jquery-1.11.2.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('css/simple-line-icons.css')}}">
 
-    <link rel="stylesheet" href="{{asset('css/style.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{asset('css/custom.min.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+
+
+    <style>
+    #colour-variations {
+        padding: 10px;
+        -webkit-transition: 0.5s;
+        -o-transition: 0.5s;
+        transition: 0.5s;
+        width: 140px;
+        position: fixed;
+        left: 0;
+        top: 100px;
+        z-index: 999999;
+        background: #fff;
+        /*border-radius: 4px;*/
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        -webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        -moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        -ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+    }
+    #colour-variations.sleep {
+        margin-left: -140px;
+    }
+    #colour-variations h3 {
+        text-align: center;;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #777;
+        margin: 0 0 10px 0;
+        padding: 0;;
+    }
+    #colour-variations ul,
+    #colour-variations ul li {
+        padding: 0;
+        margin: 0;
+    }
+    #colour-variations li {
+        list-style: none;
+        display: inline;
+    }
+    #colour-variations li a {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        float: left;
+        margin: 5px;
+    }
+    #colour-variations li a[data-theme="style"] {
+        background: #6173f4;
+    }
+    #colour-variations li a[data-theme="pink"] {
+        background: #f64662;
+    }
+    #colour-variations li a[data-theme="blue"] {
+        background: #2185d5;
+    }
+    #colour-variations li a[data-theme="turquoise"] {
+        background: #00b8a9;
+    }
+    #colour-variations li a[data-theme="orange"] {
+        background: #ff6600;
+    }
+    #colour-variations li a[data-theme="lightblue"] {
+        background: #5585b5;
+    }
+    #colour-variations li a[data-theme="brown"] {
+        background: #a03232;
+    }
+    #colour-variations li a[data-theme="green"] {
+        background: #65d269;
+    }
+
+    .option-toggle {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-top: 5px;
+        margin-right: -30px;
+        width: 30px;
+        height: 30px;
+        background: #f64662;
+        text-align: center;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        -webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        -moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        -ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+    }
+    .option-toggle i {
+        top: 2px;
+        position: relative;
+    }
+    .option-toggle:hover, .option-toggle:focus, .option-toggle:active {
+        color:  #fff;
+        text-decoration: none;
+        outline: none;
+    }
+
+    /** NEW STYLING **/
+
+
+
+    #fh5co-about-us, #fh5co-testimonials {
+        padding: 7em 0;
+        background: #c7eac9;
+        color: #fff;
+    }
+
+    #footer {
+        color: #307379 ;
+        background: #c7eac9;
+    }
+
+    #fh5co-about-us {
+        background-image: url('imgs/bg-front.png') ;
+    }
+
+    @media screen and (max-width: 768px)
+    #fh5co-header .navbar-brand {
+        color: #c7eac9 !important;
+    }
+
+
+    .section-heading h3 {
+        font-weight: 300;
+        line-height: 1.5;
+        color: #eeeeee;
+        font-size: 20px ;
+    }
+
+    #fh5co-testimonials .section-heading .subtext h3,
+    #fh5co-testimonials .section-heading h2,
+    #fh5co-testimonials .section-heading p,
+    #fh5co-testimonials .box-testimony .author,
+    #fh5co-testimonials .box-testimony a,
+    #fh5co-testimonials .box-testimony .author .subtext,
+    #fh5co-testimonials .box-testimony blockquote p,
+    #fh5co-features .fh5co-service .fh5co-desc h3,
+    #fh5co-features .fh5co-service .fh5co-desc h3,
+    .section-heading h2 {
+        color: #307379 ;
+    }
+
+    #fh5co-accounts {
+        background-color: #307379 ;
+    }
+
+#fh5co-features .fh5co-service .fh5co-icon i {
+    font-size: 36px;
+    color: #386466;
+}
+
+    /** END OF NEW STYLING **/
+    </style>
+    <!-- End demo purposes only -->
+
+
+    <!-- Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
-    	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <script src="js/respond.min.js"></script>
     <![endif]-->
 
-    <title>PrestigeWallet | Home</title>
+    </head>
+    <body>
+    <header role="banner" id="fh5co-header">
+            <div class="container">
+                <!-- <div class="row"> -->
+                <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <!-- Mobile Toggle Menu Button -->
+                    <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+                    <a class="navbar-brand" href="{{ url('/') }}">HHD</a> 
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="{{ url('/') }}"><span>Home</span></a></li>
+                    <li><a href="{{ url('/philosophy') }}"><span>Philosophy</span></a></li>
+                    <li><a href="{{ url('/key_rule') }}"><span>Key Rule</span></a></li>
+                    <li><a href="{{ url('/legality') }}"><span>Legality</span></a></li>
+                    <li><a href="{{ url('/support') }}"><span>Support</span></a></li>
+                    <li><a href="{{ url('/FAQs') }}"><span>FAQs</span></a></li>
+                    <li><a href="{{ url('/news') }}"><span>News</span></a></li>
+                    <li><a href="{{ url('/signin') }}"><span>Login</span></a></li>
+                  </ul>
+                </div>
+                </nav>
+              <!-- </div> -->
+          </div>
+    </header>
 
-    <style type="text/css">
-        
-        #header.transparent-header.light #main-navbar ul li a, 
-        .tp-caption.white_heavy_70, 
-        .white_heavy_70,
-        .tp-caption.light_medium_20, 
-        .light_medium_20, 
-        .text-white, 
-        .text-greensea {
-            color: #449090;
-        }
-
-        .myBtn.myBtn-light {
-            background-color: #0f494c;
-            color: #0f494c;
-            text-shadow: none !important;
-        }
-
-        .parallax-1 {
-            background: url({{asset('imgs/para.jpg')}}) 0% -150px;
-        }
-    </style>
-
-</head>
-
-<body>
-
-    <div id="wrapper" class="clearfix animsition"> <!-- Page Wrapper -->
-
-
-        @include('includes.header')
-
-        @yield('content')
-
-        <!--  Footer  -->
-        <footer id="footer">
-
-            <div class="footer-main">
-                <div class="container">
+    <div id="fh5co-about-us" data-section="about">
+        <div class="container">
+            <div class="row row-bottom-padded-lg" id="about-us">
+                <div class="col-md-12 section-heading text-center">
                     <div class="row">
-
-                        <div class="col-md-4">
-
-                            <div class="widget widget-about">
-                                <h2>PrestigeWallet</h2>
-                                <p>
-                                    IT cant get simpler that this
-                                </p>
-                            </div>
-
+                        <div class="col-md-8 col-md-offset-2 to-animate">
+                            <h3>The Opportunities For Your Financial Freedom</h3>
+                    <p>Holding Hands Donations, is an internetional Fund Exchange System formulated to provide financial growth with the invested funds.</p>
                         </div>
-
-                        <div class="col-md-4">
-
-                            <div class="widget widget-contact mt-20-md">
-                                <h4><strong>Contact</strong> Us</h4>
-                                <address>
-                                    <strong>Email:</strong> <a href="info@prestigewallet.com">info@prestigewallet.com</a><br>
-                                </address>
-                            </div>
-
-
-                        </div>
-
-
                     </div>
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="row">
+        </div>
+    </div>
 
-                        <div class="col-md-4 copyright">
-                            <p class="mb-0">
-                                &copy; Copyright 2016 by <a href="#">PrestigeWallet</a>. All Rights Reserved.
-                            </p>
-                        </div>
+    @yield('content')
 
-                        <div class="col-md-8 text-right text-center-md">
-
-                            <a class="social-icon social-facebook" href="#">
-                                 <div class="front">
-                                    <i class="fa fa-facebook"></i>
-                                 </div>
-                                 <div class="back">
-                                    <i class="fa fa-facebook"></i>
-                                 </div>
-                            </a>
-
-                            <a class="social-icon social-twitter" href="#">
-                                 <div class="front">
-                                    <i class="fa fa-twitter"></i>
-                                 </div>
-                                 <div class="back">
-                                    <i class="fa fa-twitter"></i>
-                                 </div>
-                            </a>
-
-                        </div>
-
-                    </div>
+    <footer id="footer" role="contentinfo">
+        <div class="container">
+            <div class="row row-bottom-padded-sm">
+                <div class="col-md-12">
+                    <p class="copyright text-center">&copy; 2016 <a href="http://holdinghandsdonations.com">HHD</a>. All Rights Reserved. </p>
                 </div>
             </div>
-
-        </footer><!-- #footer end -->
-
-    </div><!-- #wrapper end -->
-
-    <div id="gotoTop" class="fa fa-angle-up hidden-md"></div>
-
-
-    <!-- BEGIN JIVOSITE CODE {literal} -->
-    <script type='text/javascript'>
-    (function(){ var widget_id = 'DT9ktKYFrl';var d=document;var w=window;function l(){
-    var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);}if(d.readyState=='complete'){l();}else{if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();</script>
-    <!-- {/literal} END JIVOSITE CODE -->
-
-
-
-    <script type="text/javascript" src="{{asset('js/jquery-1.11.2.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/superfish.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jRespond.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/SmoothScroll.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.appear.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.stellar.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.flexslider-min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.countTo.js')}}"></script>
-
-    <script type="text/javascript" src="{{asset('js/jquery.themepunch.tools.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.themepunch.revolution.min.js')}}"></script>
-
-    <script src="{{asset('js/jquery.animsition.min.js')}}"></script>
-
-
-    <script type="text/javascript" src="{{asset('js/global.js')}}"></script>
-
-
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <ul class="social social-circle">
+                        <li><a href="#"><i class="icon-twitter"></i></a></li>
+                        <li><a href="#"><i class="icon-facebook"></i></a></li>
+                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                        <li><a href="#"><i class="icon-google-plus"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/jquery.waypoints.min.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"></script>
     @yield('js')
-
-</body>
+    </body>
 </html>

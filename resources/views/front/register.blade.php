@@ -11,9 +11,9 @@
                     <h3><i class="fa fa-lock"></i> Register a new account</h3>
 
                     @if (Session::has('account_creation_error'))
-                        <span class="alert alert-warning">
+                        <div class="alert alert-warning">
                             <strong>{{ Session::get('account_creation_error') }}</strong>
-                        </span>
+                        </div>
                     @endif
 
                     <form action="{{url('/signup')}}" method="post">

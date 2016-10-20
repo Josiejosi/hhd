@@ -10,9 +10,9 @@
                 <h3><i class="fa fa-unlock"></i> Login to your account</h3>
 
                 @if (Session::has('account_not_found'))
-                    <span class="alert alert-warning">
+                    <div class="alert alert-warning">
                         <strong>{{ Session::get('account_not_found') }}</strong>
-                    </span>
+                    </div>
                 @endif
 
                 <form action="{{url('/signin')}}" method="post">
@@ -45,7 +45,7 @@
                 </form>
 
                 <div class="header-line mt-40">
-                    <h4><a href="{{url('/signup')}}">Or Create new account</a></h4>
+                    <h4><a href="{{url('/join')}}">Or Create new account</a></h4>
                 </div>
 
 

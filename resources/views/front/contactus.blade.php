@@ -13,9 +13,9 @@
                         <div class="col-md-8">
 
                             @if (Session::has('account_not_found'))
-                                <span class="alert alert-warning">
+                                <div class="alert alert-warning">
                                     <strong>{{ Session::get('account_not_found') }}</strong>
-                                </span>
+                                </div>
                             @endif
 
                             <div class="heading-block mb-60">
