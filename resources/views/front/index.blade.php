@@ -17,6 +17,7 @@
 
         </div>
     </div>
+
     <div id="fh5co-our-services" data-section="services">
         <div class="container">
             <div class="row row-bottom-padded-sm">
@@ -134,7 +135,7 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h2 class="single-animate animate-features-1">
-                        <a href='{{ url('/join') }}' class='btn btn-success btn-lg'>Create Account</a>
+                        <a href='{{ url('/signup') }}' class='btn btn-success btn-lg'>Create Account</a>
                     </h2>
                 </div>
             </div>

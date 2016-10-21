@@ -66,7 +66,31 @@ class FrontController extends Controller
     }
 
     public function contactus() {
-    	return view('front.contactus') ;
+        return view('front.contactus') ;
+    }
+
+    public function philosophy() {
+        return view('front.philosophy') ;
+    }
+
+    public function key_rule() {
+        return view('front.key_rule') ;
+    }
+
+    public function legality() {
+        return view('front.legality') ;
+    }
+
+    public function support() {
+        return view('front.support') ;
+    }
+
+    public function FAQs() {
+        return view('front.FAQs') ;
+    }
+
+    public function news() {
+        return view('front.news') ;
     }
 
     public function post_contactus(Request $request) {

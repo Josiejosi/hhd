@@ -2,6 +2,19 @@
 
 @section ('content')
 
+    <div id="fh5co-cut">
+        <div class="container">
+            <div class="row row-bottom-padded-lg">
+                <div class="col-md-12 section-heading text-center">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 to-animate"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <section id="content">
         <div class="content-wrap">
 
@@ -207,7 +220,7 @@
                             <div class="form-group col-md-12">
                                 <label>
                                     <div class="checker"><span><input type="checkbox" id="accepted_disclimar"></span></div> 
-                                    Having read the <a href="{{url('/warning')}}">WARNING</a> , I am well aware fully of the risks. Being in sound mind, I have decided to become a member of PrestigeWallet. 
+                                    Having read the <a href="{{url('/warning')}}">WARNING</a> , I am well aware fully of the risks. Being in sound mind, I have decided to become a member of HHD. 
                                 </label>
                             </div>
 

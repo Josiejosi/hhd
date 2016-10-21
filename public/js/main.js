@@ -167,6 +167,24 @@
 		}
 
 	};
+	var NavWayPoint = function() {
+
+		if ( $('#fh5co-cut').length > 0 ) {
+			$('#fh5co-cut').waypoint( function( direction ) {
+										
+				if( direction === 'down' && !$(this).hasClass('animated') ) {
+
+
+					setTimeout(aboutAnimate, 200);
+
+					
+					$(this.element).addClass('animated');
+						
+				}
+			} , { offset: '5%' } );
+		}
+
+	};
 
 	// Team
 	var teamAnimate = function() {
@@ -404,6 +422,8 @@
 		clickMenu();
 		windowScroll();
 		navigationSection();
+
+		NavWayPoint() ;
 
 		aboutWayPoint();
 		teamWayPoint();

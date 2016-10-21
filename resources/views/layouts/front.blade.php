@@ -10,7 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="HHD, holding hands donations" />
     <meta name="keywords" content="HHD, holding hands donations" />
-    <meta name="author" content="FREEHTML5.CO" />
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="favicon.ico">
@@ -18,172 +17,204 @@
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
     
     <link rel="stylesheet" href="{{asset('css/animate.css')}}">
-
     <link rel="stylesheet" href="{{asset('css/icomoon.css')}}">
-
     <link rel="stylesheet" href="{{asset('css/simple-line-icons.css')}}">
-
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
 
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
 
 
     <style>
-    #colour-variations {
-        padding: 10px;
-        -webkit-transition: 0.5s;
-        -o-transition: 0.5s;
-        transition: 0.5s;
-        width: 140px;
-        position: fixed;
-        left: 0;
-        top: 100px;
-        z-index: 999999;
-        background: #fff;
-        /*border-radius: 4px;*/
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-        -webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-        -moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-        -ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-        box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-    }
-    #colour-variations.sleep {
-        margin-left: -140px;
-    }
-    #colour-variations h3 {
-        text-align: center;;
-        font-size: 11px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: #777;
-        margin: 0 0 10px 0;
-        padding: 0;;
-    }
-    #colour-variations ul,
-    #colour-variations ul li {
-        padding: 0;
-        margin: 0;
-    }
-    #colour-variations li {
-        list-style: none;
-        display: inline;
-    }
-    #colour-variations li a {
-        width: 20px;
-        height: 20px;
-        position: relative;
-        float: left;
-        margin: 5px;
-    }
-    #colour-variations li a[data-theme="style"] {
-        background: #6173f4;
-    }
-    #colour-variations li a[data-theme="pink"] {
-        background: #f64662;
-    }
-    #colour-variations li a[data-theme="blue"] {
-        background: #2185d5;
-    }
-    #colour-variations li a[data-theme="turquoise"] {
-        background: #00b8a9;
-    }
-    #colour-variations li a[data-theme="orange"] {
-        background: #ff6600;
-    }
-    #colour-variations li a[data-theme="lightblue"] {
-        background: #5585b5;
-    }
-    #colour-variations li a[data-theme="brown"] {
-        background: #a03232;
-    }
-    #colour-variations li a[data-theme="green"] {
-        background: #65d269;
-    }
+        #colour-variations {
+            padding: 10px;
+            -webkit-transition: 0.5s;
+            -o-transition: 0.5s;
+            transition: 0.5s;
+            width: 140px;
+            position: fixed;
+            left: 0;
+            top: 100px;
+            z-index: 999999;
+            background: #fff;
+            /*border-radius: 4px;*/
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            -webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            -moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            -ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        }
+        #colour-variations.sleep {
+            margin-left: -140px;
+        }
+        #colour-variations h3 {
+            text-align: center;;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #777;
+            margin: 0 0 10px 0;
+            padding: 0;;
+        }
+        #colour-variations ul,
+        #colour-variations ul li {
+            padding: 0;
+            margin: 0;
+        }
+        #colour-variations li {
+            list-style: none;
+            display: inline;
+        }
+        #colour-variations li a {
+            width: 20px;
+            height: 20px;
+            position: relative;
+            float: left;
+            margin: 5px;
+        }
+        #colour-variations li a[data-theme="style"] {
+            background: #6173f4;
+        }
+        #colour-variations li a[data-theme="pink"] {
+            background: #f64662;
+        }
+        #colour-variations li a[data-theme="blue"] {
+            background: #2185d5;
+        }
+        #colour-variations li a[data-theme="turquoise"] {
+            background: #00b8a9;
+        }
+        #colour-variations li a[data-theme="orange"] {
+            background: #ff6600;
+        }
+        #colour-variations li a[data-theme="lightblue"] {
+            background: #5585b5;
+        }
+        #colour-variations li a[data-theme="brown"] {
+            background: #a03232;
+        }
+        #colour-variations li a[data-theme="green"] {
+            background: #65d269;
+        }
 
-    .option-toggle {
-        position: absolute;
-        right: 0;
-        top: 0;
-        margin-top: 5px;
-        margin-right: -30px;
-        width: 30px;
-        height: 30px;
-        background: #f64662;
-        text-align: center;
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-        color: #fff;
-        cursor: pointer;
-        -webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-        -moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-        -ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-        box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-    }
-    .option-toggle i {
-        top: 2px;
-        position: relative;
-    }
-    .option-toggle:hover, .option-toggle:focus, .option-toggle:active {
-        color:  #fff;
-        text-decoration: none;
-        outline: none;
-    }
+        .option-toggle {
+            position: absolute;
+            right: 0;
+            top: 0;
+            margin-top: 5px;
+            margin-right: -30px;
+            width: 30px;
+            height: 30px;
+            background: #f64662;
+            text-align: center;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            -webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            -moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            -ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        }
+        .option-toggle i {
+            top: 2px;
+            position: relative;
+        }
+        .option-toggle:hover, .option-toggle:focus, .option-toggle:active {
+            color:  #fff;
+            text-decoration: none;
+            outline: none;
+        }
 
-    /** NEW STYLING **/
-
-
-
-    #fh5co-about-us, #fh5co-testimonials {
-        padding: 7em 0;
-        background: #c7eac9;
-        color: #fff;
-    }
-
-    #footer {
-        color: #307379 ;
-        background: #c7eac9;
-    }
-
-    #fh5co-about-us {
-        background-image: url('imgs/bg-front.png') ;
-    }
-
-    @media screen and (max-width: 768px)
-    #fh5co-header .navbar-brand {
-        color: #c7eac9 !important;
-    }
+        /** NEW STYLING **/
 
 
-    .section-heading h3 {
-        font-weight: 300;
-        line-height: 1.5;
-        color: #eeeeee;
-        font-size: 20px ;
-    }
 
-    #fh5co-testimonials .section-heading .subtext h3,
-    #fh5co-testimonials .section-heading h2,
-    #fh5co-testimonials .section-heading p,
-    #fh5co-testimonials .box-testimony .author,
-    #fh5co-testimonials .box-testimony a,
-    #fh5co-testimonials .box-testimony .author .subtext,
-    #fh5co-testimonials .box-testimony blockquote p,
-    #fh5co-features .fh5co-service .fh5co-desc h3,
-    #fh5co-features .fh5co-service .fh5co-desc h3,
-    .section-heading h2 {
-        color: #307379 ;
-    }
+        #fh5co-about-us, #fh5co-testimonials {
+            padding: 7em 0;
+            background: #c7eac9;
+            color: #fff;
+        }
 
-    #fh5co-accounts {
-        background-color: #307379 ;
-    }
+        #footer {
+            color: #307379 ;
+            background: #c7eac9;
+        }
 
-#fh5co-features .fh5co-service .fh5co-icon i {
-    font-size: 36px;
-    color: #386466;
-}
+        #fh5co-about-us {
+            background-image: url('imgs/bg-front.png') ;
+        }
+
+        #fh5co-cut {
+            background-image: url('imgs/cut-bg-front.png') ;
+        }
+
+        @media screen and (max-width: 768px)
+        #fh5co-header .navbar-brand {
+            color: #c7eac9 !important;
+        }
+
+
+        .section-heading h3 {
+            font-weight: 300;
+            line-height: 1.5;
+            color: #eeeeee;
+            font-size: 20px ;
+        }
+
+        #fh5co-testimonials .section-heading .subtext h3,
+        #fh5co-testimonials .section-heading h2,
+        #fh5co-testimonials .section-heading p,
+        #fh5co-testimonials .box-testimony .author,
+        #fh5co-testimonials .box-testimony a,
+        #fh5co-testimonials .box-testimony .author .subtext,
+        #fh5co-testimonials .box-testimony blockquote p,
+        #fh5co-features .fh5co-service .fh5co-desc h3,
+        #fh5co-features .fh5co-service .fh5co-desc h3,
+        .section-heading h2 {
+            color: #307379 ;
+        }
+
+        #fh5co-accounts {
+            background-color: #307379 ;
+        }
+
+        #fh5co-features .fh5co-service .fh5co-icon i {
+            font-size: 36px;
+            color: #386466;
+        }
+
+        .faqHeader {
+            font-size: 27px;
+            margin: 20px;
+        }
+
+        .panel-heading [data-toggle="collapse"]:after {
+            content: "\f061" ;
+            font-family: FontAwesome;
+            float: right;
+            color: #F58723;
+            font-size: 18px;
+            line-height: 22px;
+            /* rotate "play" icon from > (right arrow) to down arrow */
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+
+        .panel-heading [data-toggle="collapse"].collapsed:after {
+            /* rotate "play" icon from > (right arrow) to ^ (up arrow) */
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+            color: #454444;
+        }
 
     /** END OF NEW STYLING **/
     </style>
@@ -206,7 +237,9 @@
                 <div class="navbar-header">
                     <!-- Mobile Toggle Menu Button -->
                     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-                    <a class="navbar-brand" href="{{ url('/') }}">HHD</a> 
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        <img src="{{ asset('imgs/logo.png') }}">
+                    </a> 
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav navbar-right">
@@ -224,22 +257,6 @@
               <!-- </div> -->
           </div>
     </header>
-
-    <div id="fh5co-about-us" data-section="about">
-        <div class="container">
-            <div class="row row-bottom-padded-lg" id="about-us">
-                <div class="col-md-12 section-heading text-center">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 to-animate">
-                            <h3>The Opportunities For Your Financial Freedom</h3>
-                    <p>Holding Hands Donations, is an internetional Fund Exchange System formulated to provide financial growth with the invested funds.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 
     @yield('content')
 

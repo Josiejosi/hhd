@@ -2,6 +2,20 @@
 
 @section ('content')
 
+
+    <div id="fh5co-cut">
+        <div class="container">
+            <div class="row row-bottom-padded-lg">
+                <div class="col-md-12 section-heading text-center">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 to-animate"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <section id="content">
         <div class="content-wrap">
 
@@ -37,7 +51,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <button type="submit" class="myBtn myBtn-rounded myBtn-dark m-0 mt-10">Login</button>
+                            <button type="submit" class="btn btn-lg btn-success">Login</button>
                             <a href="{{url('/forgot')}}" class="pull-right">Forgot Password?</a>
                         </div>
 
@@ -45,7 +59,7 @@
                 </form>
 
                 <div class="header-line mt-40">
-                    <h4><a href="{{url('/join')}}">Or Create new account</a></h4>
+                    <h4><a href="{{url('/signup')}}">Or Create new account</a></h4>
                 </div>
 
 
