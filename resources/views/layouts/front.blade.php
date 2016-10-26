@@ -251,6 +251,7 @@
                     <li><a href="{{ url('/FAQs') }}"><span>FAQs</span></a></li>
                     <li><a href="{{ url('/news') }}"><span>News</span></a></li>
                     <li><a href="{{ url('/signin') }}"><span>Login</span></a></li>
+                    <li><a href="{{ url('/signup') }}"><span>Register</span></a></li>
                   </ul>
                 </div>
                 </nav>
