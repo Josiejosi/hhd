@@ -167,12 +167,12 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse10">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse11">
                                     11.&nbsp;What conditions can my account be blocked?
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapse10" class="panel-collapse collapse">
+                            <div id="collapse11" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     If you have failed to transfer funds within 48 hours or uploaded a fake deposit slip or the withdrawer didn’t confirm funds transferred within 24 hours. 
                                 </div>

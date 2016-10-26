@@ -2,6 +2,19 @@
 
 @section ('content')
 
+    <div id="fh5co-cut">
+        <div class="container">
+            <div class="row row-bottom-padded-lg">
+                <div class="col-md-12 section-heading text-center">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 to-animate"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <section id="content">
         <div class="content-wrap">
             <div class="container clearfix">
@@ -15,12 +28,12 @@
                         <p class="text-default lt lead">The page you are looking for cannot be found</p>
 
                         <div class="mt-40">
-                            <a href="{{url('/')}}" class="myBtn myBtn-sm myBtn-3d myBtn-dark">
+                            <a href="{{url('/')}}" class="btn btn-lg btn-default">
                                 <i class="fa fa-home"></i> Return to home
                             </a>
                             <a 
-                                href="{{url('/contactus')}}" 
-                                class="myBtn myBtn-sm myBtn-3d myBtn-lightred">
+                                href="{{url('/support')}}" 
+                                class="btn btn-lg btn-success">
                                 <i class="fa fa-envelope-o"></i> Contact support
                             </a>
                         </div>

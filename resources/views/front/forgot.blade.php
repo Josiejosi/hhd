@@ -35,26 +35,32 @@
                     
                     <div class="row">
 
-                        <div class="form-group col-md-12">
-                            <label for="email">Email Address</label>
-                            <input 
-                                name="email" 
-                                type="text" 
-                                class="form-control myInput" 
-                                value="{{ old('email') }}"
-                                id="email">
+                        <div class="col-md-6 col-md-offset-3">
+
+                            <div class="form-group col-md-12">
+                                <label for="email">Email Address</label>
+                                <input 
+                                    name="email" 
+                                    type="text" 
+                                    class="form-control myInput" 
+                                    value="{{ old('email') }}"
+                                    id="email">
+                            </div>
+
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-md btn-success">Reset</button>
+                            </div>
+
                         </div>
 
-                        <div class="col-md-12">
-                            <button type="submit" class="myBtn myBtn-rounded myBtn-dark m-0 mt-10">Reset</button>
+                        <div class="header-line mt-40">
+                            <h4><a href="{{url('/signin')}}">Or Login</a></h4>
                         </div>
 
                     </div>
                 </form>
 
-                <div class="header-line mt-40">
-                    <h4><a href="{{url('/signin')}}">Or Login</a></h4>
-                </div>
+
 
 
             </div><!-- /login -->

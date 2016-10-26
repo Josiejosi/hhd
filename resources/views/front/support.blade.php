@@ -34,6 +34,9 @@
                     
                     <div class="row">
 
+
+                    	<div class="col-md-6 col-md-offset-3">
+
                         <div class="form-group col-md-12">
                             <label for="username">Name</label>
                             <input 
@@ -92,7 +95,10 @@
 
 
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-lg btn-success">Submit</button>
+                            <button type="submit" class="btn btn-md btn-success">Submit</button>
+                        </div>
+
+
                         </div>
 
                     </div>

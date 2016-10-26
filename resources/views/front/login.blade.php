@@ -35,24 +35,28 @@
                     
                     <div class="row">
 
-                        <div class="form-group col-md-12">
-                            <label for="username">Email Address</label>
-                            <input 
-                                name="username" 
-                                type="text" 
-                                class="form-control myInput" 
-                                value="{{ old('username') }}"
-                                id="username" required>
-                        </div>
+                        <div class="col-md-6 col-md-offset-3">
 
-                        <div class="form-group col-md-12">
-                            <label for="password">Password</label>
-                            <input name="password" type="password" class="form-control myInput" id="password" required>
-                        </div>
+                            <div class="form-group col-md-12">
+                                <label for="username">Email Address</label>
+                                <input 
+                                    name="username" 
+                                    type="text" 
+                                    class="form-control myInput" 
+                                    value="{{ old('username') }}"
+                                    id="username" required>
+                            </div>
 
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-lg btn-success">Login</button>
-                            <a href="{{url('/forgot')}}" class="pull-right">Forgot Password?</a>
+                            <div class="form-group col-md-12">
+                                <label for="password">Password</label>
+                                <input name="password" type="password" class="form-control myInput" id="password" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-md btn-success">Login</button>
+                                <a href="{{url('/forgot')}}" class="pull-right">Forgot Password?</a>
+                            </div>
+
                         </div>
 
                     </div>
