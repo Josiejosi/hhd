@@ -86,6 +86,7 @@
                                             value="{{ old('dob') }}"
                                             type="text" 
                                             class="form-control myInput" 
+                                            data-mask="____-__-__"
                                             id="cell_phone">
 
                                             @if ($errors->has('dob'))
@@ -407,6 +408,22 @@
                                         @endif 
                                 </div>
 
+                                <div class="form-group col-md-12">
+                                    <h5><i class="fa fa-btc"></i> Bitcoin Details</h5>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label for="bitcoin_address">Bitcoin Address <span class="text-lightred" style="font-size: 15px">*</span></label>
+                                    <input name="bitcoin_address" 
+                                        value="{{ old('bitcoin_address') }}"
+                                        type="text" class="form-control myInput" id="bitcoin_address">
+                                    @if ($errors->has('bitcoin_address'))
+                                        <span class="help-block error-message">
+                                            <strong>{{ $errors->first('bitcoin_address') }}</strong>
+                                        </span>
+                                    @endif 
+                                </div>
+
 
                                 <div class="form-group col-md-12">
                                     <h5><i class="fa fa-money"></i> Banking Details</h5>
@@ -501,12 +518,12 @@
                                 <div class="form-group col-md-12">
                                     <label>
                                         <div class="checker"><span><input type="checkbox" id="accepted_disclimar"></span></div> 
-                                        Having read the <a href="{{url('/legality')}}">WARNING</a> , I am well aware fully of the risks. Being in sound mind, I have decided to become a member of HHD. 
+                                        Having read the <a href="{{url('/legality')}}">LEGALITY</a> , I am well aware fully of the risks. Being in sound mind, I have decided to become a member of HHD. 
                                     </label>
                                 </div>
 
                                 <div class="col-md-12">
-                                    <button type="submit" id="submit_btn" class="btn btn-md btn-success">Register Now</button>
+                                    <button type="submit" id="submit_btn" class="btn btn-md btn-success">REGISTER NOW</button>
                                 </div>
 
                             </div>
@@ -534,6 +551,46 @@
         $("#accepted_disclimar").on("click", function() {
             $("#submit_btn").show() ;
         }) ;
+
+        Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
+
+        function applyDataMask(field) {
+            var mask = field.dataset.mask.split('');
+            
+            // For now, this just strips everything that's not a number
+            function stripMask(maskedData) {
+                function isDigit(char) {
+                    return /\d/.test(char);
+                }
+                return maskedData.split('').filter(isDigit);
+            }
+            
+            // Replace `_` characters with characters from `data`
+            function applyMask(data) {
+                return mask.map(function(char) {
+                    if (char != '_') return char;
+                    if (data.length == 0) return char;
+                    return data.shift();
+                }).join('')
+            }
+            
+            function reapplyMask(data) {
+                return applyMask(stripMask(data));
+            }
+            
+            function changed() {   
+                var oldStart = field.selectionStart;
+                var oldEnd = field.selectionEnd;
+                
+                field.value = reapplyMask(field.value);
+                
+                field.selectionStart = oldStart;
+                field.selectionEnd = oldEnd;
+            }
+            
+            field.addEventListener('click', changed)
+            field.addEventListener('keyup', changed)
+        }
 
     </script>
     
