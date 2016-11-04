@@ -109,9 +109,9 @@ class AuthenticationController extends Controller
                     "emails.confirm"
                 ) ;
 
-               $sms_message = "Hi " . $request->first_name . " " . $request->last_name . ", your verification code to complete your profile is:  $verification_code" ;
+/*               $sms_message = "Hi " . $request->first_name . " " . $request->last_name . ", your verification code to complete your profile is:  $verification_code" ;
 
-                Helper::send_sms( $sms_message, $request->cell_phone) ;
+                Helper::send_sms( $sms_message, $request->cell_phone) ;*/
 
 		    	return redirect()->intended( 'home' ) ;
 	        }
