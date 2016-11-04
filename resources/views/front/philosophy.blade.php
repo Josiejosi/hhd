@@ -20,9 +20,18 @@
 
             <div class="container clearfix w-3xl">
 
-                <h3><i class="fa fa-exclamation-triangle"></i> Philosophy</h3>
+                <h2><i class="fa fa-university"></i> Philosophy</h2>
                
 
+                <h4 style="font-size: 14px; line-height: 22px;">
+                    After your donation funds matured in 30 days you will receive 100% of your donation profits, 
+                    the system will automatically reinvest for you. 
+                    The reason is to sustain the system so that people don’t run away with the system funds. 
+                    And create you an income every 30 days which will help eliminate poverty and unemployment.
+                </h4>
+                <div class="round hollow text-center">
+                    The system allows you to create two donations per month.
+                </div>
 
             </div>
 

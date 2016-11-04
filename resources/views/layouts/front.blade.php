@@ -216,6 +216,37 @@
             color: #454444;
         }
 
+        .error-message {
+            font-size: 12px ;
+            color: #f29191 ;
+            font-style: italic; 
+        }
+
+        #fh5co-header {
+            position: absolute;
+            z-index: 99;
+            width: 100%;
+            opacity: 1;
+            top: 0;
+            margin-top: 0px ;
+            background-color: #fff;
+        }
+
+        #fh5co-header #navbar li a span {
+            position: relative;
+            display: block;
+            padding-bottom: 2px;
+            color: #307379;
+        }
+
+        .navbar-brand {
+            float: left;
+            padding: 15px 15px;
+            font-size: 18px;
+            line-height: 20px;
+            height: 70px;
+        }
+
     /** END OF NEW STYLING **/
     </style>
     <!-- End demo purposes only -->
@@ -245,7 +276,7 @@
                   <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="{{ url('/') }}"><span>Home</span></a></li>
                     <li><a href="{{ url('/philosophy') }}"><span>Philosophy</span></a></li>
-                    <li><a href="{{ url('/key_rule') }}"><span>Key Rule</span></a></li>
+                    <li><a href="{{ url('/how_it_works') }}"><span>How it works</span></a></li>
                     <li><a href="{{ url('/legality') }}"><span>Legality</span></a></li>
                     <li><a href="{{ url('/support') }}"><span>Support</span></a></li>
                     <li><a href="{{ url('/FAQs') }}"><span>FAQs</span></a></li>

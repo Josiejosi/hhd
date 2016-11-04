@@ -29,7 +29,11 @@ class TransactionController extends Controller
     public function index() {
     	
     	$transactions 					= ActiveDonation::where( 'receiver', Auth::user()->id )->where('donation_status',1)->get() ;
-    	$data 							= [	'transactions'	=> $transactions ] ;
+    	$data 							= [	
+            'transactions'	            => $transactions,
+            'name'                      => Helper::userDetails( Auth::user()->id ),
+            'avatar'                    => Helper::userAvatar( Auth::user()->id ), 
+        ] ;
 
     	return view('admin.transactions',$data) ;
     }

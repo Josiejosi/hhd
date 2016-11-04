@@ -9,7 +9,7 @@
 @section ('content')
 
     <div class="m-heading-1 border-green m-bordered">
-        <h3>Manage my accounts</h3>
+        <h3>Manage accounts</h3>
         <p> PLEASE NOTE: Only one account can be the active account per donation, and you can only add 3 accounts</p>
     </div>
     <div class="row">
@@ -150,9 +150,10 @@
 
                 }, error: function( data ) {
                     var message = 'No member\'s for the selected range, please try a different range.' ;
-                    toast_notification('danger', message) ;
+                    alert(message) ;
                 }
             });
+            
         };
         $("#add_account").on('click',function(){
             $.ajax({
@@ -168,18 +169,18 @@
                 }, success: function( data ) {
 
                     if ( data == 'success' ) {
-                        toast_notification('success', "New account successfully added") ;
+                        alert("New account successfully added") ;
                         get_account() ;
                         $("#account_number").val("") ;
                         $("#account_name").val("") ;
                         $("#branch_code").val("") ;
                         $("#draggable").hide() ;
                     } else {
-                        toast_notification('info', data) ;
+                        alert(data) ;
                     }
                 }, error: function( data ) {
                     var message = 'Failed to add a new account please try again later.' ;
-                    toast_notification('danger', message) ;
+                    alert(message) ;
                 }
             }); 
         }) ;
@@ -199,14 +200,16 @@
                         }, success: function( data ) {
 
                             if (data == 'success') {
-                                toast_notification( 'success', 'Account successfully trashed' ) ;
+                                //toast_notification( 'success', 'Account successfully trashed' ) ;
+                                alert('Account successfully trashed') ;
                                 get_account() ;
                             } else {
-                                toast_notification( 'info', data ) ;
+                                alert(data) ;
                             }
 
                         }, error: function( data ) {
-                            toast_notification('danger', 'Failed to trash account, please try again later.') ;
+                            //toast_notification('danger', 'Failed to trash account, please try again later.') ;
+                            alert('Failed to trash account, please try again later.') ;
                         }
                     });              
                 }
@@ -228,20 +231,21 @@
                         }, success: function( data ) {
 
                             if (data == 'success') {
-                                toast_notification( 'success', 'Primary account changed' ) ;
+                                alert('Primary account changed' ) ;
                                 get_account() ;
                             } else {
-                                toast_notification( 'info', data ) ;
+                                alert(data ) ;
+
                             }
 
                         }, error: function( data ) {
-                            toast_notification('danger', 'Failed to make this account primary, please try again later.') ;
+                            alert('Failed to make this account primary, please try again later.') ;
                         }
                     });              
                 }
             });
         };
-
+        
         get_account() ;
     </script>
 

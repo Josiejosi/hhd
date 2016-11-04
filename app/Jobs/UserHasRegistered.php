@@ -35,7 +35,7 @@ class UserHasRegistered extends Job implements ShouldQueue
 
         Helper::send_mail( 
             $this->user->email, 
-            "Welcome to PrestigeWallet", 
+            "Welcome to HHD", 
             $this->user->first_name . " " . $this->user->last_name , 
             "We hope your doing well, here are your".
             "<br />Username: " . $this->user->email . "<br />Password: " . $this->password .
@@ -43,8 +43,17 @@ class UserHasRegistered extends Job implements ShouldQueue
             "emails.confirm"
         ) ;
 
-        $sms_message = "Hi " . $this->user->first_name . " " . $this->user->last_name . ", your verification code to complete your profile is:  $verification_code" ;
+        Helper::send_mail( 
+            $this->user->email, 
+            "Your verification code", 
+            $this->user->first_name . " " . $this->user->last_name , 
+            "Hi " . $this->user->first_name . " " . $this->user->last_name . ", your verification code to complete your profile is:  $verification_code".
+            "<br /><br />Referral URL : <a href='$url'>$url</a><br /><br />", 
+            "emails.confirm"
+        ) ;
 
-        Helper::send_sms( $sms_message, $this->user->cell_phone) ;
+        //$sms_message = "Hi " . $this->user->first_name . " " . $this->user->last_name . ", your verification code to complete your profile is:  $verification_code" ;
+
+        //Helper::send_sms( $sms_message, $this->user->cell_phone) ;
     }
 }

@@ -133,6 +133,8 @@ class AdminController extends Controller
             'user_agent'                    => $request->header('User-Agent'), 
             'password'                      => bcrypt($request->password),
             'is_active'                     => 1,
+                'dob'               => "1988-02-02",
+                'country'           => "ZAR",
 
         ]) ;                            
 

@@ -14,15 +14,16 @@ use App\Classes\Helper ;
 class ScheduledController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth');
-        $this->middleware('verify');
+/*        $this->middleware('auth');
+        $this->middleware('verify');*/
     }
 
     public function index() {
-        $avatar                         = Helper::userAvatar( Auth::user()->id ) ;
+        
     	$data = [
     		'scheduled'                 => ScheduledDonation::where('user_id',Auth::user()->id)->get(),
-            'avatar'                    => $avatar,
+            'name'                      => Helper::userDetails( Auth::user()->id ),
+            'avatar'                    => Helper::userAvatar( Auth::user()->id ),
     	] ;
     	return view('admin.schedules',$data) ;
     }

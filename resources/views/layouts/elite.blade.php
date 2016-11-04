@@ -56,7 +56,7 @@
                 <div class="container-fluid">
                     <div class="havbar-header">
                         <a id="index" class="navbar-brand" href="{{url('/home')}}">
-                            <img src="{{asset('imgs/logo-sm.png')}}" alt="Logo"> 
+                            HHD ADMIN
                         </a>
                         <div class="topbar-actions">
                             <div class="btn-group-img btn-group">
@@ -156,7 +156,7 @@
                     
                 </div>
                 <!-- BEGIN FOOTER -->
-                <p class="copyright-v2">{{date("Y")}} © Prestige Wallet.
+                <p class="copyright-v2">{{date("Y")}} © HHD.
                 </p>
                 <a href="#index" class="go2top">
                     <i class="icon-arrow-up"></i>

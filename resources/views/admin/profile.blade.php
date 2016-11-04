@@ -25,23 +25,6 @@
                 <strong>{{ session('error') }}</strong>
             </span>
         @endif        
-        <div class="profile-sidebar">
-            
-            <div class="portlet light profile-sidebar-portlet bordered">
-                
-                <div class="profile-userpic">
-                    <img src="{{ $avatar }}" class="img-responsive" alt=""> 
-                </div>
-
-                <div class="profile-usertitle">
-                    <div class="profile-usertitle-name"> 
-                        {{Auth::user()->first_name}} {{Auth::user()->last_name}}
-                    </div>
-                </div>
-                
-            </div>
-            
-        </div>
 
         <div class="profile-content">
             <div class="row">

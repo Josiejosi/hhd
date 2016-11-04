@@ -16,13 +16,15 @@
     <section id="content">
         <div class="content-wrap">
 
-			<div class="container text-center">
+			<div class="container">
 			    <div class="row">
 					<h2><i aria-hidden="true" class="fa  fa-legal"></i> Legality</h2>
+					<div class="round hollow text-center">
 			        <h4 style="font-size: 14px; line-height: 22px;">
 						Holding Hands Donations is not a bank or a company or online business or an investment plan of any kind. <br />
 						It has no directors, shareholders, joining fees or a product. 
 			        </h4>
+			        </div>
 			        <div class="round hollow text-center">
 						YOU ARE DOING THESE AT YOUR OWN RISK. IF YOU ARE NOT CERTAIN, <br />
 						DO NOT PARTCITIPATE BECAUSE THERE WON’T BE ANYONE RESPONSIBLE FOR YOUR LOSS.

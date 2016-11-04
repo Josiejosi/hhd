@@ -552,6 +552,14 @@
             $("#submit_btn").show() ;
         }) ;
 
+        $(document).ready(function() {
+            $("form").bind("keypress", function(e) {
+                if (e.keyCode == 13) {
+                    return false;
+                }
+            });
+        });
+
         Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
 
         function applyDataMask(field) {

@@ -34,7 +34,6 @@ class HomeController extends Controller
     	$help_time 						= Helper::help_time() ;
     	$max_reserves_allowed 			= Helper::reached_max_donations(Auth::user()->id) ;
     	$max_reserves_limit 			= Helper::max_reserves() ;
-    	$avatar 						= Helper::userAvatar( Auth::user()->id ) ;
     	
     	$alltransactions 				= Helper::getAllMyTransctions(Auth::user()->id) ;
     	$expiry_hour 					= Helper::expiryHour() ;
@@ -50,8 +49,9 @@ class HomeController extends Controller
     		'transactions'				=> $transactions,
     		'alltransactions'			=> $alltransactions,
     		'now'						=> $now,
-    		'avatar'					=> $avatar,
     		'expiry_hour'				=> $expiry_hour,
+            'name'                      => Helper::userDetails( Auth::user()->id ),
+            'avatar'                    => Helper::userAvatar( Auth::user()->id ),
     	] ;
 
     	return view( 'admin.home', $data ) ;
@@ -65,8 +65,7 @@ class HomeController extends Controller
     	if ( $max_reserves_allowed == 'add' ) {
 			$donations 					= Helper::getActiveDoneeUnderSameAccount( 
 											Auth::user()->id, 
-											$request->min, 
-											$request->max 
+											$request->requested_amount 
 			) ;
 			return $donations ;
 		} else {
@@ -92,9 +91,9 @@ class HomeController extends Controller
 			
 			return [
 				'message'				=> 'success', 
-				'bank'					=> $account->bank, 
-				'account'				=> $account->account_number, 
-				'branch'				=> $account->branch_code, 
+				'bank'					=> "Netbank", 
+				'account'				=> rand(11111111, 9999999), 
+				'branch'				=> rand(11111, 99999), 
 			] ;  
 
     	} else {

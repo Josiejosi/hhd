@@ -23,11 +23,12 @@ class ProfileController extends Controller
     
     public function index() {
 
-        $avatar                         = Helper::userAvatar( Auth::user()->id ) ;
-
         $data                           = [
-            'avatar'                    => $avatar,
+            'name'                      => Helper::userDetails( Auth::user()->id ),
+            'avatar'                    => Helper::userAvatar( Auth::user()->id ),
         ] ;
+
+        //'avatar'                    => Helper::userAvatar( Auth::user()->id ) ;
 
     	return view('admin.profile', $data) ;
     }

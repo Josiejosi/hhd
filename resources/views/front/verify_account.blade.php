@@ -36,7 +36,7 @@
 
                             <div class="row">
                                 @if (!Session::has('account_not_found'))
-                                <div class="alert alert-info">An SMS was send to your phone, please provide the verification code to continue using the app</div>
+                                <div class="alert alert-info">An email was send to your, please provide the verification code</div>
                                 @endif
                                 @if (Session::has('account_not_found'))
                                     <div class="alert alert-warning">
@@ -56,8 +56,8 @@
                                     @endif 
                                 </div>
 
-                                <button type="submit" class="myBtn myBtn-rounded myBtn-lg myBtn-3d m-0 mt-12">
-                                    Verify Account
+                                <button type="submit" class="btn-lg btn-success">
+                                    VERIFY ACCOUNT
                                 </button>
                                 
                             </div>

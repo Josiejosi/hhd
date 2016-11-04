@@ -21,10 +21,9 @@ class AccountsController extends Controller
 
     public function index() {
 
-        $avatar                         = Helper::userAvatar( Auth::user()->id ) ;
-
         $data                           = [
-            'avatar'                    => $avatar,
+            'name'                      => Helper::userDetails( Auth::user()->id ),
+            'avatar'                    => Helper::userAvatar( Auth::user()->id ),
         ] ;
 
     	return view( 'admin.accounts', $data ) ;
@@ -49,16 +48,16 @@ class AccountsController extends Controller
     		if ( $account->active_account == 1 ) {
     		$string .= "
                             <button class='btn btn-xs btn-success'>
-                                <i class='icon-check'></i>
+                                <i class='fa fa-check'></i>
                             </button> " ;
             } else {
     		$string .= "
                             <button class='btn btn-xs btn-warning' onclick=\"activate_account('".$account->id."')\">
-                                <i class='icon-check'></i>
+                                <i class='fa fa-check'></i>
                             </button> " ;
             $string .= "
                             <button class='btn btn-xs btn-danger' onclick=\"delete_account('".$account->id."')\">
-                                <i class='icon-trash'></i>
+                                <i class='fa fa-trash'></i>
                             </button>
     					</td>
     					</tr>

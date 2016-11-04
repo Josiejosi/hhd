@@ -15,7 +15,7 @@
 	Route::post( '/verify_account', 		'FrontController@verify_process');
 
 	Route::get( '/philosophy', 				'FrontController@philosophy');
-	Route::get( '/key_rule', 				'FrontController@key_rule');
+	Route::get( '/how_it_works', 			'FrontController@key_rule');
 	Route::get( '/legality', 				'FrontController@legality');
 	Route::get( '/support', 				'FrontController@support');
 	Route::get( '/FAQs', 					'FrontController@FAQs');

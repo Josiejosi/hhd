@@ -4,11 +4,7 @@ use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
     public function run()
     {
     	$name 						= ['Jon','Bob', 'Sam', 'Chris','Brian','Tom','Jack','Jessy','Wil','Dan'] ;
@@ -33,6 +29,8 @@ class UsersTableSeeder extends Seeder
 		        'user_agent'	    =>	'demo agent', 
 		        'password'			=>	bcrypt('password'),
 		        'is_active'			=> 1,
+                'dob'               => "1988-02-02",
+                'country'           => "ZAR", 
 	        ]);
 
     	}

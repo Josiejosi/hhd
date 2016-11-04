@@ -7,9 +7,9 @@
             <div class="row row-bottom-padded-lg" id="about-us">
                 <div class="col-md-12 section-heading text-center">
                     <div class="row">
-                        <div class="col-md-8 col-md-offset-2 to-animate">
-                            <h3>The Opportunities For Your Financial Freedom</h3>
-                    <p>Holding Hands Donations, is an internetional Fund Exchange System formulated to provide financial growth with the invested funds.</p>
+                        <div class="col-md-8 col-md-offset-2 to-animate" style="margin-top: 120px !important;">
+                            <h1 style="color: #fff ; ">The Opportunities For Your Financial Freedom</h1>
+                    <h2 style="color: #fff; font-size: 20px ;">Holding Hands Donations, is an internetional Fund Exchange System formulated to provide financial growth with the invested funds.</h2>
                         </div>
                     </div>
                 </div>
@@ -26,22 +26,28 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="box to-animate">
                         <div class="icon colored-1"><span><i class="icon-mustache"></i></span></div>
                         <h3>100% Return Profit</h3>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="box to-animate">
                         <div class="icon colored-4"><span><i class="icon-heart"></i></span></div>
-                        <h3>15 Days To Mature</h3>
+                        <h3>30 Days To Mature</h3>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="box to-animate">
                         <div class="icon colored-2"><span><i class="icon-screen-desktop"></i></span></div>
                         <h3>5% Commission</h3>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box to-animate">
+                        <div class="icon colored-3"><span><i class="fa fa-btc"></i></span></div>
+                        <h3>Bitcoin Support</h3>
                     </div>
                 </div>
 

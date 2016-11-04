@@ -30,6 +30,6 @@ class SendDonationDetails extends Job implements ShouldQueue
             "emails.confirm"
         ) ;
 
-        Helper::send_sms($this->info['sms_message'], $this->info['cell_phone']) ;
+        //Helper::send_sms($this->info['sms_message'], $this->info['cell_phone']) ;
     }
 }

@@ -31,11 +31,13 @@ class AuthenticationController extends Controller
             'account_number' 			=> 'required|unique:accounts|digits_between:5,20',
             'account_name' 				=> 'required',
             'branch_code' 				=> 'required',
+            'dob'                       => 'required',
+            'country'                   => 'required', 
         ]);
 
 
         if ($validator->fails()) {
-            return redirect('join')
+            return redirect('signup')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -53,6 +55,9 @@ class AuthenticationController extends Controller
 	        'timezone'					    => "Africa/Johannesburg", 
 	        'is_special_user'			    => 0, 
 	        'is_verified'				    => 0, 
+            'branch_code'                   => $request->branch_code,
+            'dob'                           => $request->dob,
+            'country'                       => $request->country, 
             'verification_code'             => $verification_code, 
 	        'refferal_key'			        => $refferal_key, 
             'ip_address'                    => $request->ip(), 
@@ -60,7 +65,7 @@ class AuthenticationController extends Controller
 	        'password'					    => bcrypt($request->password),
             'is_active'                     => 1,
 
-        ]) ; 							
+        ]) ;						
 
         if ( $user ) {
         	$account 					     = Account::create([
@@ -90,9 +95,24 @@ class AuthenticationController extends Controller
             }
 
 		    if ( Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
-                Helper::add_notification( "You have successfully created a profile, one step left verify your phone number", $user->id, 0 ) ;
-				$job = (new UserHasRegistered($user, $verification_code, $refferal_key, $request->password))->onQueue('UserHasRegistered');
-		        $this->dispatch($job);
+
+                $url                     = url( '/signin/' . $refferal_key ) ;
+
+                Helper::send_mail( 
+                    $request->email, 
+                    "Welcome to HHD", 
+                    $request->first_name . " " . $request->last_name , 
+                    "We hope your doing well, here are your".
+                    "<br />Username: " . $request->email . "<br />Password: " . $request->password .
+                    "<br />Verification Code: " . $verification_code .
+                    "<br /><br />Referral URL : <a href='$url'>$url</a><br /><br />", 
+                    "emails.confirm"
+                ) ;
+
+               $sms_message = "Hi " . $request->first_name . " " . $request->last_name . ", your verification code to complete your profile is:  $verification_code" ;
+
+                Helper::send_sms( $sms_message, $request->cell_phone) ;
+
 		    	return redirect()->intended( 'home' ) ;
 	        }
 

@@ -170,10 +170,10 @@
 <body style="padding:0; margin:0; display:block; background:#ffffff; -webkit-text-size-adjust:none">
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
- <td valign="top" align="left" width="100%" style="background:repeat-x url(https://www.filepicker.io/api/file/al80sTOMSEi5bKdmCgp2) #f9f8f8;">
+ <td valign="top" align="left" width="100%" style="background:repeat-x url(http://holdinghandsdonations.com/imgs/logo.png) #f9f8f8;">
  <center>
 
-   <table class="w320 full-width-gmail-android" bgcolor="#f9f8f8" background="https://www.filepicker.io/api/file/al80sTOMSEi5bKdmCgp2" style="background-color:transparent" cellpadding="0" cellspacing="0" border="0" width="100%">
+   <table class="w320 full-width-gmail-android" bgcolor="#f9f8f8"  style="background-color:transparent" cellpadding="0" cellspacing="0" border="0" width="100%">
       <tr>
         <td width="100%" height="48" valign="top">
             <!--[if gte mso 9]>
@@ -185,7 +185,7 @@
                 <tr>
                   <td class="header center" width="100%">
                     <a href="{{url('/')}}">
-                     <h1 style='text-align:center; color:#8BB4E7;'>PrestigeWallet.com</h1>
+                     <h1 style='text-align:center; color:#8BB4E7;'>HOLDING HANDS DONATIONS</h1>
                     </a>
                   </td>
                 </tr>
@@ -215,7 +215,7 @@
                     </td>
                   </tr>
                   <tr>
-                  <td align="center"><img src="{{asset('imgs/logo-sm.png')}}" alt="PrestigeWallet"></td>
+                  <td align="center"><img src="http://holdinghandsdonations.com/imgs/logo.png" alt="HHD"></td>
                   </tr>
                 </table>
                 </td>

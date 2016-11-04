@@ -13,9 +13,18 @@ class ActiveTranscationTableSeeder extends Seeder
      */
     public function run()
     {
+        $s = 0 ;
     	for ( $i=1; $i<31; $i++ ) {
     		$receiver                 = mt_rand(1,10) ;
-    		$amount                   = mt_rand(1000,20000) ;
+
+            if ( $s == 0 ) {
+    		  $amount                   = 500 ;
+              $s=1 ;
+            }
+            else {
+              $amount                   = 1500 ;
+              $s=0 ;                
+            }
 
 	        DB::table('active_donations')->insert([
 		    	"receiver"           => $receiver,

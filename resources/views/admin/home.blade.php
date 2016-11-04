@@ -4,9 +4,6 @@
 
 @section ('css')
 
-	<link rel="stylesheet" type="text/css" href="{{asset('css/ion.rangeSlider.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('css/ion.rangeSlider.skinNice.css')}}">
-
 	<link rel="stylesheet" type="text/css" href="{{asset('css/profile.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('css/loader.css')}}">
 
@@ -45,267 +42,44 @@
 @section ('content')
 
 	<div class="row">
+
+		<div class="col-md-12" id="assignment_div_big">
+		</div>
+		<div class="col-md-6">
+			<h2 class="page-header">Welcome to HHD Dashboard</h2>
+
+			<h5 class="page-header">NEW FUND</h5>
+			<h4 class="alert alert-info"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;</i><strong>PLEASE NOTE:</strong> HHD only allows <span class="badge badge-danger">2</span> funds to be created by 1 individual user per month.</h4>
+            <form role="form" action="{{url('/update_profile')}}" method="post">
+
+                {!! csrf_field() !!}
+                <div class="form-group">
+                    <label class="control-label">Label Fund</label>
+                    <input type="text" value="" id='label' name='label' placeholder="Label" class="form-control"> 
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Amount</label>
+                    <select id='amount' name='amount' placeholder="Amount" class="form-control">
+                    	
+                    	@for( $i=1; $i<41; $i++ )
+
+                    		<option>{{$i*500}}</option>
+                    	@endfor
+                    </select>
+                </div>
+                <div class="margiv-top-10">
+                    <button class="btn btn-success" id="create_fund"> Create Fund </button>
+                </div>
+            </form>
+		</div>
+
+		<div class="col-md-6">
+			<h2 class="page-header">Recent Donations</h2>
+			<div id="donations">
+				<div id="divFeeds"></div>
+			</div>
+		</div>
 		
-		<div class="col-md-8 col-sm-8">
-			<div class="row">
-				<div id='count_down'>
-
-
-				</div>
-			</div>
-
-			@if ( $max_reserves_allowed == false)
-				<div class="note note-info">
-					<h5 class="block"><strong>You have reached your max Donation limit, thank you.</strong></h5>
-				</div>
-			@endif
-
-
-			<ul class="nav nav-tabs">
-				<li class="active">
-					<a href="#small" data-toggle="tab" aria-expanded="false"> Small Donations </a>
-				</li>
-				<li class="">
-					<a href="#big" data-toggle="tab" aria-expanded="true"> Big Donations </a>
-				</li>
-			</ul>
-
-			<div class="tab-content">
-
-				@if ($is_help_time == true )
-
-				<div class="tab-pane fade active in" id="small">
-					<div class="note note-info">
-						<p> Please select amount from ZAR 1000 - ZAR 20 000</p>
-					</div>
-		            <div class="form-group">
-		                <div class="col-md-10 col-md-offset-1">
-		                    <input id="small_investment" type="text" value="" />
-							<p class="text-center">	Between R 
-								<span id="lower-value"></span> and R 
-								<span id="upper-value"></span>
-								<br />
-							</p>
-		                </div>
-		            </div>
-
-				</div>
-
-				<div class="tab-pane fade in" id="big">
-					<div class="note note-info">
-						<p> Please select help amount ZAR 20 000 - ZAR 50 000</p>
-					</div>
-
-		            <div class="form-group">
-		                <div class="col-md-10 col-md-offset-1">
-		                    <input id="big_investment" type="text" value="" />
-							<p class="text-center">	Between R 
-								<span id="lower-value2"></span> and R 
-								<span id="upper-value2"></span>
-								<br />
-							</p>
-		                </div>
-		            </div>
-					
-				</div>
-
-				@else
-				<div class="tab-pane fade active in" id="small">
-
-					<div class="note note-info">
-						<h4 class="block">DONATION TIME IS BETWEEN</h4>
-						<p> <strong>{{ $help_time }}</strong></p>
-					</div>
-
-				</div>
-				@endif
-
-			</div>
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<div id="assignment_div_big" style="text-align:center; font-weight: bold;"></div>
-				</div>
-			</div>			
-
-		</div>
-
-		<div class="col-md-4 col-sm-4">
-			<div class="col-md-12 col-sm-12">
-				
-				<div class="portlet light bordered">
-				    <div class="portlet-title tabbable-line">
-				        <div class="caption">
-				            <i class="icon-globe font-dark hide"></i>
-				            <span class="caption-subject font-dark bold uppercase">Updates</span>
-				        </div>
-				        <ul class="nav nav-tabs">
-				            <li class="active">
-				                <a href="#tab_1_1" class="active" data-toggle="tab" aria-expanded="true"> Donations </a>
-				            </li>
-				        </ul>
-				    </div>
-				    <div class="portlet-body">
-				        <!--BEGIN TABS-->
-				        <div class="tab-content">
-				            <div class="tab-pane active" id="tab_1_1">
-				                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 239px;"><div class="scroller" style="height: 339px; overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible="0" data-initialized="1">
-
-				                    <ul class="feeds" id="divFeeds">
-
-				                    	@if ( count($transactions) > 0 )
-				                    	<?php $i=1 ; ?>
-				                    	@foreach ( $transactions as $transaction )
-
-			                         	<?php
-			                         		$user_count = \App\Models\User::where('id',$transaction->sender)->count() ;
-			                         		$name = '' ;
-			                         		if ( $user_count == 1 ) {
-			                         			$user = \App\Models\User::where('id',$transaction->sender)->first() ;
-			                         			$name = $user->first_name . " " . $user->last_name ;
-			                         		}
-			                         	?>
-				                        <li>
-				                            <div class="col1">
-				                                <div class="cont">
-				                                    <div class="cont-col2">
-				                                        <div class="desc"> 
-				                                        	{{$name}}, R {{$transaction->amount}}
-				                                        </div>
-				                                    </div>
-				                                </div>
-				                            </div>
-				                            <div class="col2">
-				                                <button 
-				                                	class="btn btn-sx btn-success"
-				                                	id="approve{{$i}}"
-				                                	onclick="approve( {{$i}}, {{ $transaction->id }})">
-				                                Approve</button>
-				                            </div>
-				                        </li>
-				                        <?php $i++ ; ?>
-				                        @endforeach
-
-				                        @else
-
-				                        <li>
-				                            <div class="col1">
-		                                        <div class="desc"> 
-		                                        	No donations to approve.
-		                                        </div>
-		                                    </div>
-				                        </li>
-
-				                        @endif
-				                    </ul>
-				                </div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 173.859px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div></div>
-				            </div>
-				        </div>
-				        <!--END TABS-->
-				    </div>
-				</div>
-				
-			</div>		
-
-			<div class="col-md-12 col-sm-12">
-				
-				<div class="portlet light bordered">
-				    <div class="portlet-title tabbable-line">
-				        <div class="caption">
-				            <i class="icon-globe font-dark hide"></i>
-				            <span class="caption-subject font-dark bold uppercase">Recent</span>
-				        </div>
-				        <ul class="nav nav-tabs">
-				            <li class="active">
-				                <a href="#tab_1_1" class="active" data-toggle="tab" aria-expanded="true"> Activity </a>
-				            </li>
-				        </ul>
-				    </div>
-				    <div class="portlet-body">
-				        <!--BEGIN TABS-->
-				        <div class="tab-content">
-				            <div class="tab-pane active" id="tab_1_1">
-				                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 239px;"><div class="scroller" style="height: 339px; overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible="0" data-initialized="1">
-
-				                    <ul class="feeds" id="divFeeds">
-
-				                    	@if ( count($alltransactions) > 0 )
-				                    	<?php $i=1 ; ?>
-				                    	@foreach ( $alltransactions as $alltransaction )
-
-				                    		@if ( $alltransaction->sender == Auth::user()->id)
-				                        <li>
-				                            <div class="col1">
-				                                <div class="cont">
-				                                    <div class="cont-col2">
-				                                    	<div><i class="fa fa-hand-o-right" aria-hidden="true"></i></div>
-				                                        <div class="desc"> 
-				                                        	R {{$alltransaction->amount}}
-				                                        </div>
-				                                    </div>
-				                                </div>
-				                            </div>
-				                        </li>
-				                        	@else
-				                        <li>
-				                            <div class="col1">
-				                                <div class="cont">
-				                                    <div class="cont-col2">
-				                                    	<div><i class="fa fa-hand-o-left" aria-hidden="true"></i></div>
-				                                        <div class="desc"> 
-				                                        	R {{$alltransaction->amount}}
-				                                        </div>
-				                                    </div>
-				                                </div>
-				                            </div>
-				                        </li>
-				                        	@endif
-				                        @endforeach
-
-				                        @else
-
-				                        <li>
-				                            <div class="col1">
-		                                        <div class="desc"> 
-		                                        	No new activities.
-		                                        </div>
-		                                    </div>
-				                        </li>
-
-				                        @endif
-				                    </ul>
-				                </div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 173.859px; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div></div>
-				            </div>
-				        </div>
-				        <!--END TABS-->
-				    </div>
-				</div>
-				
-			</div>
-
-<!-- 		<div class="col-md-12 col-sm-12">
-		    <div class="portlet light bordered">
-		        <div class="portlet-title">
-		            <div class="caption">
-		                <i class="icon-cursor font-dark hide"></i>
-		                <span class="caption-subject font-dark bold uppercase">REFERAL BONUS</span>
-		            </div>
-		        </div>
-		        <div class="portlet-body">
-		            <div class="row">
-		                <div class="col-md-4">
-		                    <div class="easy-pie-chart">
-		                        <div class="number transactions" data-percent="55">
-		                            <span sylte='text-align:center;'>0.00</span>% <canvas height="75" width="75"></canvas></div>
-		                        <a class="title" href="javascript:;"> Members
-		                            <i class="icon-arrow-right"></i>
-		                        </a>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div> -->
-		</div>
 	</div>
 	
 
@@ -313,153 +87,66 @@
 
 @section ('js')
 
-	<script src="{{asset('js/ion.rangeSlider.min.js')}}" type="text/javascript"></script>
-	<script src="{{asset('js/jquery.countdown.min.js')}}" type="text/javascript"></script>
 	<script type="text/javascript">
 
 		var expiry_hour 			= {{ $expiry_hour }} ;
 
-		$( function() {
-	      //var time            = '2016/09/07 11:30' ;
-	      //var now             = add_stop_minute( time ) ;
-
-		});
 
 		var secondary_level_token 	= $('meta[name="secondary_level_token"]').attr('content') ;
+
+		$("#create_fund").on("click", function() {
+			event.preventDefault() 
+
+			 $("#assignment_div_big").html(
+			 	"<div style='padding:50px; text-align:center'>" +
+				"Please be patient as we try and find a suitable match for you to donate to.<br />" +
+				"@include ('includes.loader')" +
+				"</div>"
+			 ) ;
+
+		    $.ajax({
+		        url: "/get_donar",
+		        type:"POST",
+		        beforeSend: function (xhr) {
+		            var token 	= $('meta[name="csrf_token"]').attr('content') ;
+		            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
+		        }, data: { 
+		        	requested_amount 	 : $("#amount").val(),
+		        }, success: function( data ) {
+
+		            $("#assignment_div_big").html(data.message) ;
+
+		            if ( data.message == "found") {
+		            	var tid 		= data.tid ;
+		            	var user_id 	= data.user_id ;
+		            	var amount 		= data.amount ;
+
+		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'>We found a suitable donee to match your amount range for: " ) ;
+		            	$("#assignment_div_big").append( "<br/>R " + amount ) ;
+		            	$("#assignment_div_big").append(
+		            		"<br /><br /><button id='reserve_order' class='btn btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\">Cash Reserve</button>|<button id='reserve_order' class='btn btn-info'>Bitcoin Recerve</button><br /><br /></div>"
+		            	) ;
+		            } else {
+		            	$("#assignment_div_big").html(data.message) ;
+		            }
+
+		        }, error: function( data ) {
+		        	var message = 'No member\'s for the selected range, please try a different range.' ;
+		        	$("#assignment_div_big").html(message) ;
+		            //toast_notification('danger', message) ;
+		        }
+		    });
+		}) ;
 		
-
-        $("#small_investment").ionRangeSlider({
-            type: "double",
-            grid: true,
-            min: 1000,
-            max: 20000,
-            from: 1,
-            to: 5,
-            step: 100,
-            /*values: [0, 10, 100, 1000, 10000, 100000, 1000000],*/
-		    onStart: function (data) {
-		        
-		    },
-		    onChange: function (data) {
-		        $("#lower-value").html(data.from) ;
-		        $("#upper-value").html(data.to) ;
-		    },
-		    onFinish: function (data) {
-		        $("#lower-value").html(data.from) ;
-		        $("#upper-value").html(data.to) ;
-
-				//event.preventDefault() 
-
-				 $("#assignment_div_big").html(
-				 	"<div style='padding:50px; text-align:center'>" +
-					"Please be patient as we try and find a suitable match for you to donate to.<br />" +
-					"@include ('includes.loader')" +
-					"</div>"
-				 ) ;
-
-			    $.ajax({
-			        url: "/get_donar",
-			        type:"POST",
-			        beforeSend: function (xhr) {
-			            var token 	= $('meta[name="csrf_token"]').attr('content') ;
-			            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
-			        }, data: { 
-			        	min 	 : data.from,
-			        	max 	: data.to,
-			        }, success: function( data ) {
-
-			            $("#assignment_div_big").html(data.message) ;
-
-			            if ( data.message == "found") {
-			            	var tid 		= data.tid ;
-			            	var user_id 	= data.user_id ;
-			            	var amount 		= data.amount ;
-
-			            	$("#assignment_div_big").html( "We found a suitable donee to match your amount range for: " ) ;
-			            	$("#assignment_div_big").append( "<br/>R " + amount ) ;
-			            	$("#assignment_div_big").append(
-			            		"<br /><br /><button id='reserve_order' class='btn btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\">Assign me</button><br /><br />"
-			            	) ;
-			            } else {
-			            	$("#assignment_div_big").html(data.message) ;
-			            }
-
-			        }, error: function( data ) {
-			        	var message = 'No member\'s for the selected range, please try a different range.' ;
-			        	$("#assignment_div_big").html(message) ;
-			            //toast_notification('danger', message) ;
-			        }
-			    });
-		    },
-		    onUpdate: function (data) {
-		        
-		        $("#lower-value").html(data.from) ;
-		        $("#upper-value").html(data.to) ;
-		    }
-        });
-
-        $("#big_investment").ionRangeSlider({
-            type: "double",
-            grid: true,
-            min: 20000,
-            max: 50000,
-            from: 1,
-            to: 20,
-            step: 500,
-            /*values: [0, 10, 100, 1000, 10000, 100000, 1000000],*/
-		    onStart: function (data) {
-		        
-		    },
-		    onChange: function (data) {
-		        $("#lower-value").html(data.from) ;
-		        $("#upper-value").html(data.to) ;		        
-		    },
-		    onFinish: function (data) {
-		        $("#lower-value").html(data.from) ;
-		        $("#upper-value").html(data.to) ;
-
-				//event.preventDefault() 
-
-				 $("#assignment_div_big").html(
-				 	"<div style='padding:50px; text-align:center'>" +
-					"Please be patient as we try and find a suitable match for you to donate to.<br />" +
-					"@include ('includes.loader')" +
-					"</div>"
-				 ) ;
-
-			    $.ajax({
-			        url: "/get_donar",
-			        type:"POST",
-			        beforeSend: function (xhr) {
-			            var token 	= $('meta[name="csrf_token"]').attr('content') ;
-			            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
-			        }, data: { 
-			        	min 	 : data.from,
-			        	max 	: data.to,
-			        }, success: function( data ) {
-
-			            $("#assignment_div_big").html(data) ;
-
-			        }, error: function( data ) {
-			        	var message = 'No member\'s for the selected range, please try a different range.' ;
-			        	$("#assignment_div_big").html(message) ;
-			            //toast_notification('danger', message) ;
-			        }
-			    });		        
-		    },
-		    onUpdate: function (data) {
-		        
-		    }
-        });
 
 		var count_countdowns = 1 ;
 
 
         var assign_me 				= function( tid, user_id, amount ) {
-        	var remaining_hours 	= new Date(); 
-        	remaining_hours 		= remaining_hours.addHours(4) ;
+        	//var remaining_hours 	= new Date(); 
+        	//remaining_hours 		= remaining_hours + 30 ;
         	console.log("Clicked") ;
-        	$('#reserve_order').button('loading');
+        	//$('#reserve_order').button('loading');
 
 		    $.ajax({
 		        url: "/assign_donar",
@@ -475,14 +162,11 @@
 		        	console.log(data.message) ;
 		        	if ( data.message == "success" ) {
 			            $( "#assignment_div_big" ).html( 
-							"Successfully reserved, an SMS will be send to you shortly with member's details," +
-        				  	" Please make a payment before "+
-        				  	remaining_hours.getHours()+":"+
-        				  	remaining_hours.getMinutes()+":"+
-        				  	remaining_hours.getSeconds()+
+							"Successfully reserved, an Email will be send to you shortly with member's details," +
+        				  	" Please make a payment before " +
         				  	" and await their approval"
 			             ) ;
-			            create_countdown_timer( data.bank, data.account, data.branch, 60*parseInt(expiry_hour), count_countdowns, "red" ) ;
+			            //create_countdown_timer( data.bank, data.account, data.branch, 60*parseInt(expiry_hour), count_countdowns, "red" ) ;
 			            count_countdowns++ ;
 			            //toast_notification( "info", message ) ;		        		
 		        	} else if( data == 'failed') {
@@ -492,12 +176,12 @@
 		        	} else {
 		        		$( "#assignment_div_big" ).html( data ) ;
 		        	}
-		        	$('#reserve_order').button('reset') ;
+		        	//$('#reserve_order').button('reset') ;
 		        }, error: function( data ) {
 		        	var message = "Technical error, please try again a different range, if the error persists, contact support" ;
 		        	$("#assignment_div_big").html(data) ;
 		            //toast_notification( "danger", message ) ;
-		            $('#reserve_order').button('reset') ;
+		            //$('#reserve_order').button('reset') ;
 		        }
 		    });
         };
@@ -520,13 +204,13 @@
 		        	console.log("Error") ;
 		        }
 		    });
-		    load_countdowns() ;
+		    //load_countdowns() ;
 		}
 
-		var updateFeeds = setInterval( feedUpdate, 5000 ) ;
+		var updateFeeds = setInterval( feedUpdate, 2000 ) ;
 
 		var approve = function( num, id) {
-        	$('#approve'+num).button('loading');
+        	//$('#approve'+num).button('loading');
 
 
 		    $.ajax({
@@ -542,15 +226,15 @@
 		        	if ( data == "success" ) {
 			            $( "#Inform" ).html("<div class='alert alert-success'>Successfully approved.</div>") ;
 			            $('#approve'+num).hide() ;
-			            toast_notification( "info", "Successfully approved." ) ;		        		
+			            alert("Successfully approved." ) ;		        		
 		        	} else {
 			            $( "#Inform" ).html("<div class='alert alert-success>"+data+"</div>") ;
-			            toast_notification( "warning", data ) ;
+			            alert( data ) ;
 		        	}
-		        	$('#approve'+num).button('reset') ;
+		        	//$('#approve'+num).button('reset') ;
 		        }, error: function( data ) {
 		        	$( "#Inform" ).html("<div class='alert alert-success>"+data+"</div>") ;
-		            $('#approve'+num).button('reset') ;
+		            //$('#approve'+num).button('reset') ;
 		        }
 		    });
 		};
@@ -569,15 +253,15 @@
 		        	if ( data == "success" ) {
 			            $( "#Inform" ).html("<div class='alert alert-success'>Successfully approved.</div>") ;
 			            $('#approve'+num).hide() ;
-			            toast_notification( "info", "Successfully approved." ) ;		        		
+			            alert("Successfully approved." ) ;		        		
 		        	} else {
 			            $( "#Inform" ).html("<div class='alert alert-success>"+data+"</div>") ;
-			            toast_notification( "warning", data ) ;
+			            alert(data ) ;
 		        	}
-		        	$('#approve'+num).button('reset') ;
+		        	//$('#approve'+num).button('reset') ;
 		        }, error: function( data ) {
 		        	$( "#Inform" ).html("<div class='alert alert-success>"+data+"</div>") ;
-		            $('#approve'+num).button('reset') ;
+		            //$('#approve'+num).button('reset') ;
 		        }
 		    });
 		};
@@ -665,7 +349,7 @@
 			}) ;
 		}
 
-		load_countdowns() ;
+		//load_countdowns() ;
 	</script>
 
 @endsection

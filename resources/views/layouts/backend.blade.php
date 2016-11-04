@@ -1,203 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="HHD, Holding Hands Donations">
+    <meta name="csrf_token" content="{{ csrf_token() }}" />
 
-    <head>
-        <meta charset="utf-8" />
-        <title>PrestigeWallet | @yield('title')</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-
-        <meta name="csrf_token" content="{{ csrf_token() }}" />
         <meta name="secondary_level_token" content="{{ Auth::user()->id }}" />
         <meta name="fallback_url" content="{{env('SOCKET_URL')}}" />
+
+    <title>HHD - Home</title>
+
+    <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
         
-        <link href="//fonts.googleapis.com/css?family=Oswald:400,300,700" rel="stylesheet" type="text/css" />
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/uniform.default.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('css/admin/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin/style-responsive.css')}}" rel="stylesheet">
 
-        <link href="{{asset('css/components.min.css')}}" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="{{asset('css/jquery.countdown.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/layout.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/custom.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-        <style type="text/css">
-            
-        .mt-element-card.mt-card-round .mt-card-item .mt-card-avatar {
-            border-radius: 50%!important;
-            -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFW…9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+    <style type="text/css">
+        .black-bg {
+            background: #c7eac9;
+            border-bottom: 1px solid #307477;
         }
-        </style>
 
-        @yield('css')
+        #sidebar {
+            background: #307477;
+            color: #c7eac9 ;
+        }
 
-        <link rel="shortcut icon" href="imgs/favicon.ico" /> 
+        ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
+            background: #3f8184;
+        }
 
-        <script src="{{asset('js/jquery-1.11.2.min.js')}}" type="text/javascript"></script>
-    </head>
-    <!-- END HEAD -->
+        ul.sidebar-menu li ul.sub li{
+            background: #386466;
+        }
+    </style>
+  </head>
 
-    <body class="">
-        <!-- BEGIN HEADER -->
-        <header class="page-header">
-            <nav class="navbar" role="navigation">
-                <div class="container-fluid">
-                    <div class="havbar-header">
-                        <a id="index" class="navbar-brand" href="{{url('/home')}}">
-                            <img src="{{asset('imgs/logo-sm.png')}}" alt="Logo"> 
-                        </a>
-                        <div class="topbar-actions">
-                            <div class="btn-group-notification btn-group" id="header_notification_bar">
-                                <button type="button" class="btn md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <span class="badge" id="notification_big_count">0</span>
-                                </button>
-                                <ul class="dropdown-menu-v2">
-                                    <li class="external">
-                                        <h3>
-                                            <span class="bold" id="notification_count">0 pending</span> notifications</h3>
-                                        <a href="#">view all</a>
-                                    </li>
-                                    <li>
-                                        <!--<i class="fa fa-eye-slash" aria-hidden="true"></i>-->
-                                        <!--<i class="fa fa-eye-slash" aria-hidden="true"></i>-->
-                                        <ul 
-                                            class="dropdown-menu-list scroller" 
-                                            style="height: 250px; padding: 0;" 
-                                            data-handle-color="#637283"
-                                            id="list_notifications">
+  <body>
 
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- END GROUP NOTIFICATION -->
-                            <!-- BEGIN USER PROFILE -->
-                            <div class="btn-group-img btn-group">
-                                <button 
-                                    type="button" 
-                                    class="btn btn-sm dropdown-toggle" 
-                                    data-toggle="dropdown" 
-                                    data-hover="dropdown" 
-                                    data-close-others="true">
-                                    <img src="{{ $avatar }}" alt=""> 
-                                </button>
-                                <ul class="dropdown-menu-v2" role="menu">
-                                    <li>
-                                        <a href="{{url('/profile')}}">
-                                            <i class="icon-user"></i> My Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url('/logout')}}">
-                                            <i class="icon-key"></i> Log Out 
-                                        </a>
-                                    </li>
+  <section id="container" >
 
-                                </ul>
-                            </div>
-                            <!-- END USER PROFILE -->
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <div class="container-fluid">
-            <div class="page-content page-content-popup">
-                <div class="page-content-fixed-header">
-                    <ul class="page-breadcrumb">
-                        <li>Home</li>
-                    </ul>
-                    <div class="content-header-menu">
-                        <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="toggle-icon">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-                <div class="page-sidebar-wrapper">
-
-                    <div class="page-sidebar navbar-collapse collapse">
-                        <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-light " data-keep-expanded="true" data-auto-scroll="true" data-slide-speed="200">
-                            <li class="nav-item start ">
-                                <a href="{{url('/home')}}" class="nav-link nav-toggle">
-                                    <i class="icon-home"></i>
-                                    <span class="title">Home</span>
-                                </a>
-                            </li>
-                            <li class="nav-item start ">
-                                <a href="{{url('/accounts')}}" class="nav-link nav-toggle">
-                                    <i class="icon-credit-card"></i>
-                                    <span class="title">Accounts</span>
-                                </a>
-                            </li> 
-                            <li class="nav-item start ">
-                                <a href="{{url('/schedules')}}" class="nav-link nav-toggle">
-                                    <i class="icon-notebook"></i>
-                                    <span class="title">Scheduled</span>
-                                </a>
-                            </li>                            
-                            <li class="nav-item start ">
-                                <a href="{{url('/profile')}}" class="nav-link nav-toggle">
-                                    <i class="icon-user"></i>
-                                    <span class="title">Profile</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- END SIDEBAR MENU -->
-                    </div>
-                    <!-- END SIDEBAR -->
-                </div>
-                <div class="page-fixed-main-content">
-
-                    @yield('content')
-                    
-                </div>
-                <!-- BEGIN FOOTER -->
-                <p class="copyright-v2">{{date("Y")}} © Prestige Wallet.
-                </p>
-                <a href="#index" class="go2top">
-                    <i class="icon-arrow-up"></i>
-                </a>
-                <!-- END FOOTER -->
+      <header class="header black-bg">
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+              </div>
+            <a href="http://holdinghandsdonations.com" class="logo"><b>HHD</b></a>
+            <div class="top-menu">
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="{{url('/logout')}}">Logout</a></li>
+                </ul>
             </div>
-        </div>
-        <!-- END CONTAINER -->
-        <!--[if lt IE 9]>
-        <script src="../assets/global/plugins/respond.min.js"></script>
-        <script src="../assets/global/plugins/excanvas.min.js"></script> 
-        <![endif]-->
-        <!-- BEGIN CORE PLUGINS -->
-        
-        <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/bootstrap-hover-dropdown.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/jquery.blockui.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/jquery.uniform.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/app.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/layout.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/quick-sidebar.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/jquery.countdown.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/bootbox.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/modavication.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/pw_notifications.js')}}" type="text/javascript"></script>
-        <!--        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js" type="text/javascript"></script>
-        <script src="{{asset('js/push-notification.js')}}" type="text/javascript"></script> 
-        -->
-        
+      </header>
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <ul class="sidebar-menu" id="nav-accordion">
+              
+                  <p class="centered"><a href="profile.html"><img src="{{ $avatar }}" class="img-circle" width="60"></a></p>
+                  <h5 class="centered">{{ $name }}</h5>
+                    
+                  <li class="mt">
+                      <a href="{{ url('/home') }}">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
 
-        @yield('js')
+                  <li class="mt">
+                      <a href="{{ url('/accounts') }}">
+                          <i class="fa fa-money"></i>
+                          <span>Accounts</span>
+                      </a>
+                  </li>
 
-    </body>
 
+                  <li class="mt">
+                      <a href="{{ url("/schedules") }}">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Transactions</span>
+                      </a>
+                  </li>
+
+                  <li class="mt">
+                      <a href="{{ url("/profile") }}">
+                          <i class="fa fa-user"></i>
+                          <span>Profile</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </aside>
+
+        <section id="main-content">
+            <section class="wrapper site-min-height">
+                @yield('content')
+            </section>
+        </section>
+
+        <footer class="site-footer">
+            <div class="text-center">
+                2016 - HHD
+                <a href="http://holdinghandsdonations.com" class="go-top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+            </div>
+        </footer>
+    </section>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/admin/jquery-ui-1.9.2.custom.min.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.ui.touch-punch.min.js')}}"></script>
+    <script class="include" type="text/javascript" src="{{asset('js/admin/jquery.dcjqaccordion.2.7.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.scrollTo.min.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.nicescroll.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/admin/common-scripts.js')}}"></script>
+    @yield('js')
+  </body>
 </html>

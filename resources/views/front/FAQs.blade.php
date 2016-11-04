@@ -76,7 +76,7 @@
                             </div>
                             <div id="collapse4" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Funds can only be withdrawn once they have matured which is in 15 days. 
+                                    Funds can only be withdrawn once they have matured which is in 30 days. 
                                 </div>
                             </div>
                         </div>

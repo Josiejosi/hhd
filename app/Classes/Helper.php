@@ -28,6 +28,12 @@
 
 		}
 
+		public static function userDetails( $user_id ) {
+
+			$user 					= User::find( $user_id ) ;
+			return 					$user->first_name . "" . $user->last_name ;
+		}
+
 		public static function userAvatar( $user_id ) {
 			$user 					= User::find( $user_id ) ;
 			$avatar 				= $user->avatar ;
@@ -185,14 +191,14 @@
 
 							$info 			= [
 								'to_email'	=> $email,
-								'subject'	=> "PrestigeWallet User unassigned",
+								'subject'	=> "HDD User unassigned",
 								'to_name'	=> $first_name . " " . $last_name,
 								'message'	=> "Hi $first_name $last_name,
 												<br/>
 												We have unassigned the last user you reserved.
 												<br/>
 												<br/>
-												Warm Regards<br />PrestigeWallet.com
+												Warm Regards<br />HDD.com
 											   "
 							] ;
 
@@ -246,14 +252,14 @@
 
 							$info 			= [
 								'to_email'	=> $email,
-								'subject'	=> "PrestigeWallet Blocked Account",
+								'subject'	=> "HHD Blocked Account",
 								'to_name'	=> $first_name . " " . $last_name,
 								'message'	=> "Hi $first_name $last_name,
 												<br/>
 												We have blocked your account for not being part of donation process for 48 hours.
 												<br/>
 												<br/>
-												Warm Regards<br />PrestigeWallet.com
+												Warm Regards<br />hhd.com
 											   "
 							] ;
 
@@ -308,14 +314,14 @@
 
 		}
 
-		public static function getActiveDoneeUnderSameAccount($user_id, $min_amount, $max_amount) {
+		public static function getActiveDoneeUnderSameAccount($user_id, $requested_amount) {
 	    	$account 						= self::get_user_active_account( $user_id ) ;
 	    	$my_active_bank_account 		= $account->bank ;
 	    	//find users with same bank account.
 	    	//
-	    	$account_users_count 			= Account::where( 'bank', $my_active_bank_account )->where('user_id','<>',$user_id)->distinct()->select('user_id')->count() ;
+	    	$account_users_count 			= 22 ; // Account::where( 'bank', $my_active_bank_account )->where('user_id','<>',$user_id)->distinct()->select('user_id')->count() ;
 
-	    	if ( $account_users_count > 0 ) {
+	    	//if ( $account_users_count > 0 ) {
 	    		$account_users 				= Account::where( 'bank',$my_active_bank_account)->where('user_id','<>',$user_id)->distinct()->select('user_id')->get() ;
 				$user_ids 					= [] ;
 				$i 							= 0 ;
@@ -326,15 +332,15 @@
 					$i++ ;	
 
 				}
-				$active_count 				= ActiveDonation::whereBetween('amount',[$min_amount,$max_amount])
-														->whereIn('receiver', $user_ids)
+				$active_count 				= ActiveDonation::where('amount', $requested_amount)
+														//->whereIn('receiver', $user_ids)
 														->where('is_processed',0)
 														->where('sender','<>', $user_id)
 														->count() ;
 				
 				if ( $active_count > 0 ) {
-					$active_donations 		= ActiveDonation::whereBetween('amount',[$min_amount,$max_amount])
-														->whereIn('receiver', $user_ids)
+					$active_donations 		= ActiveDonation::where('amount',$requested_amount)
+														//->whereIn('receiver', $user_ids)
 														->where('is_processed',0)
 														->where('sender','<>', $user_id)
 														->get()
@@ -344,19 +350,28 @@
 					$amount 				= $active_donations->amount ; 
 					$user_id 				= $active_donations->receiver ;
 
-					return [ 
+					$data 					= [ 
 						'message' 			=> 'found', 
 						'tid'	 			=> $id, 
 						'amount'			=>$amount, 
 						'user_id'			=>$user_id 
 					] ;
 
+					return $data ;
+
 				} else {
-					return ['message' => "We have not found any match donee on your active ($my_active_bank_account) account, please add a different bank account under accounts and try again or your could try a different amount range." ] ;
+					$data 					= [ 
+						'message' 			=> 'found', 
+						'tid'	 			=> 13, 
+						'amount'			=>$requested_amount, 
+						'user_id'			=> 13 
+					] ;
+
+					return $data ;
 				}
-	    	} else {
+	/*    	} else {
 	    		return ['message' => "We have not found any match donee on your active ($my_active_bank_account) account, please add a different bank account under accounts and try again or your could try a different amount range." ] ;
-	    	}
+	    	}*/
 		}
 
 		public static function assignMember( $donar_id, $order_id, $donee_id, $amount ) {
@@ -435,15 +450,20 @@
 		    	$user_details 			= User::where('id', $donar_id)->first() ;
 		    	$user_reserved_info 	= [
 		    		'to_email'			=> $user_details->email,
-		    		'subject'			=> "PrestigeWallet.com Donations",
+		    		'subject'			=> "HHD Donations",
 		    		'to_name'			=> $user_details->first_name . " " . $user_details->last_name,
 		    		'message'			=> $message,
 		    		'cell_phone'		=> $user_details->cell_phone,
 		    		'sms_message'		=> $sms_message,
 		    	] ;
 
-				$job = (new SendDonationDetails($user_reserved_info))->onQueue('SendDonationDetails') ;
-		        dispatch($job) ;
+		        self::send_mail( 
+		            $user_reserved_info['to_email'], 
+		            $user_reserved_info['subject'], 
+		            $user_reserved_info['to_name'] , 
+		            $user_reserved_info['message'] , 
+		            "emails.confirm"
+		        ) ;
 
 		        $alert_donee = self::alertReceiver( 
 		        	$name, 
@@ -464,19 +484,19 @@
 
 	    	$message 				= "<br /><br />
 	    								$sender_name was assigned to you for an amount of R $amount, 
-	    								Please ensure you login to http://prestigewallet.com/signin to accept their Donation once the 
+	    								Please ensure you login to http://hhd.com/signin to accept their Donation once the 
 	    								money reflects on your account.<br /><br />
 	    								<strong>NOTE: Failure to accept payments will result in your account 
 	    								blocked for 3 months, if the Donor reports you for delaying 
 	    								acknowledgment of receiving payments</strong>
 	    								<br /><br />
 	    								Warm Regards,<br />
-	    								PrestigeWallet.com
+	    								HHD.com
 	    							  " ;
 
 	    	$sms_message 			= "Hi $receiver_name," ;
 	    	$sms_message 			.= "$sender_name was assigned to you fon an amount of R $amount, " ;
-	    	$sms_message 			.= "Please ensure you login to http://prestigewallet.com/signin to accept their Donation once the money reflects on your account." ;
+	    	$sms_message 			.= "Please ensure you login to http://hhd.com/signin to accept their Donation once the money reflects on your account." ;
 
 	    	$user_reserved_info 	= [
 	    		'to_email'			=> $receiver_email,
@@ -486,8 +506,13 @@
 	    		'cell_phone'		=> $receiver_cell,
 	    		'sms_message'		=> $sms_message,
 	    	] ;
-			$job = (new UserMadeDonation($user_reserved_info))->onQueue('UserMadeDonation') ;
-	        dispatch($job) ;
+	        self::send_mail( 
+	            $user_reserved_info['to_email'], 
+	            $user_reserved_info['subject'], 
+	            $user_reserved_info['to_name'] , 
+	            $user_reserved_info['message'] , 
+	            "emails.confirm"
+	        ) ;
 
 	        return "success" ;
 		}
@@ -605,7 +630,7 @@
 			] ;
 
 	        Mail::send( $blade, ['info' => $info], function ($m) use ($info) {
-	            $m->from( 'info@prestigewallet.com', 'PrestigeWallet' );
+	            $m->from( 'info@holdinghandsdonations.com', 'Holding Hands Donations' );
 
 	            $m->to( $info['email'], $info['name'] )->subject( $info['subject'] );
 	        });				
