@@ -40,7 +40,7 @@
         	                            <td> {{$member->first_name}} {{$member->last_name}} </td>
         	                            <td> {{ $member->email }} </td>
                                         <td> {{ $member->cell_phone }} </td>
-        	                            <td> {{ $member->created_at->diffForHumans() }} </td>
+        	                            <td> {{ $member->created_at }} </td>
         	                        </tr>
         	                        <?php $i++ ; ?>
                                 	@endforeach
