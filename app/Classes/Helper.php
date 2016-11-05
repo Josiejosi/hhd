@@ -31,7 +31,7 @@
 		public static function userDetails( $user_id ) {
 
 			$user 					= User::find( $user_id ) ;
-			return 					$user->first_name . "" . $user->last_name ;
+			return 					$user->first_name . " " . $user->last_name ;
 		}
 
 		public static function userAvatar( $user_id ) {
