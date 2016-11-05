@@ -8,7 +8,7 @@
 	Route::post( '/signup', 				'AuthenticationController@signup' );
 	Route::get(  '/forgot', 				'FrontController@forgot' );
 	Route::post( '/forgot', 				'AuthenticationController@forgot' );
-	Route::get(	 '/contactus', 				'FrontController@contactus');
+	Route::get(	 '/support', 				'FrontController@contactus');
 	Route::post( '/contactus', 				'FrontController@post_contactus');
 	Route::get(	 '/warning', 				'FrontController@warning');
 	Route::get(	 '/verify_account', 		'FrontController@verify_account');
@@ -17,7 +17,6 @@
 	Route::get( '/philosophy', 				'FrontController@philosophy');
 	Route::get( '/how_it_works', 			'FrontController@key_rule');
 	Route::get( '/legality', 				'FrontController@legality');
-	Route::get( '/support', 				'FrontController@support');
 	Route::get( '/FAQs', 					'FrontController@FAQs');
 	Route::get( '/news', 					'FrontController@news');
 

@@ -376,11 +376,8 @@
 
 		public static function assignMember( $donar_id, $order_id, $donee_id, $amount ) {
 
-			self::add_notification( "You have been successfully assigned a member for R $amount", $donar_id, 0 ) ;
-			self::add_notification( "A member was assigned to you to make a donation of R $amount", $donee_id, 0 ) ;
-
 			$now 						= Carbon::now("Africa/Johannesburg") ;
-	
+			echo "$donar_id, $order_id, $donee_id, $amount" ;
 			ActiveDonation::where('id', $order_id)->update([
 				'is_processed'		=> 1,
 				'donation_status'	=> 1, 
@@ -390,11 +387,12 @@
 			
 			//check if user has not made donation to this user before.
     		$account 				= Account::where( 'user_id', $donee_id )->where('active_account',1)->first() ;
-    		$user 					= User::find($donee_id) ;
+    		$user 					= User::find( $donar_id ) ;
 
     		$name 					= $user->first_name . " " . $user->last_name ;
     		$email 					= $user->email ;
     		$cell_phone 			= $user->cell_phone ;
+
     		if ( count($account) > 0 ) {
 	    		$account_number 		= $account->account_number ;
 	    		$bank 					= $account->bank ;
@@ -437,7 +435,7 @@
 		    								<strong>NOTE: Failure to make payment before, This member will be unassigned to you and failure to make payment to 2 assigned members will result in your account blocked for 3 months</strong>
 		    								<br /><br />
 		    								Warm Regards,<br />
-		    								PrestigeWallet.com
+		    								hhd.com
 
 		    							  " ;
 
@@ -456,6 +454,8 @@
 		    		'cell_phone'		=> $user_details->cell_phone,
 		    		'sms_message'		=> $sms_message,
 		    	] ;
+
+		    	//self::send_mail( $email, $subject, $name, $message, $blade )
 
 		        self::send_mail( 
 		            $user_reserved_info['to_email'], 

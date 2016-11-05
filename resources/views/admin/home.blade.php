@@ -4,9 +4,6 @@
 
 @section ('css')
 
-	<link rel="stylesheet" type="text/css" href="{{asset('css/profile.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('css/loader.css')}}">
-
 	<style type="text/css">
 		
 		.icon-btn {
@@ -35,6 +32,14 @@
 		.dashboard-stat .details .desc {
 		    font-size: 12px;
 		}
+
+		.box1 {
+			border-bottom: none ;
+			border: 1px soild #307379 ;
+			border-radius: 5px ;
+			padding: 5px ;
+			font-size: 16px ;
+		} 
 	</style>
 
 @endsection
@@ -42,22 +47,49 @@
 @section ('content')
 
 	<div class="row">
+		<div class="col-md-12">
+			<h2 class="page-header text-center">Welcome to HHD Dashboard</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+  			<div class="box1">
+	  			<i class="fa fa-cash"></i>
+	  			<h3>Funds Send</h3>
+	  			<h3>R 0.00</h3>
+  			</div>
+  		</div>
+		<div class="col-md-6">
+  			<div class="box1">
+	  			<i class="fa fa-cash"></i>
+	  			<h3>Funds to cash-in</h3>
+	  			<h3>R 0.00</h3>
+  			</div>
+  		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<p class="alert alert-info"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;</i><strong>PLEASE NOTE:</strong> HHD only allows <span class="badge badge-danger">2</span> funds to be created by 1 individual user per month.</p>
+		</div>
+	</div>
+
+	<div class="row">
 
 		<div class="col-md-12" id="assignment_div_big">
 		</div>
 		<div class="col-md-6">
-			<h2 class="page-header">Welcome to HHD Dashboard</h2>
 
-			<h5 class="page-header">NEW FUND</h5>
-			<h4 class="alert alert-info"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;</i><strong>PLEASE NOTE:</strong> HHD only allows <span class="badge badge-danger">2</span> funds to be created by 1 individual user per month.</h4>
+			<h5 class="page-header">FUND A MEMBER</h5>
             <form role="form" action="{{url('/update_profile')}}" method="post">
 
                 {!! csrf_field() !!}
-                <div class="form-group">
+                <div class="form-group input-group-sm">
                     <label class="control-label">Label Fund</label>
                     <input type="text" value="" id='label' name='label' placeholder="Label" class="form-control"> 
                 </div>
-                <div class="form-group">
+                <div class="form-group input-group-sm">
                     <label class="control-label">Amount</label>
                     <select id='amount' name='amount' placeholder="Amount" class="form-control">
                     	
@@ -68,13 +100,13 @@
                     </select>
                 </div>
                 <div class="margiv-top-10">
-                    <button class="btn btn-success" id="create_fund"> Create Fund </button>
+                    <button class="btn btn-sm btn-success" id="create_fund"> Create Fund </button>
                 </div>
             </form>
 		</div>
 
 		<div class="col-md-6">
-			<h2 class="page-header">Recent Donations</h2>
+			<h5 class="page-header">Recent Donations</h5>
 			<div id="donations">
 				<div id="divFeeds"></div>
 			</div>
@@ -121,10 +153,10 @@
 		            	var user_id 	= data.user_id ;
 		            	var amount 		= data.amount ;
 
-		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'>We found a suitable donee to match your amount range for: " ) ;
+		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><h4 class='text-center'>We found a suitable donee to match your amount range for: " ) ;
 		            	$("#assignment_div_big").append( "<br/>R " + amount ) ;
 		            	$("#assignment_div_big").append(
-		            		"<br /><br /><button id='reserve_order' class='btn btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\">Cash Reserve</button>|<button id='reserve_order' class='btn btn-info'>Bitcoin Recerve</button><br /><br /></div>"
+		            		"<br /><button id='reserve_order' class='btn btn-xs btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\">Cash Reserve</button>|<button id='reserve_order' class='btn btn-xs btn-info'>Bitcoin Recerve</button></h4><br /><br /></div>"
 		            	) ;
 		            } else {
 		            	$("#assignment_div_big").html(data.message) ;
@@ -145,7 +177,6 @@
         var assign_me 				= function( tid, user_id, amount ) {
         	//var remaining_hours 	= new Date(); 
         	//remaining_hours 		= remaining_hours + 30 ;
-        	console.log("Clicked") ;
         	//$('#reserve_order').button('loading');
 
 		    $.ajax({
@@ -161,24 +192,24 @@
 		        }, success: function( data ) {
 		        	console.log(data.message) ;
 		        	if ( data.message == "success" ) {
-			            $( "#assignment_div_big" ).html( 
-							"Successfully reserved, an Email will be send to you shortly with member's details," +
-        				  	" Please make a payment before " +
-        				  	" and await their approval"
+			            $( "#assignment_div_big" ).html(  
+							"<h4 class='text-center'>Successfully reserved, an Email will be send to you shortly with member's details," +
+        				  	" Please make a payment " +
+        				  	" and await their approval</h4>"
 			             ) ;
 			            //create_countdown_timer( data.bank, data.account, data.branch, 60*parseInt(expiry_hour), count_countdowns, "red" ) ;
-			            count_countdowns++ ;
+			            //count_countdowns++ ;
 			            //toast_notification( "info", message ) ;		        		
 		        	} else if( data == 'failed') {
 		        		var message = "This message might be because a donation was reserved before you, please try a different range" ;
-			            $( "#assignment_div_big" ).html( message ) ;
+			            $( "#assignment_div_big" ).html( "<h4 class='text-center'>" + message + "</h4>" ) ;
 			            //toast_notification( "warning", message ) ;
 		        	} else {
-		        		$( "#assignment_div_big" ).html( data ) ;
+		        		$( "#assignment_div_big" ).html( "<h4 class='text-center'>" + data + "</h4>" ) ;
 		        	}
 		        	//$('#reserve_order').button('reset') ;
 		        }, error: function( data ) {
-		        	var message = "Technical error, please try again a different range, if the error persists, contact support" ;
+		        	var message = "<h4 class='text-center'>Technical error, please try again a different range, if the error persists, contact support</h4>" ;
 		        	$("#assignment_div_big").html(data) ;
 		            //toast_notification( "danger", message ) ;
 		            //$('#reserve_order').button('reset') ;

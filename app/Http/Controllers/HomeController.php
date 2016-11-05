@@ -70,7 +70,7 @@ class HomeController extends Controller
 			return $donations ;
 		} else {
     		return [
-		    	'message' 				=>  "Sorry you already have $max_reserves_limit donations made today, please wait for approval from assigned members to create a new one." 
+		    	'message' 				=>  "Sorry you already have $max_reserves_limit funds made, Pleas note you can only fund 2 memebers a month ." 
 		    ] ;
     	}
     }
@@ -98,7 +98,7 @@ class HomeController extends Controller
 
     	} else {
     		return [
-    			'message'=>"Sorry you already have reached your daily donation limit of $max_reserves_limit, please wait for approval from assigned members to create a new one." 
+    			'message'=>"Sorry you already have reached your daily funds limit of $max_reserves_limit, Pleas note you can only fund 2 memebers a month." 
     		];
     	}
 
@@ -112,7 +112,7 @@ class HomeController extends Controller
 		$i 								= 1 ;
 
 		if ( ActiveDonation::where( 'receiver', $request->id )->where('donation_status',1)->count() > 0 ) {
-
+            $string_transactions            = "" ;
 			foreach ( $transactions as $transaction ) {
 				$sender 					= $transaction->sender ;
 				$amount 					= $transaction->amount ;

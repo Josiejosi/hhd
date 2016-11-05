@@ -98,6 +98,7 @@ class FrontController extends Controller
             'name'                      => 'required',
             'email'                     => 'required|email',
             'subject'                   => 'required',
+            'language'                   => 'required',
             'message'                   => 'required',
         ]); 
 
@@ -106,16 +107,21 @@ class FrontController extends Controller
         } 
 
         $contact_info                   = [
-            'to_email'                  => 'prestigewallet@gmail.com',
+            'to_email'                  => 'sewapetj@gmail.com',
             'from_email'                => $request->email,
-            'to_name'                   => 'PrestigeWallet',
-            'message'                   => "Sender's Details<br /> Email: " . $request->email . "<br />Phone: " . $request->phone . "<br />Subject: " . $request->subject . "<br />Message: " . $request->message,
+            'to_name'                   => 'HHD',
+            'message'                   => "Sender's Details<br /> Email: " . $request->email . "<br />Phone: " . $request->phone . "<br />Language: " . $request->language . "<br />Subject: " . $request->subject . "<br />Message: " . $request->message,
             'subject'                   => "Feedback Message",
             'balde'                     => "emails.confirm",
         ] ;
 
-        $job = ( new SendContactEmail($contact_info))->onQueue('SendContactEmail') ;
-        $this->dispatch($job);
+        Helper::send_mail( 
+            $contact_info['to_email'], 
+            $contact_info['subject'], 
+            $contact_info['to_name'] , 
+            $contact_info['message'] , 
+            "emails.confirm"
+        ) ;
 
         Session::flash( "account_not_found", "Thank you for your email we'll get back at you as soon as posible.") ;
         return redirect('contactus') ;     

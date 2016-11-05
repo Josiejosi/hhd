@@ -23,7 +23,7 @@
 
                     <div class="row">
 
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-md-offset-2">
 
                             @if (Session::has('account_not_found'))
                                 <div class="alert alert-warning">
@@ -71,6 +71,22 @@
                                         <input name="phone" type="text" class="form-control myInput" id="phone">
                                     </div>
 
+                        <div class="form-group col-md-12">
+                            <label for="language">Preferable Language</label>
+                            <select
+                                name="language" 
+                                type="text" 
+                                class="form-control myInput" 
+                                value="{{ old('language') }}"
+                                id="language" required>
+
+                                <option>English</option>
+                                <option>Sotho</option>
+                                <option>Zulu</option>
+
+                            </select> 
+                        </div>
+
                                 </div>
 
                                 <div class="row">
@@ -103,7 +119,7 @@
 
                                 </div>
 
-                                <button type="submit" class="myBtn myBtn-rounded myBtn-lg myBtn-3d m-0 mt-10">Send Message</button>
+                                <button type="submit" class="btn btn-success">Send Message</button>
 
 
                             </form>
@@ -139,49 +155,6 @@
 
                         </div>
 
-                        <div class="col-md-4">
-
-                            <div>
-                                <h3 class="text-uppercase">Support info</h3>
-
-                                <address>
-
-                                    <strong class="block mt-20">Email:</strong>
-                                    <a href="#">info@prestigewallet.com</a><br>
-                                    <a href="#">support@prestigewallet.com</a>
-
-                                    <div class="social mt-40 mb-60">
-                                        <a class="social-icon social-facebook" href="#">
-                                            <div class="front">
-                                                <i class="fa fa-facebook"></i>
-                                            </div>
-                                            <div class="back">
-                                                <i class="fa fa-facebook"></i>
-                                            </div>
-                                        </a>
-
-                                        <a class="social-icon social-twitter" href="#">
-                                            <div class="front">
-                                                <i class="fa fa-twitter"></i>
-                                            </div>
-                                            <div class="back">
-                                                <i class="fa fa-twitter"></i>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </address>
-
-                                <h3 class="text-uppercase"><span class="text-theme">Business</span> Hours</h3>
-
-                                <address>
-                                    <strong>Monday - Friday:</strong> 9:00 - 17:00<br>
-                                    <strong>Saturday:</strong> 9:00 - 12:00<br>
-                                    <strong>Sunday:</strong> Closed
-                                </address>
-
-                            </div>
-
-                        </div>
 
                     </div>
 
@@ -190,5 +163,7 @@
 
         </div>
     </section>
+
+    <hr />
 
 @endsection

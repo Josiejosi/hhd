@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 to-animate" style="margin-top: 120px !important;">
                             <h1 style="color: #fff ; ">The Opportunities For Your Financial Freedom</h1>
-                    <h2 style="color: #fff; font-size: 20px ;">Holding Hands Donations, is an internetional Fund Exchange System formulated to provide financial growth with the invested funds.</h2>
+                            <h3 style="color: #fff; font-size: 20px ;">Holding Hands Donations, is an internetional Fund Exchange System formulated to provide financial growth with the invested funds.</h3>
                         </div>
                     </div>
                 </div>

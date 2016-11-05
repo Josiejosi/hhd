@@ -43,7 +43,13 @@
         ul.sidebar-menu li ul.sub li{
             background: #386466;
         }
+
+        body {
+            background-color: #fff ;
+        }
     </style>
+
+      @yield('css')
   </head>
 
   <body>

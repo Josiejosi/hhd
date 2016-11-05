@@ -14,7 +14,7 @@ class ActiveTranscationTableSeeder extends Seeder
     public function run()
     {
         $s = 0 ;
-    	for ( $i=1; $i<31; $i++ ) {
+    	for ( $i=1; $i<11; $i++ ) {
     		$receiver                 = mt_rand(1,10) ;
 
             if ( $s == 0 ) {
