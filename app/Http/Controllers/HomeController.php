@@ -107,12 +107,12 @@ class HomeController extends Controller
     public function get_latest_feed( Request $request ) {
 		$transactions 					= ActiveDonation::where( 'receiver', $request->id )->where('donation_status',1)->get() ; 
 
-		$string_transactions 			= "<li><div class='col1'><div class='desc'>No donations to approve.</div></div></li>" ;
+		$string_transactions 			= "<ol><li><div class='col1'><div class='desc'>No donations to approve.</div></div></li></ol>" ;
 
 		$i 								= 1 ;
 
 		if ( ActiveDonation::where( 'receiver', $request->id )->where('donation_status',1)->count() > 0 ) {
-            $string_transactions            = "" ;
+            $string_transactions            = "<ol>" ;
 			foreach ( $transactions as $transaction ) {
 				$sender 					= $transaction->sender ;
 				$amount 					= $transaction->amount ;
@@ -147,7 +147,7 @@ class HomeController extends Controller
 
 				$i++ ;
 			}
-
+            $string_transactions            .= "</ol>" ;
 		}
 
 		return $string_transactions ;
