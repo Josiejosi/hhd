@@ -156,7 +156,7 @@
 		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><h4 class='text-center'>We found a suitable donee to match your amount range for: " ) ;
 		            	$("#assignment_div_big").append( "<br/>R " + amount ) ;
 		            	$("#assignment_div_big").append(
-		            		"<br /><button id='reserve_order' class='btn btn-xs btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\">Cash Reserve</button>|<button id='reserve_order' class='btn btn-xs btn-info'>Bitcoin Recerve</button></h4><br /><br /></div>"
+		            		"<br /><button id='reserve_order' class='btn btn-sm btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\"><i class='fa fa-btc'></i> Cash Reserve</button><span style='padding-left:30px ;'></span><button class='btn btn-sm btn-success' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\"><i class='fa fa-btc'></i>Bitcoin Recerve</button></h4><br /><br /></div>"
 		            	) ;
 		            } else {
 		            	$("#assignment_div_big").html(data.message) ;
@@ -194,7 +194,7 @@
 		        	if ( data.message == "success" ) {
 			            $( "#assignment_div_big" ).html(  
 							"<h4 class='text-center'>Successfully reserved, an Email will be send to you shortly with member's details," +
-        				  	" Please make a payment " +
+        				  	" Please make a payment and send proof of payment to both user and support team" +
         				  	" and await their approval</h4>"
 			             ) ;
 			            //create_countdown_timer( data.bank, data.account, data.branch, 60*parseInt(expiry_hour), count_countdowns, "red" ) ;
