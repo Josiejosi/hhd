@@ -103,7 +103,7 @@ class FrontController extends Controller
         ]); 
 
         if ($validator->fails()) {
-            return redirect('contactus')->withErrors($validator)->withInput() ;
+            return redirect('support')->withErrors($validator)->withInput() ;
         } 
 
         $contact_info                   = [
@@ -124,7 +124,7 @@ class FrontController extends Controller
         ) ;
 
         Session::flash( "account_not_found", "Thank you for your email we'll get back at you as soon as posible.") ;
-        return redirect('contactus') ;     
+        return redirect('support') ;     
     }
 
     public function home() {
