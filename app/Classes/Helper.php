@@ -445,7 +445,7 @@
 		    	$sms_message 			.= " Account Number: $account_number," ;
 		    	$sms_message 			.= " Branch Code: $branch_code, Amount: R $amount" ;
 
-		    	$user_details 			= User::where('id', $donar_id)->first() ;
+		    	$user_details 			= User::where('id', $donee_id)->first() ;
 		    	$user_reserved_info 	= [
 		    		'to_email'			=> $user_details->email,
 		    		'subject'			=> "HHD Donations",
