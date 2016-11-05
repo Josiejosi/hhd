@@ -60,7 +60,7 @@
                                             ?>
                                         </td>
                                         <td> {{$donation->donation_percentage}} % </td>
-                                        <td> {{$donation->donation_days}} % </td>
+                                        <td> {{$donation->donation_days}} days </td>
                                         <td> R {{ $donation->amount }} </td>
                                         <td> 
                                             @if ( $donation->donation_status == 0 )

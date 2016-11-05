@@ -8,7 +8,7 @@
 
 @section ('content')
     <div class="m-heading-1 border-green m-bordered">
-        <h3>My Scheduled Donations</h3>
+        <h3>My Cash-in Funds Status</h3>
         <p> PLEASE NOTE: Once a member has approved your payment, your scheduled donations will be in here, and moved to active donations once they reached maturity.</p>
     </div>
     <div class="row">
@@ -18,7 +18,7 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="fa fa-calender-plus-o font-dark"></i>
-                        <span class="caption-subject bold uppercase">Scheduled</span>
+                        <span class="caption-subject bold uppercase">Cash-in Funds Status</span>
                     </div>
                 </div>
                 <div class="portlet-body">
@@ -28,7 +28,7 @@
                             <thead>
                                 <tr>
                                     <th> Percentage </th>
-                                    <th> Scheduled For </th>
+                                    <th> Available </th>
                                     <th> Amount </th>
                                 </tr>
                             </thead>

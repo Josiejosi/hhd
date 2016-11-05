@@ -2,13 +2,13 @@
 
 @section ('css')
 
-@section ('title', 'Scheduled')
+@section ('title', 'Cash-in Funds Status')
 
 @endsection
 
 @section ('content')
     <div class="m-heading-1 border-green m-bordered">
-        <h3>Scheduled Donations</h3>
+        <h3>Cash-in Funds Status</h3>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -17,7 +17,7 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="fa fa-calender-plus-o font-dark"></i>
-                        <span class="caption-subject bold uppercase">Scheduled</span>
+                        <span class="caption-subject bold uppercase">Cash-in Funds Status</span>
                     </div>
                 </div>
                 <div class="portlet-body">
@@ -28,7 +28,7 @@
                                 <tr>
                                     <th> User </th>
                                     <th> Percentage </th>
-                                    <th> Scheduled For </th>
+                                    <th> Available </th>
                                     <th> Amount </th>
                                 </tr>
                             </thead>
