@@ -377,7 +377,7 @@
 		public static function assignMember( $donar_id, $order_id, $donee_id, $amount ) {
 
 			$now 						= Carbon::now("Africa/Johannesburg") ;
-			echo "$donar_id, $order_id, $donee_id, $amount" ;
+			
 			ActiveDonation::where('id', $order_id)->update([
 				'is_processed'		=> 1,
 				'donation_status'	=> 1, 
