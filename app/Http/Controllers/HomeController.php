@@ -137,7 +137,7 @@ class HomeController extends Controller
 						                            </div>
 						                            <div class='col2'>
 						                                <button 
-						                                	class='btn btn-sx btn-success'
+						                                	class='btn btn-xs btn-success'
 						                                	id='approve$i'
 						                                	onclick=\"approve( '$i', '$id' )\"
 						                                	>Approve</button>
