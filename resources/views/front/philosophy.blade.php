@@ -26,10 +26,11 @@
                 
                     After your donation funds matured in 30 days you will receive 100% of your donation profits, 
                     the system will automatically reinvest for you. 
+                    <br />
                     The reason is to sustain the system so that people don’t run away with the system funds. 
                     And create you an income every 30 days which will help eliminate poverty and unemployment.
                 </div>
-                
+
                 <div class="round hollow text-center">
                     The system allows you to create two donations per month.
                 </div>
@@ -37,6 +38,8 @@
             </div>
 
         </div>
+        <br />
+        <br />
     </section>
 
 @endsection
