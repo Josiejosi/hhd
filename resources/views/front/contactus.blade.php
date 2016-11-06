@@ -32,7 +32,7 @@
                             @endif
 
                             <div class="heading-block mb-60">
-                                <h2 class="text-uppercase">
+                                <h2>
                                     <i class="fa fa-phone-square" aria-hidden="true"></i> Support
                                 </h2>
 
