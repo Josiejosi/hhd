@@ -39,14 +39,19 @@ class HomeController extends Controller
     	$expiry_hour 					= Helper::expiryHour() ;
     	$now							= Carbon::now() ;
 
-    	$transactions 					= ActiveDonation::where( 'receiver', Auth::user()->id )->where('donation_status',1)->get() ;
+        $transactions                   = ActiveDonation::where( 'receiver', Auth::user()->id )->where('donation_status',1)->get() ;
+        $paid                           = 0.00 ;
+
+        if (ActiveDonation::where( 'sender', Auth::user()->id )->where('donation_status',2)->count() > 0 )
+    	   $paid 					    = ActiveDonation::where( 'sender', Auth::user()->id )->where('donation_status',2)->sum( "amount" ) ;
 
     	$data 							= [
     		'is_help_time'				=> $is_help_time,
     		'help_time'					=> $help_time,
     		'max_reserves_limit'		=> $max_reserves_limit,
     		'max_reserves_allowed'		=> $max_reserves_allowed,
-    		'transactions'				=> $transactions,
+            'transactions'              => $transactions,
+    		'paid'				        => $paid,
     		'alltransactions'			=> $alltransactions,
     		'now'						=> $now,
     		'expiry_hour'				=> $expiry_hour,

@@ -57,7 +57,7 @@
   			<div class="box1">
 	  			<i class="fa fa-cash"></i>
 	  			<h3>Funds Send</h3>
-	  			<h3>R 0.00</h3>
+	  			<h3>R {{ $paid }}</h3>
   			</div>
   		</div>
 		<div class="col-md-4">
