@@ -280,7 +280,6 @@
                     <li><a href="{{ url('/legality') }}"><span>Legality</span></a></li>
                     <li><a href="{{ url('/support') }}"><span>Support</span></a></li>
                     <li><a href="{{ url('/FAQs') }}"><span>FAQs</span></a></li>
-                    <li><a href="{{ url('/news') }}"><span>News</span></a></li>
                     <li><a href="{{ url('/signin') }}"><span>Login</span></a></li>
                     <li><a href="{{ url('/signup') }}"><span>Register</span></a></li>
                   </ul>
@@ -304,8 +303,6 @@
                     <ul class="social social-circle">
                         <li><a href="#"><i class="icon-twitter"></i></a></li>
                         <li><a href="#"><i class="icon-facebook"></i></a></li>
-                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                        <li><a href="#"><i class="icon-google-plus"></i></a></li>
                     </ul>
                 </div>
             </div>

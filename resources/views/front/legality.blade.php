@@ -20,21 +20,23 @@
 			    <div class="row">
 					<h2><i aria-hidden="true" class="fa  fa-legal"></i> Legality</h2>
 					<div class="round hollow text-center">
-			        <h4 style="font-size: 14px; line-height: 22px;">
+			        
 						Holding Hands Donations is not a bank or a company or online business or an investment plan of any kind. <br />
 						It has no directors, shareholders, joining fees or a product. 
-			        </h4>
+
 			        </div>
 			        <div class="round hollow text-center">
-						YOU ARE DOING THESE AT YOUR OWN RISK. IF YOU ARE NOT CERTAIN, <br />
-						DO NOT PARTCITIPATE BECAUSE THERE WON’T BE ANYONE RESPONSIBLE FOR YOUR LOSS.
+			        	<strong>
+						You are doing these at your own risk. if you are not certain, <br />
+						do not partcitipate because there won’t be anyone responsible for your loss.
+						</strong>
 			        </div>
 
 
 			        <hr />
 
 			        <div class="round hollow text-center text-warning">
-			        	READ ALL THE RULES CAREFULLY!!!!
+			        	<strong>Read all the rules carefully!!!!</strong>
 			        </div>
 
 				</div>

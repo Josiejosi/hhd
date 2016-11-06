@@ -536,6 +536,8 @@
                 </div><!-- /sign up -->
 
         </div>
+        <br />
+        <br />
     </section>
 
 @endsection

@@ -32,7 +32,9 @@
                             @endif
 
                             <div class="heading-block mb-60">
-                                <h2 class="text-uppercase"><span class="text-theme">Give us</span> a line</h2>
+                                <h2 class="text-uppercase">
+                                    <i class="fa fa-phone-square" aria-hidden="true"></i> Support
+                                </h2>
 
                             </div>
 
@@ -164,6 +166,7 @@
         </div>
     </section>
 
-    <hr />
+    <br />
+    <br />
 
 @endsection
