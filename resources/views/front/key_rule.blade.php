@@ -122,11 +122,11 @@
 
 
                 <div class="round hollow text-center">
-                    ALWAYS REMEMBER TO HAVE A SMOOTH AND SUSTAINABLE NETWORK SYSTEM RUNNING.
+                    Always remember to have a smooth and sustainable network system running.
                 </div>
 
                 <div class="round hollow text-center">
-                    RECRUITMENT IS THE BEST KEY
+                    Recruitment is the best key
                 </div>
 
             </div>
