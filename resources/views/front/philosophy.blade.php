@@ -18,7 +18,7 @@
     <section id="content">
         <div class="content-wrap">
 
-            <div class="container clearfix w-3xl">
+<!--             <div class="container clearfix w-3xl">
 
                 <h2><i class="fa fa-university"></i> Philosophy</h2>
                
@@ -33,6 +33,25 @@
 
                 <div class="round hollow text-center">
                     The system allows you to create two donations per month.
+                </div>
+
+            </div> -->
+
+            <div class="container clearfix w-3xl">
+
+                <h2><i class="fa fa-university"></i> Philosophy</h2>
+               
+                <div class="round hollow text-center">
+
+                    Financial difficulties are faced all over the world due to the banking system and the
+                    influence it has on all government across the globe.
+                    <br /><br />
+                    HHD is an international fund exchange programme formulated to empower individual financially, by
+                    giving them an opportunity to exchange funds freely and make profits effortlessly in the process.
+                    <br /><br />
+                    HHD strives to implement a new global system which replaces an obviously flawed banking system
+                    therefore giving global citizens a fighting chance in today's tough economy. A new age begins with HHD.
+
                 </div>
 
             </div>
