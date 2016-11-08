@@ -24,6 +24,7 @@ class AccountsController extends Controller
         $data                           = [
             'name'                      => Helper::userDetails( Auth::user()->id ),
             'avatar'                    => Helper::userAvatar( Auth::user()->id ),
+            'title'                     => 'Banking Details',
         ] ;
 
     	return view( 'admin.accounts', $data ) ;

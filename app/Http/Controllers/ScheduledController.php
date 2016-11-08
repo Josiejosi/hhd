@@ -24,6 +24,7 @@ class ScheduledController extends Controller
     		'scheduled'                 => ScheduledDonation::where('user_id',Auth::user()->id)->get(),
             'name'                      => Helper::userDetails( Auth::user()->id ),
             'avatar'                    => Helper::userAvatar( Auth::user()->id ),
+            'title'                     => 'Transactions',
     	] ;
     	return view('admin.schedules',$data) ;
     }

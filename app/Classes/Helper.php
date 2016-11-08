@@ -12,6 +12,7 @@
 	use App\Models\SystemSetting ;
 	use App\Models\ScheduledDonation ;
 	use App\Models\Notifications ;
+	use App\Models\BitcoinAddress ;
 
 	use App\Jobs\DonationReachedCountDown ;
 	use App\Jobs\BlockedUser ;
@@ -54,6 +55,17 @@
 							
 		}
 
+		public static function get_user_active_bitcoin_address( $user_id ) {
+
+			$account_details = BitcoinAddress::where( 'user_id', $user_id )->where( 'is_processed', 1 ) ;
+
+			if ( $account_details->count() == 1 )
+				return $account_details->first() ;
+			else 
+				return false ;	
+							
+		}
+
 		public static function date_diff( $start_date, $end_date ) {
 
 			return $start_date->diffInDays( $end_date ) ;
@@ -66,8 +78,6 @@
 											->where('is_processed',1)
 											->where('donation_status',1)
 											->count() ;
-			$daily_maximum 			= self::max_reserves() ;
-
 			$allowed_donations 		= 0 ;
 
 			$permission 			= "add" ;
@@ -83,14 +93,14 @@
 				$now 				= Carbon::now("Africa/Johannesburg") ;
 
 				foreach ( $donations as $donation ) {
-					$hours_pending 	= $now->diffInSeconds($donation->booked_at) ;
-					if ( $hours_pending > 0 ) {
+					$hours_pending 	= $now->diffInDays($donation->booked_at) ;
+					if ( $hours_pending < 30 ) {
 						$allowed_donations++ ;
 					}
 				}
 			}
 			
-			if ( $allowed_donations == $daily_maximum ) 
+			if ( $allowed_donations == self::max_reserves() ) 
 				return 'stop' ; 
 
 			return 'add' ;

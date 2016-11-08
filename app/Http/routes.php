@@ -40,6 +40,13 @@
 	Route::post( '/delete_account', 		'AccountsController@deleteAccount' ) ;
 	Route::post( '/activate_account', 		'AccountsController@updateAccount' ) ;
 
+	Route::get( '/bitcoin', 				'BitcoinController@index' ) ;
+	Route::post( '/get_bitcoin_accounts', 	'BitcoinController@get_bitcoin_accounts' ) ;
+	Route::post( '/add_bitcoin_account', 	'BitcoinController@add_bitcoin_account' ) ;
+	Route::post( '/delete_bitcoin_account', 'BitcoinController@delete_bitcoin_account' ) ;
+	Route::post( '/activate_account', 		'BitcoinController@activate_account' ) ;
+
+
 	Route::post( '/update_profile', 		'ProfileController@update_profile' ) ;	
 	Route::post( '/change_password', 		'ProfileController@change_password' ) ;	
 	Route::post( '/update_avatar', 			'ProfileController@update_avatar' ) ;	

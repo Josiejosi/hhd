@@ -11,13 +11,14 @@
         <meta name="secondary_level_token" content="{{ Auth::user()->id }}" />
         <meta name="fallback_url" content="{{env('SOCKET_URL')}}" />
 
-    <title>HHD - Home</title>
+    <title>HHD - {{ $title }}</title>
 
     <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
         
     <link href="{{asset('css/admin/style.css')}}" rel="stylesheet">
     <link href="{{asset('css/admin/style-responsive.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin/loader.css')}}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -27,8 +28,13 @@
 
     <style type="text/css">
         .black-bg {
-            background: #c7eac9;
-            border-bottom: 1px solid #307477;
+
+            background: #388986; /* Old browsers */
+            background: -moz-linear-gradient(top,  #388986 0%, #307477 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top,  #388986 0%,#307477 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom,  #388986 0%,#307477 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#388986', endColorstr='#307477',GradientType=0 ); /* IE6-9 */
+            border-bottom: 1px solid #666 !important;
         }
 
         #sidebar {
@@ -47,6 +53,20 @@
         body {
             background-color: #fff ;
         }
+
+        ul.top-menu > li > .logout {
+            color: #f2f2f2;
+            font-size: 14px;
+            border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border: 1px solid #8ab66b !important;
+            padding: 5px 15px;
+            margin-right: 15px;
+            background: #307477;
+            margin-top: 15px;
+        }
+
+
     </style>
 
       @yield('css')
@@ -63,7 +83,9 @@
             <a href="http://holdinghandsdonations.com" class="logo"><b>HHD</b></a>
             <div class="top-menu">
                 <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="{{url('/logout')}}">Logout</a></li>
+                    <li><a class="logout" href="{{url('/logout')}}">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </a></li>
                 </ul>
             </div>
       </header>
@@ -71,7 +93,11 @@
           <div id="sidebar"  class="nav-collapse ">
               <ul class="sidebar-menu" id="nav-accordion">
               
-                  <p class="centered"><a href="profile.html"><img src="{{ $avatar }}" class="img-circle" width="60"></a></p>
+                  <p class="centered">
+                      <a href="{{ url("/profile") }}">
+                          <img src="{{ $avatar }}" class="img-circle" width="60">
+                      </a>
+                  </p>
                   <h5 class="centered">{{ $name }}</h5>
                     
                   <li class="mt">
@@ -86,6 +112,25 @@
                           <i class="fa fa-money"></i>
                           <span>Accounts</span>
                       </a>
+                  </li>
+
+                  <li class="sub-menu dcjq-parent-li">
+                      <a class="active dcjq-parent" href="javascript:;">
+                          <i class="fa fa-expand" aria-hidden="true"></i>
+                          <span>Accounts</span>
+                      <span class="dcjq-icon"></span></a>
+                      <ul class="sub" style="display: block;">
+                          <li>
+                              <a href="{{ url('/accounts') }}">
+                                  <i class="fa fa-cash" aria-hidden="true"></i> Banks
+                              </a>
+                          </li>
+                          <li>
+                              <a href="{{ url('/bitcoin') }}">
+                                  <i class="fa fa-cash" aria-hidden="true"></i>  Bitcoins
+                              </a>
+                          </li>
+                      </ul>
                   </li>
 
 

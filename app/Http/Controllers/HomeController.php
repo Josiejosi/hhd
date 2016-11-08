@@ -57,6 +57,7 @@ class HomeController extends Controller
     		'expiry_hour'				=> $expiry_hour,
             'name'                      => Helper::userDetails( Auth::user()->id ),
             'avatar'                    => Helper::userAvatar( Auth::user()->id ),
+            'title'                     => 'Dashboard',
     	] ;
 
     	return view( 'admin.home', $data ) ;

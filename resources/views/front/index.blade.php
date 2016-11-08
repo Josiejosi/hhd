@@ -1,5 +1,14 @@
 @extends('layouts.front')
 
+@section ('js')
+
+    <script type="text/javascript">
+    $.get("http://www.apilayer.net/api/convert?access_key=c9adf38d17ce750c7d7f19b76540cb41&from=BTC&to=ZAR", function (data) {
+        console.log(data) ;
+    }) ;
+    </script>
+
+@endsection
 @section ('content')
 
     <div id="fh5co-about-us" data-section="about">

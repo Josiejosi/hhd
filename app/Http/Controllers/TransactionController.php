@@ -33,6 +33,7 @@ class TransactionController extends Controller
             'transactions'	            => $transactions,
             'name'                      => Helper::userDetails( Auth::user()->id ),
             'avatar'                    => Helper::userAvatar( Auth::user()->id ), 
+            'title'                     => 'Transactions',
         ] ;
 
     	return view('admin.transactions',$data) ;

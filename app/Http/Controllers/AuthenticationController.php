@@ -9,6 +9,7 @@ use App\Http\Requests;
 use Auth ;
 use App\Models\User ;
 use App\Models\Account ;
+use App\Models\BitcoinAddress ;
 use App\Models\Referral ;
 
 use Validator ;
@@ -75,6 +76,12 @@ class AuthenticationController extends Controller
 		    	"active_account"		     => 1,
 		    	"user_id"				     => $user->id,
         	]) ;
+
+            $bitcoin_Address                = BitcoinAddress::create([
+                "user_id"                   => $user->id,
+                "label"                     => "Default Address",
+                "address"                   => $request->bitcoin_address,
+            ]) ;
 
             if ( isset( $request->referral_key ) ) {
                 $user_referred              = User::where('refferal_key', $request->referral_key)->count() ;

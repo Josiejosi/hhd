@@ -2,7 +2,7 @@
 
 @section ('css')
 
-@section ('title', 'Scheduled')
+@section ('title', 'Banking Details')
 
 @endsection
 
@@ -10,11 +10,9 @@
 
     <div class="m-heading-1 border-green m-bordered">
         <h3>Manage accounts</h3>
-        <p> PLEASE NOTE: Only one account can be the active account per donation, and you can only add 3 accounts</p>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption font-dark">

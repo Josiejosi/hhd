@@ -8,8 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>HHD - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="HHD, holding hands donations" />
-    <meta name="keywords" content="HHD, holding hands donations" />
+    <meta name="description" content="holding hands donations" />
+    <meta name="keywords" content="HHD, holding, hands, donations" />
+    <meta name="google-site-verification" content="OwCTfTj55HzotT-wrJ4_xXPHk5nqIFE7_LVMeQZXSbQ" />
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="favicon.ico">

@@ -413,15 +413,15 @@
                                 </div>
 
                                 <div class="form-group col-md-12">
-                                    <label for="bitcoin_address">Bitcoin Address <span class="text-lightred" style="font-size: 15px">*</span></label>
+                                    <label for="bitcoin_address">Bitcoin Address </label>
                                     <input name="bitcoin_address" 
                                         value="{{ old('bitcoin_address') }}"
                                         type="text" class="form-control myInput" id="bitcoin_address">
-                                    @if ($errors->has('bitcoin_address'))
-                                        <span class="help-block error-message">
-                                            <strong>{{ $errors->first('bitcoin_address') }}</strong>
-                                        </span>
-                                    @endif 
+                                        @if ($errors->has('bitcoin_address'))
+                                            <span class="help-block error-message">
+                                                <strong>{{ $errors->first('bitcoin_address') }}</strong>
+                                            </span>
+                                        @endif 
                                 </div>
 
 

@@ -17,18 +17,13 @@
 
     <section id="content">
         <div class="content-wrap">
-
-            <!-- ============ login ============ -->
             <div class="container clearfix w-3xl">
-
                 <h3><i class="fa fa-unlock"></i> Login to your account</h3>
-
                 @if (Session::has('account_creation_error'))
                     <div class="alert alert-warning">
                         <strong>{{ Session::get('account_not_found') }}</strong>
                     </div>
                 @endif
-
                 <form action="{{url('/forgot')}}" method="post">
 
                     {!! csrf_field() !!}
@@ -59,13 +54,10 @@
 
                     </div>
                 </form>
-
-
-
-
-            </div><!-- /login -->
+            </div>
 
         </div>
+        <br /><br />
     </section>
 
 @endsection

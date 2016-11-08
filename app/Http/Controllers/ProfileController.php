@@ -26,6 +26,7 @@ class ProfileController extends Controller
         $data                           = [
             'name'                      => Helper::userDetails( Auth::user()->id ),
             'avatar'                    => Helper::userAvatar( Auth::user()->id ),
+            'title'                     => 'Profile',
         ] ;
 
         //'avatar'                    => Helper::userAvatar( Auth::user()->id ) ;

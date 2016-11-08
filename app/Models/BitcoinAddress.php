@@ -12,5 +12,6 @@ class BitcoinAddress extends Model
     	"user_id",
     	"label",
     	"address",
+    	"is_processed",
     ];
 }

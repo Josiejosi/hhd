@@ -16,7 +16,8 @@ class ActiveDonation extends Model
     	"created_at",
         "booked_at",
     	"donation_percentage",
-    	"donation_days",
+        "donation_days",
+    	"pop",
     	"donation_status",
     	"is_processed",
     ];
