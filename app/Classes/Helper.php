@@ -8,6 +8,7 @@
 
 	use App\Models\User ;
 	use App\Models\Account ;
+	use App\Models\Referral ;
 	use App\Models\ActiveDonation ;
 	use App\Models\SystemSetting ;
 	use App\Models\ScheduledDonation ;
@@ -57,13 +58,45 @@
 
 		public static function get_user_active_bitcoin_address( $user_id ) {
 
-			$account_details = BitcoinAddress::where( 'user_id', $user_id )->where( 'is_processed', 1 ) ;
+			$account_details 				= BitcoinAddress::where( 'user_id', $user_id )->where( 'is_processed', 1 ) ;
 
 			if ( $account_details->count() == 1 )
 				return $account_details->first() ;
 			else 
 				return false ;	
 							
+		}
+
+		public static function getForRefferedFirstDonation($user_id) {
+			//
+
+			if ( Referral::where('referred_id', $user_id)->where('paid', 0)->count()  == 1 ) {
+				$refferal 					= Referral::where('referred_id', $user_id)->where('paid', 0)->first() ;
+				$referrer_id 				= $refferal->referrer_id ;
+
+				//you need to make the refera paid increase.
+				return $referrer_id ;
+			}
+
+			return false ;
+		}
+
+		public static function updateRefferedPaid($user_id, $amount) {
+
+			$flag  							= false ;
+
+			if ( Referral::where('referred_id', $user_id)->where('paid', 0)->count()  == 1 ) {
+				$update 					= Referral::where('referred_id', $user_id)->update([
+					'paid' 					=> 1,
+					'amount' 				=> $amount,
+				]) ;
+
+				if ( $update )
+					$flag 					= true ;
+				
+			} 
+			
+			return $flag ;
 		}
 
 		public static function date_diff( $start_date, $end_date ) {

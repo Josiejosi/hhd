@@ -18,7 +18,7 @@
 
 			<div class="container">
 			    <div class="row">
-					<h2><i aria-hidden="true" class="fa  fa-legal"></i> Legality</h2>
+					<div class="faqHeader"><i aria-hidden="true" class="fa  fa-legal"></i> Legality</div>
 					<div class="round hollow text-center">
 			        
 						Holding Hands Donations is not a bank or a company or online business or an investment plan of any kind. <br />

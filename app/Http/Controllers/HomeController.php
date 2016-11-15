@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use Auth ;
 use App\Models\User ;
+use App\Models\Referral ;
 use App\Models\Account ;
 use App\Models\ActiveDonation ;
 
@@ -42,6 +43,14 @@ class HomeController extends Controller
         $transactions                   = ActiveDonation::where( 'receiver', Auth::user()->id )->where('donation_status',1)->get() ;
         $paid                           = 0.00 ;
 
+        $referral_bonuses               = 0.00 ;
+
+        $withdraw_funds_amount          = 0.00 ;
+
+        if ( Referral::where('referrer_id', Auth::user()->id)->count() > 0 ) {
+            $referral_bonuses           = Referral::where('referrer_id', Auth::user()->id)->sum( "amount" ) ;   
+        }
+
         if (ActiveDonation::where( 'sender', Auth::user()->id )->where('donation_status',2)->count() > 0 )
     	   $paid 					    = ActiveDonation::where( 'sender', Auth::user()->id )->where('donation_status',2)->sum( "amount" ) ;
 
@@ -51,7 +60,9 @@ class HomeController extends Controller
     		'max_reserves_limit'		=> $max_reserves_limit,
     		'max_reserves_allowed'		=> $max_reserves_allowed,
             'transactions'              => $transactions,
-    		'paid'				        => $paid,
+            'paid'                      => $paid,
+            'referral_bonuses'          => $referral_bonuses,
+    		'withdraw_funds_amount'		=> $withdraw_funds_amount,
     		'alltransactions'			=> $alltransactions,
     		'now'						=> $now,
     		'expiry_hour'				=> $expiry_hour,

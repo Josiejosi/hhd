@@ -33,6 +33,7 @@
 	Route::get(	 '/schedules', 				'ScheduledController@index') ;
 	Route::get(	 '/transactions', 			'TransactionController@index') ;
 	Route::post( '/approve_order', 			'TransactionController@approve_order') ;
+	Route::post( '/withdrawal', 			'TransactionController@withdrawal') ;
 
 	Route::get( '/accounts', 				'AccountsController@index' ) ;
 	Route::post( '/get_account', 			'AccountsController@get_account' ) ;

@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Models\ActiveDonation ;
 use App\Models\ScheduledDonation ;
 use App\Models\User ;
+use App\Models\Referral ;
 
 use App\Classes\Helper ;
 
@@ -39,6 +40,45 @@ class TransactionController extends Controller
     	return view('admin.transactions',$data) ;
     }
 
+    public function withdrawal( Request $request ) {
+        $withdrawal                     = $request->withdrawal ;
+
+        if ( $withdrawal == "bonuses" ) {
+
+            if ( Referral::where('referrer_id', Auth::user()->id)->count() > 0 ) {
+                $referral_bonuses       = Referral::where('referrer_id', Auth::user()->id)->sum( "amount" ) ; 
+
+                if ( $referral_bonuses < 1000 ) {
+                    return [
+                        'message'           => 'Your referral bonuses have not yet matured',  
+                    ] ;                    
+                }
+
+                //
+                Referral::where('referrer_id', Auth::user()->id)->update([
+                    'amount'            => 0.00,
+                ]) ;
+                return [
+                    'message'           => 'found',  
+                ] ; 
+            } else {
+                 return [
+                    'message'           => 'Your referral bonuses have not yet matured',  
+                ] ;                
+            } 
+
+        } else if ( $withdrawal == "funds" ) {
+            if ( ScheduledDonation::where('user_id', Auth::user()->id)->count() > 0 ) {
+                $scheduled_donation         = ScheduledDonation::where('user_id', Auth::user()->id)->sum( "amount" ) ;
+                return [
+                    'message'           => 'found',  
+                    'amount'            => $scheduled_donation,  
+                ] ;
+            }
+
+        }
+
+    }
     public function approve_order( Request $request ) {
 
     	$id 							= $request->id ;
@@ -67,12 +107,17 @@ class TransactionController extends Controller
     		]) ;
 
     		if ( $insert ) {
+
+                if ( Helper::getForRefferedFirstDonation($sender) != false ) {
+                    $paid_referral      = Helper::updateRefferedPaid($sender, ( $amount * 0.05 ) ) ;
+                }
+
     			$scheduled_at 			= Carbon::now()->addDays($expiry_hours)->setToStringFormat('jS \o\f F, Y g:i a') ;
     			$scheduled_amount 		= ( $amount * $donation_percentage / 100 ) + $amount ;
     			//$user 					= User::find(Auth::user()->id) ;
     			$scheduled_for 			= Carbon::now()->addDays($donation_days) ;
 		    	$message 				= "<br />
-		    								<p>Your donation has been approved you are scheduled for: $scheduled_for<br/>:
+		    								<p>Your donation has been approved, your funds will be withdraw-able as from: $scheduled_for<br/>:
 		    								<br />
 		    								<table border=0 cellpadding=5 cellspacing=0>
 		    								<tr>
@@ -83,7 +128,7 @@ class TransactionController extends Controller
 
 		    								<br /><br />
 		    								Warm Regards,<br />
-		    								PrestigeWallet.com" ;
+		    								HoldingHandsDonations.com" ;
 
                 $sms_message            = "Your donation has been approved you are scheduled for: $scheduled_for:  
                                             Amount: R $scheduled_amount" ;
@@ -97,8 +142,16 @@ class TransactionController extends Controller
                     'sms_message'       => $sms_message,
 		    	] ;
 
-				$job = (new DonationHasBeenAcceptedByReceiver($user_reserved_info))->onQueue('DonationHasBeenAcceptedByReceiver') ;
-		        $this->dispatch($job) ;
+                Helper::send_mail( 
+                    $user->email, 
+                    "Donation has been approved", 
+                    $user->first_name ." ". $user->last_name, 
+                    $message, 
+                    'emails.confirm' 
+                ) ;
+
+/*				$job = (new DonationHasBeenAcceptedByReceiver($user_reserved_info))->onQueue('DonationHasBeenAcceptedByReceiver') ;
+		        $this->dispatch($job) ;*/
     			return "success" ;
     		} else {
     			return "Something went wrong, please try again later, if this problem persists, please contact support." ;

@@ -56,30 +56,41 @@
 		<div class="col-md-4">
   			<div class="box1">
 	  			<i class="fa fa-cash"></i>
-	  			<h3>Funds Send</h3>
-	  			<h3>R {{ $paid }}</h3>
+	  			<h3>Funds Send<br />
+	  			R {{ $paid }}</h3>
   			</div>
   		</div>
 		<div class="col-md-4">
   			<div class="box1">
 	  			<i class="fa fa-cash"></i>
-	  			<h3>Funds to cash-in</h3>
-	  			<h3>R 0.00</h3>
+	  			<h3>Funds to cash-in<br />
+	  			R {{ $withdraw_funds_amount }}</h3>
+  				@if ( (float) $withdraw_funds_amount < (float) 1000 )
+	  			<span style="font-size: 12px; font-style: italic; color: red;">You can only withdraw funds that have matured and are greater or equal to R 1000</span>
+	  			@else
+	  			<span style="font-size: 12px; font-style: italic; color: blue;">Your referral bonus has matured for withdrawal</span>
+	  			@endif
+	  			<p class="text-center">
+	  				<button id="withdraw_funds" class="btn btn-xs btn-default">Withdraw Funds</button>
+	  			</p>
   			</div>
   		</div>
 		<div class="col-md-4">
   			<div class="box1">
 	  			<i class="fa fa-cash"></i>
-	  			<h3>Referral Bonus</h3>
-	  			<h3>R 0.00</h3>
+	  			<h3>Referral Bonus<br />
+	  			R {{ (float) $referral_bonuses }}</h3>
+	  			
+	  			@if ( (float) $referral_bonuses < (float) 1000 )
+	  			<span style="font-size: 12px; font-style: italic; color: red;">You can only withdraw referral bonus greater or equal to R 1000</span>
+	  			@else
+	  			<span style="font-size: 12px; font-style: italic; color: blue;">Your referral bonus has matured for withdrawal</span>
+	  			@endif
+	  			<p class="text-center">
+	  				<button id="withdraw_referral_bonuses" class="btn btn-xs btn-default">Withdraw Bonus</button>
+	  			</p>
   			</div>
   		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-12">
-			<p class="alert alert-info"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;</i><strong>PLEASE NOTE:</strong> HHD only allows <span class="badge badge-danger">2</span> funds to be created by 1 individual user per month.</p>
-		</div>
 	</div>
 
 	<div class="row">
@@ -120,6 +131,12 @@
 		</div>
 		
 	</div>
+	<br />
+	<div class="row">
+		<div class="col-md-12">
+			<p class="alert alert-info"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;</i><strong>PLEASE NOTE:</strong> HHD only allows <span class="badge badge-danger">2</span> funds to be created by 1 individual user per month.</p>
+		</div>
+	</div>
 	
 
 @endsection
@@ -133,8 +150,75 @@
 
 		var secondary_level_token 	= $('meta[name="secondary_level_token"]').attr('content') ;
 
+		$("#withdraw_funds").on("click", function(){
+			event.preventDefault() ;
+
+			 $("#assignment_div_big").html(
+			 	"<div style='padding:50px; text-align:center'>" +
+				"Please wait as we check funds availability.<br />" +
+				"@include ('includes.loader')" +
+				"</div>"
+			 ) ;
+
+		    $.ajax({
+		        url: "/withdrawal",
+		        type:"POST",
+		        beforeSend: function (xhr) {
+		            var token 	= $('meta[name="csrf_token"]').attr('content') ;
+		            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
+		        }, data: { 
+		        	withdrawal 	 : "funds",
+		        }, success: function( data ) {
+		        	console.log(data) ;
+		            $("#assignment_div_big").html(data.message) ;
+
+		            if ( data.message == "found") {
+		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><h4 class='text-center'>Funds successfully withdrawn</h4></div>" ) ;
+		            } 
+
+		        }, error: function( data ) {
+		        	var message = 'Unable to process your request at this moment, please try again later.' ;
+		        	$("#assignment_div_big").html(message) ;
+		        }
+		    });
+
+		}) ;
+
+		$("#withdraw_referral_bonuses").on("click", function(){
+			event.preventDefault() ;
+
+			 $("#assignment_div_big").html(
+			 	"<div style='padding:50px; text-align:center'>" +
+				"Please wait as we check referral bonus availability.<br />" +
+				"@include ('includes.loader')" +
+				"</div>"
+			 ) ;
+
+		    $.ajax({
+		        url: "/withdrawal",
+		        type:"POST",
+		        beforeSend: function (xhr) {
+		            var token 	= $('meta[name="csrf_token"]').attr('content') ;
+		            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
+		        }, data: { 
+		        	withdrawal 	 : "bonuses",
+		        }, success: function( data ) {
+		        	console.log(data) ;
+		            $("#assignment_div_big").html(data.message) ;
+
+		            if ( data.message == "found") {
+		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><h4 class='text-center'>Funds successfully withdrawn</h4></div>" ) ;
+		            } 
+
+		        }, error: function( data ) {
+		        	var message = 'Unable to process your request at this moment, please try again later.' ;
+		        	$("#assignment_div_big").html(message) ;
+		        }
+		    });
+		}) ;
+
 		$("#create_fund").on("click", function() {
-			event.preventDefault() 
+			event.preventDefault() ;
 
 			 $("#assignment_div_big").html(
 			 	"<div style='padding:50px; text-align:center'>" +

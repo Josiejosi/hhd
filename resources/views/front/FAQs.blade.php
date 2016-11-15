@@ -23,7 +23,7 @@
                 <div class="container">
                     <br />
                     <div class="panel-group" id="accordion">
-                        <div class="faqHeader">HHD FAQ's</div>
+                        <div class="faqHeader"><i class="fa fa-comments" aria-hidden="true"></i> HHD FAQ's</div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">

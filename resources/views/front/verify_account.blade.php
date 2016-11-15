@@ -25,7 +25,7 @@
                     <div class="col-md-8">
 
                         <div class="heading-block mb-60">
-                            <h2 class="text-uppercase"><span class="text-theme">Verify Account</h2>
+                            <div class="faqHeader"><span class="text-theme">Verify Account</span>
 
                         </div>
 
@@ -66,6 +66,9 @@
                 </div>                
 
             </div>
+
+            <br/>
+            <br/>
 
         </div>
     </section>

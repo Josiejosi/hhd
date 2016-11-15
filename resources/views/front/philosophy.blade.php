@@ -39,7 +39,7 @@
 
             <div class="container clearfix w-3xl">
 
-                <h2><i class="fa fa-university"></i> Philosophy</h2>
+                <div class="faqHeader"><i class="fa fa-university"></i> Philosophy</div>
                
                 <div class="round hollow text-center">
 

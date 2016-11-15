@@ -20,7 +20,7 @@
 
             <div class="container clearfix w-3xl">
 
-                <h3><i class="fa fa-user-secret"></i> Support</h3>
+                <div class="faqHeader"><i class="fa fa-user-secret"></i> Support</div>
 
                 @if (Session::has('account_not_found'))
                     <div class="alert alert-warning">

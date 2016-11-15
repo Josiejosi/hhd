@@ -20,7 +20,7 @@
 
             <div class="container clearfix w-3xl">
 
-                <h3 style="color: red;"><i class="fa fa-exclamation-triangle"></i> Warning from Team HHD</h3>
+                <div class="faqHeader"><i class="fa fa-exclamation-triangle"></i> Warning from Team HHD</div>
 
                 <div class="mt-list-head list-simple font-white bg-red">
                     <div class="list-head-title-container">

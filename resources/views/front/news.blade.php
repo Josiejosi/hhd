@@ -20,7 +20,7 @@
 
             <div class="container clearfix w-3xl">
 
-                <h3><i class="fa fa-exclamation-triangle"></i> News</h3>
+                <div class="faqHeader"><i class="fa fa-exclamation-triangle"></i> News</div>
                
 
 

@@ -50,9 +50,18 @@ class FrontController extends Controller
         return view('front.register') ;
     }
 
-    public function signup_referral( $referral_key ) {
-        $data = [
-            'referral_key'=>$referral_key,
+    public function signup_referral( $referral_key ) { 
+
+        $name                   = "Referral Code Unknown" ;
+        //referrer
+        if ( User::where('refferal_key', $referral_key )->count() == 1 )  {
+            $user               = User::where('refferal_key', $referral_key )->first() ;
+            $name               = $user->first_name . " " . $user->last_name ; 
+        }           
+
+        $data                   = [
+            'referral_key'      => $referral_key,
+            'name'              => $name,
         ] ;
     	return view('front.register', $data) ;
     }

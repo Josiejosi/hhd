@@ -21,7 +21,7 @@
 
             <div class="container clearfix w-3xl">
 
-                <h3><i class="fa fa-unlock"></i> Login to your account</h3>
+                <div class="faqHeader"><i class="fa fa-unlock"></i> Login to your account</div>
 
                 @if (Session::has('account_not_found'))
                     <div class="alert alert-warning">

@@ -32,9 +32,9 @@
                             @endif
 
                             <div class="heading-block mb-60">
-                                <h2>
+                                <div class="faqHeader">
                                     <i class="fa fa-phone-square" aria-hidden="true"></i> Support
-                                </h2>
+                                </div>
 
                             </div>
 
@@ -73,21 +73,21 @@
                                         <input name="phone" type="text" class="form-control myInput" id="phone">
                                     </div>
 
-                        <div class="form-group col-md-12">
-                            <label for="language">Preferable Language</label>
-                            <select
-                                name="language" 
-                                type="text" 
-                                class="form-control myInput" 
-                                value="{{ old('language') }}"
-                                id="language" required>
+            <!--                         <div class="form-group col-md-12">
+                                        <label for="language">Preferable Language</label>
+                                        <select
+                                            name="language" 
+                                            type="text" 
+                                            class="form-control myInput" 
+                                            value="{{ old('language') }}"
+                                            id="language" required>
 
-                                <option>English</option>
-                                <option>Sotho</option>
-                                <option>Zulu</option>
+                                            <option>English</option>
+                                            <option>Sotho</option>
+                                            <option>Zulu</option>
 
-                            </select> 
-                        </div>
+                                        </select> 
+                                    </div> -->
 
                                 </div>
 

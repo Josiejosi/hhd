@@ -18,6 +18,8 @@ use Session ;
 use App\Classes\Helper ;
 use App\Jobs\UserHasRegistered ;
 
+use Carbon\Carbon ;
+
 class AuthenticationController extends Controller
 {
     public function signup( Request $request ) {
@@ -84,17 +86,18 @@ class AuthenticationController extends Controller
             ]) ;
 
             if ( isset( $request->referral_key ) ) {
-                $user_referred              = User::where('refferal_key', $request->referral_key)->count() ;
 
-                if ( $user_referred == 1 ) {
+                if ( User::where('refferal_key', $request->referral_key)->count() == 1 ) {
                     $referred_user          = User::where('refferal_key', $request->referral_key)->first() ;
                     $key                    = $referred_user->refferal_key ;
                     $new_user_from_referred = $referred_user->id ;
 
                     if ( Referral::where('referrer_id', $user->id)->where('referred_id', $new_user_from_referred)->count() == 0 ) {
                         Referral::create([
-                            "referrer_id"   => $user->id,
-                            "referred_id"   => $new_user_from_referred,
+                            "referrer_id"   => $new_user_from_referred,
+                            "referred_id"   => $user->id,
+                            "paid"          => 0,
+                            "amount"        => 0.00,
                             "join_at"       => Carbon::now(),
                         ]) ;
                     }
@@ -103,7 +106,7 @@ class AuthenticationController extends Controller
 
 		    if ( Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
 
-                $url                     = url( '/signin/' . $refferal_key ) ;
+                $url                     = url( '/signup/' . $refferal_key ) ;
 
                 Helper::send_mail( 
                     $request->email, 

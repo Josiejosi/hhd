@@ -11,7 +11,9 @@ class Referral extends Model
     protected $dates 		= ['join_at'];
     protected $fillable 	= [
     	"referrer_id",
-    	"referred_id",
+        "referred_id",
+        "paid",
+    	"amount",
     	"join_at",
     ];
 

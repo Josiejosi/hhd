@@ -20,7 +20,7 @@
 
             <div class="container clearfix w-3xl">
                
-                <h2><i aria-hidden="true" class="fa fa-question-circle"></i> How it works</h2>
+                <div class="faqHeader"><i aria-hidden="true" class="fa fa-question-circle"></i> How it works</div>
 
                 <div class="table-responsive">
                     <table class="table table-hover">

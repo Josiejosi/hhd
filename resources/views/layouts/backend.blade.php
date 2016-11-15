@@ -34,7 +34,7 @@
             background: -webkit-linear-gradient(top,  #388986 0%,#307477 100%); /* Chrome10-25,Safari5.1-6 */
             background: linear-gradient(to bottom,  #388986 0%,#307477 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#388986', endColorstr='#307477',GradientType=0 ); /* IE6-9 */
-            border-bottom: 1px solid #666 !important;
+            border-bottom: 1px solid #AEB2B7 !important;
         }
 
         #sidebar {
@@ -64,6 +64,22 @@
             margin-right: 15px;
             background: #307477;
             margin-top: 15px;
+        }
+
+        .sidebar-toggle-box .fa-bars {
+            color: #fff;
+        }
+        .box1 h3 {
+
+            font-size: 16px;
+            font-weight: bolder;
+        }
+
+        .box1 {
+          display: block;
+          height: 170px ;
+          border: 1px solid #386466;
+
         }
 
 
@@ -107,15 +123,8 @@
                       </a>
                   </li>
 
-                  <li class="mt">
-                      <a href="{{ url('/accounts') }}">
-                          <i class="fa fa-money"></i>
-                          <span>Accounts</span>
-                      </a>
-                  </li>
-
                   <li class="sub-menu dcjq-parent-li">
-                      <a class="active dcjq-parent" href="javascript:;">
+                      <a class="dcjq-parent" href="javascript:;">
                           <i class="fa fa-expand" aria-hidden="true"></i>
                           <span>Accounts</span>
                       <span class="dcjq-icon"></span></a>
