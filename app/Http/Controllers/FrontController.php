@@ -98,7 +98,6 @@ class FrontController extends Controller
             'name'                      => 'required',
             'email'                     => 'required|email',
             'subject'                   => 'required',
-            'language'                   => 'required',
             'message'                   => 'required',
         ]); 
 
@@ -109,8 +108,8 @@ class FrontController extends Controller
         $contact_info                   = [
             'to_email'                  => 'sewapetj@gmail.com',
             'from_email'                => $request->email,
-            'to_name'                   => 'HHD',
-            'message'                   => "Sender's Details<br /> Email: " . $request->email . "<br />Phone: " . $request->phone . "<br />Language: " . $request->language . "<br />Subject: " . $request->subject . "<br />Message: " . $request->message,
+            'to_name'                   => 'Hollding Hands Donations',
+            'message'                   => "Sender's Details<br /> Email: " . $request->email . "<br />Phone: " . $request->phone . "<br />Subject: " . $request->subject . "<br />Message: " . $request->message,
             'subject'                   => "Feedback Message",
             'balde'                     => "emails.confirm",
         ] ;

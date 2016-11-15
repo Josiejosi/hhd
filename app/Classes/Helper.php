@@ -317,7 +317,9 @@
 		}
 
 		public static function getActiveSetting() {
+
 			return SystemSetting::where('is_active',1)->first() ;
+
 		}
 
 		public static function addEliteToDonationList() {
@@ -397,7 +399,7 @@
 			
 			//check if user has not made donation to this user before.
     		$account 				= Account::where( 'user_id', $donee_id )->where('active_account',1)->first() ;
-    		$user 					= User::find( $donar_id ) ;
+    		$user 					= User::find( $donee_id ) ;
 
     		$name 					= $user->first_name . " " . $user->last_name ;
     		$email 					= $user->email ;
@@ -445,7 +447,7 @@
 		    								<strong>NOTE: Failure to make payment before, This member will be unassigned to you and failure to make payment to 2 assigned members will result in your account blocked for 3 months</strong>
 		    								<br /><br />
 		    								Warm Regards,<br />
-		    								hhd.com
+		    								holdinghandsdonations.com
 
 		    							  " ;
 
@@ -455,7 +457,7 @@
 		    	$sms_message 			.= " Account Number: $account_number," ;
 		    	$sms_message 			.= " Branch Code: $branch_code, Amount: R $amount" ;
 
-		    	$user_details 			= User::where('id', $donee_id)->first() ;
+		    	$user_details 			= User::where('id', $donar_id)->first() ;
 		    	$user_reserved_info 	= [
 		    		'to_email'			=> $user_details->email,
 		    		'subject'			=> "HHD Donations",
@@ -494,14 +496,14 @@
 
 	    	$message 				= "<br /><br />
 	    								$sender_name was assigned to you for an amount of R $amount, 
-	    								Please ensure you login to http://hhd.com/signin to accept their Donation once the 
+	    								Please ensure you login to http://holdinghandsdonations.com/signin to accept their Donation once the 
 	    								money reflects on your account.<br /><br />
 	    								<strong>NOTE: Failure to accept payments will result in your account 
 	    								blocked for 3 months, if the Donor reports you for delaying 
 	    								acknowledgment of receiving payments</strong>
 	    								<br /><br />
 	    								Warm Regards,<br />
-	    								HHD.com
+	    								holdinghandsdonations.com
 	    							  " ;
 
 	    	$sms_message 			= "Hi $receiver_name," ;
@@ -640,7 +642,7 @@
 			] ;
 
 	        Mail::send( $blade, ['info' => $info], function ($m) use ($info) {
-	            $m->from( 'info@holdinghandsdonations.com', 'Holding Hands Donations' );
+	            $m->from( 'support@holdinghandsdonations.com', 'Holding Hands Donations' );
 
 	            $m->to( $info['email'], $info['name'] )->subject( $info['subject'] );
 	        });				

@@ -112,7 +112,7 @@ class AuthenticationController extends Controller
                     "We hope your doing well, here are your".
                     "<br />Username: " . $request->email . "<br />Password: " . $request->password .
                     "<br />Verification Code: " . $verification_code .
-                    "<br /><br />Referral URL : <a href='$url'>$url</a><br /><br />", 
+                    "<br /><br />Referral URL : <a href='$url'>$url</a><br /><br />Warm Regards<br>holdinghandsdonations.com", 
                     "emails.confirm"
                 ) ;
 

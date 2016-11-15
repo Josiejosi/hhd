@@ -47,7 +47,7 @@
                                 id="username" required>
                         </div>
 
-                        <div class="form-group col-md-12">
+<!--                         <div class="form-group col-md-12">
                             <label for="username">Preferable Language</label>
                             <select
                                 name="username" 
@@ -61,7 +61,7 @@
                                 <option>Zulu</option>
 
                             </select> 
-                        </div>
+                        </div> -->
 
                         <div class="form-group col-md-12">
                             <label for="username">Email</label>
