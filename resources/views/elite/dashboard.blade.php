@@ -165,11 +165,24 @@
 
                             <div class="form-group col-md-12">
                                 <label for="amount">Amount <span class="text-lightred" style="font-size: 15px">*</span></label>
-                                <input name="amount" 
-                                        type="text" 
-                                        class="form-control myInput" 
-                                        id="email"
-                                        value="{{ old('amount') }}">
+                                <select id='amount' name='amount' placeholder="Amount" class="form-control">
+                                    
+                                    <option>1000</option>
+                                    <option>2000</option>
+                                    <option>3000</option>
+                                    <option>4000</option>
+                                    <option>5000</option>
+                                    <option>6000</option>
+                                    <option>7000</option>
+                                    <option>8000</option>
+                                    <option>9000</option>
+                                    <option>10000</option>
+                                    <option>15000</option>
+                                    <option>20000</option>
+                                    <option>25000</option>
+                                    <option>30000</option>
+
+                                </select>
                                 @if ($errors->has('amount'))
                                     <span class="help-block error-message">
                                         <strong>{{ $errors->first('amount') }}</strong>

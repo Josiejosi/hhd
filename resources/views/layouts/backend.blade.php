@@ -79,7 +79,14 @@
           display: block;
           height: 170px ;
           border: 1px solid #386466;
+          background: #C7EAC9;
+          border-radius: 5px ;
+          margin: 5px ;
 
+        }
+
+        .form-control, .btn {
+            border-radius: 0px !important ;
         }
 
 

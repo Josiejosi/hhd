@@ -33,13 +33,6 @@
 		    font-size: 12px;
 		}
 
-		.box1 {
-			border-bottom: none ;
-			border: 1px soild #307379 ;
-			border-radius: 5px ;
-			padding: 5px ;
-			font-size: 16px ;
-		} 
 	</style>
 
 @endsection
@@ -47,8 +40,10 @@
 @section ('content')
 
 	<div class="row">
+		<div class="col-md-12" id="assignment_div_big">
+		</div>
 		<div class="col-md-12">
-			<h3 class="page-header text-center">Welcome to HHD Dashboard</h3>
+			<h4 class="page-header text-center">Welcome to HHD Dashboard</h4>
 		</div>
 	</div>
 
@@ -95,8 +90,6 @@
 
 	<div class="row">
 
-		<div class="col-md-12" id="assignment_div_big">
-		</div>
 		<div class="col-md-6">
 
 			<h5 class="page-header">FUND A MEMBER</h5>
@@ -111,10 +104,21 @@
                     <label class="control-label">Amount</label>
                     <select id='amount' name='amount' placeholder="Amount" class="form-control">
                     	
-                    	@for( $i=1; $i<41; $i++ )
+                    	<option>1000</option>
+                    	<option>2000</option>
+                    	<option>3000</option>
+                    	<option>4000</option>
+                    	<option>5000</option>
+                    	<option>6000</option>
+                    	<option>7000</option>
+                    	<option>8000</option>
+                    	<option>9000</option>
+                    	<option>10000</option>
+                    	<option>15000</option>
+                    	<option>20000</option>
+                    	<option>25000</option>
+                    	<option>30000</option>
 
-                    		<option>{{$i*500}}</option>
-                    	@endfor
                     </select>
                 </div>
                 <div class="margiv-top-10">
@@ -169,16 +173,16 @@
 		        }, data: { 
 		        	withdrawal 	 : "funds",
 		        }, success: function( data ) {
-		        	console.log(data) ;
-		            $("#assignment_div_big").html(data.message) ;
+		        	console.log(data.message) ;
+		            $("#assignment_div_big").html("<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>" + data.message + "</p></div>") ;
 
 		            if ( data.message == "found") {
-		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><h4 class='text-center'>Funds successfully withdrawn</h4></div>" ) ;
+		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><h4 class='text-center'>Funds successfully withdrawn</p></div>" ) ;
 		            } 
 
 		        }, error: function( data ) {
 		        	var message = 'Unable to process your request at this moment, please try again later.' ;
-		        	$("#assignment_div_big").html(message) ;
+		        	$("#assignment_div_big").html("<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>" + message + "</p></div>" ) ;
 		        }
 		    });
 
@@ -204,7 +208,7 @@
 		        	withdrawal 	 : "bonuses",
 		        }, success: function( data ) {
 		        	console.log(data) ;
-		            $("#assignment_div_big").html(data.message) ;
+		            $("#assignment_div_big").html("<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>" + data.message + "</p></div>") ;
 
 		            if ( data.message == "found") {
 		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><h4 class='text-center'>Funds successfully withdrawn</h4></div>" ) ;
@@ -244,18 +248,18 @@
 		            	var user_id 	= data.user_id ;
 		            	var amount 		= data.amount ;
 
-		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><h4 class='text-center'>We found a suitable donee to match your amount range for: " ) ;
+		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>We found you a suitable donee to match your selected amount " ) ;
 		            	$("#assignment_div_big").append( "<br/>R " + amount ) ;
 		            	$("#assignment_div_big").append(
-		            		"<br /><button id='reserve_order' class='btn btn-sm btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\"><i class='fa fa-cash'></i> Cash Reserve</button><span style='padding-left:30px ;'></span><button class='btn btn-sm btn-success' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\"><i class='fa fa-btc'></i>Bitcoin Recerve</button></h4><br /><br /></div>"
+		            		"<br /><button id='reserve_order' class='btn btn-sm btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\"><i class='fa fa-cash'></i> Cash Reserve</button><span style='padding-left:30px ;'></span><button class='btn btn-sm btn-success' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\"><i class='fa fa-btc'></i>Bitcoin Recerve</button></p><br /><br /></div>"
 		            	) ;
 		            } else {
-		            	$("#assignment_div_big").html(data.message) ;
+		            	$("#assignment_div_big").html("<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>" + data.message + "</p></div>" ) ;
 		            }
 
 		        }, error: function( data ) {
 		        	var message = 'No member\'s for the selected range, please try a different range.' ;
-		        	$("#assignment_div_big").html(message) ;
+		        	$("#assignment_div_big").html("<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>" +message+ "</p></div>") ;
 		            //toast_notification('danger', message) ;
 		        }
 		    });

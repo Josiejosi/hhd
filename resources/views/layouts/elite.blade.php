@@ -13,7 +13,7 @@
         
         <link href="//fonts.googleapis.com/css?family=Oswald:400,300,700" rel="stylesheet" type="text/css" />
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
         <link href="{{asset('css/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/uniform.default.css')}}" rel="stylesheet" type="text/css" />

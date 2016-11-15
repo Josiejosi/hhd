@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Models\User ;
+use App\Models\BitcoinAddress ;
 use App\Models\ActiveDonation ;
 use App\Models\ScheduledDonation ;
 use App\Models\SystemSetting ;
@@ -145,6 +146,12 @@ class AdminController extends Controller
                 "account_number"             => $request->account_number,
                 "active_account"             => 1,
                 "user_id"                    => $user->id,
+            ]) ;
+
+            $bitcoin_Address                = BitcoinAddress::create([
+                "user_id"                   => $user->id,
+                "label"                     => "Default Address",
+                "address"                   => $request->bitcoin_address,
             ]) ;
 
 

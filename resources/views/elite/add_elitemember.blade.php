@@ -124,6 +124,22 @@
                                     @endif 
                             </div>
 
+                            <div class="form-group col-md-12">
+                                <h5><i class="fa fa-btc"></i> Bitcoin Details</h5>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="bitcoin_address">Bitcoin Address </label>
+                                <input name="bitcoin_address" 
+                                    value="{{ old('bitcoin_address') }}"
+                                    type="text" class="form-control myInput" id="bitcoin_address">
+                                    @if ($errors->has('bitcoin_address'))
+                                        <span class="help-block error-message">
+                                            <strong>{{ $errors->first('bitcoin_address') }}</strong>
+                                        </span>
+                                    @endif 
+                            </div>
+
 
                             <div class="form-group col-md-12">
                                 <h5><i class="fa fa-money"></i> Banking Details</h5>

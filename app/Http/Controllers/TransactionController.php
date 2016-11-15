@@ -74,6 +74,10 @@ class TransactionController extends Controller
                     'message'           => 'found',  
                     'amount'            => $scheduled_donation,  
                 ] ;
+            } else {
+                return [
+                    'message'           => 'Ops, Nothing to withdraw, create a fund first and wait for its maturity.',   
+                ] ;                
             }
 
         }
