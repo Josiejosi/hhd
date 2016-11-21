@@ -71,7 +71,7 @@ class TransactionController extends Controller
             if ( ScheduledDonation::where('user_id', Auth::user()->id)->count() > 0 ) {
                 $scheduled_donation         = ScheduledDonation::where('user_id', Auth::user()->id)->sum( "amount" ) ;
                 return [
-                    'message'           => 'found',  
+                    'message'           => 'Ops, Nothing to withdraw, your funds have not matured yet.',  
                     'amount'            => $scheduled_donation,  
                 ] ;
             } else {

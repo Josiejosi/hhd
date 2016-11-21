@@ -93,6 +93,35 @@ class HomeController extends Controller
     }
     //change to confirm
     public function assign_donar( Request $request ) {
+        $order_id                       = $request->tid ;
+        $donee_id                       = $request->user_id ;
+        $amount                         = $request->amount ;
+
+        $max_reserves_allowed           = Helper::reached_max_donations(Auth::user()->id) ;
+        $max_reserves_limit             = Helper::max_reserves() ;
+
+        if ( $max_reserves_allowed == "add" ) {
+
+            Helper::assignMember( Auth::user()->id, $order_id, $donee_id, $amount ) ;
+
+            $account                    = Helper::get_user_active_account( $donee_id ) ;
+            
+            return [
+                'message'               => 'success', 
+                'bank'                  => "Netbank", 
+                'account'               => rand(11111111, 9999999), 
+                'branch'                => rand(11111, 99999), 
+            ] ;  
+
+        } else {
+            return [
+                'message'=>"Sorry you already have reached your daily funds limit of $max_reserves_limit, Pleas note you can only fund 2 memebers a month." 
+            ];
+        }
+
+    }
+    //change to confirm
+    public function assign_bitcoin_donar( Request $request ) {
     	$order_id 						= $request->tid ;
     	$donee_id 						= $request->user_id ;
     	$amount 						= $request->amount ;
@@ -102,7 +131,7 @@ class HomeController extends Controller
 
     	if ( $max_reserves_allowed == "add" ) {
 
-			Helper::assignMember( Auth::user()->id, $order_id, $donee_id, $amount ) ;
+			Helper::assignBitcoinMember( Auth::user()->id, $order_id, $donee_id, $amount ) ;
 
 			$account 					= Helper::get_user_active_account( $donee_id ) ;
 			

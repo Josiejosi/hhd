@@ -153,22 +153,28 @@
 		}
 
 		public static function expiry_hours() {
+
 			$settings = SystemSetting::where('is_active',1)->first() ;
 
 			return (int)$settings->daily_reserves ;
+
 		}
 
 		public static function expiryHour() {
+
 			$settings = SystemSetting::where('is_active',1)->first() ;
 
 			return (int)$settings->expiry_hours ;
+
 		}
 
 		public static function has_pending_timers($user_id) {
+
 			return  ActiveDonation::where('sender',$user_id)
 									->where('donation_status', 1)
 									->where('is_processed', 1)
 									->count() ;
+
 		}
 
 		public static function getPendingTime($user_id) {
@@ -206,6 +212,7 @@
 		}
 
 		public static function removeUsersNotDonated48hour() {
+
 			$now 				= Carbon::now("Africa/Johannesburg") ;
 			
 			$donations 			= ActiveDonation::where('donation_status', 1)
@@ -360,63 +367,40 @@
 		}
 
 		public static function getActiveDoneeUnderSameAccount($user_id, $requested_amount) {
-	    	$account 						= self::get_user_active_account( $user_id ) ;
-	    	$my_active_bank_account 		= $account->bank ;
-	    	//find users with same bank account.
-	    	//
-	    	$account_users_count 			= 22 ; // Account::where( 'bank', $my_active_bank_account )->where('user_id','<>',$user_id)->distinct()->select('user_id')->count() ;
 
-	    	//if ( $account_users_count > 0 ) {
-	    		$account_users 				= Account::where( 'bank',$my_active_bank_account)->where('user_id','<>',$user_id)->distinct()->select('user_id')->get() ;
-				$user_ids 					= [] ;
-				$i 							= 0 ;
+			$active_count 				= ActiveDonation::where('amount', $requested_amount)
+													->where('is_processed',0)
+													->where('sender','<>', $user_id)
+													->count() ;
+			
+			if ( $active_count > 0 ) {
+				$active_donations 		= ActiveDonation::where('amount',$requested_amount)
+													->where('is_processed',0)
+													->where('sender','<>', $user_id)
+													->get()
+													->random(1) ;
 
-				foreach( $account_users as $account_user) {
-					
-					$user_ids[$i] 			= $account_user->user_id ;
-					$i++ ;	
+				$id 					= $active_donations->id ; 
+				$amount 				= $active_donations->amount ; 
+				$user_id 				= $active_donations->receiver ;
 
-				}
-				$active_count 				= ActiveDonation::where('amount', $requested_amount)
-														//->whereIn('receiver', $user_ids)
-														->where('is_processed',0)
-														->where('sender','<>', $user_id)
-														->count() ;
-				
-				if ( $active_count > 0 ) {
-					$active_donations 		= ActiveDonation::where('amount',$requested_amount)
-														//->whereIn('receiver', $user_ids)
-														->where('is_processed',0)
-														->where('sender','<>', $user_id)
-														->get()
-														->random(1) ;
+				$data 					= [ 
+					'message' 			=> 'found', 
+					'tid'	 			=> $id, 
+					'amount'			=>$amount, 
+					'user_id'			=>$user_id 
+				] ;
 
-					$id 					= $active_donations->id ; 
-					$amount 				= $active_donations->amount ; 
-					$user_id 				= $active_donations->receiver ;
+				return $data ;
 
-					$data 					= [ 
-						'message' 			=> 'found', 
-						'tid'	 			=> $id, 
-						'amount'			=>$amount, 
-						'user_id'			=>$user_id 
-					] ;
+			} else {
+				$data 					= [ 
+					'message' 			=> 'Sorry we have no active donations for the selected amount, please try a different amount.', 
+				] ;
 
-					return $data ;
+				return $data ;
+			}
 
-				} else {
-					$data 					= [ 
-						'message' 			=> 'found', 
-						'tid'	 			=> 13, 
-						'amount'			=>$requested_amount, 
-						'user_id'			=> 13 
-					] ;
-
-					return $data ;
-				}
-	/*    	} else {
-	    		return ['message' => "We have not found any match donee on your active ($my_active_bank_account) account, please add a different bank account under accounts and try again or your could try a different amount range." ] ;
-	    	}*/
 		}
 
 		public static function assignMember( $donar_id, $order_id, $donee_id, $amount ) {
@@ -524,6 +508,100 @@
 
 		}
 
+		public static function assignBitcoinMember( $donar_id, $order_id, $donee_id, $amount ) {
+
+			$now 							= Carbon::now("Africa/Johannesburg") ;
+			
+			ActiveDonation::where('id', $order_id)->update([
+				'is_processed'				=> 1,
+				'donation_status'			=> 1, 
+				'sender'					=> $donar_id,
+				'booked_at'					=> $now,
+			]) ;
+			
+			//check if user has not made donation to this user before.
+    		$account 						= self::get_user_active_bitcoin_address($donee_id) ;
+    		$user 							= User::find( $donee_id ) ;
+
+    		$name 							= $user->first_name . " " . $user->last_name ;
+    		$email 							= $user->email ;
+    		$cell_phone 					= $user->cell_phone ;
+
+    		if ( count($account) > 0 ) {
+	    		$label 						= $account->label ;
+	    		$address 					= $account->address ;
+
+		    	$message 				= "<br />
+		    								You have successfully being assigned to make a donation, details are as follows:<br/><br/>
+		    								<br />
+		    								<table border=0 cellpadding=5 cellspacing=0>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Account Holder</td>
+		    									<td align=right> : $name</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Holder' Email</td>
+		    									<td align=right> : $email</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Holder's Cell Phone</td>
+		    									<td align=right> : $cell_phone</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Bitcoin Address Lable</td>
+		    									<td align=right> : $label</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Bitcoin Address</td>
+		    									<td align=right> : $address</td>
+		    								</tr>
+		    								<tr>
+		    									<td align=right bgcolor=#E0FFFF>Amount</td>
+		    									<td align=right> : R $amount</td>
+		    								</tr>
+		    								</table>
+		    								<strong>NOTE: Failure to make payment before, This member will be unassigned to you and failure to make payment to 2 assigned members will result in your account blocked for 3 months</strong>
+		    								<br /><br />
+		    								Warm Regards,<br />
+		    								holdinghandsdonations.com
+
+		    							  " ;
+
+/*		    	$sms_message 			= "You have successfully being assigned to make a donation," ;
+		    	$sms_message 			.= " details of the donee are as follows, Account Holder: $name," ;
+		    	$sms_message 			.= " Cell Phone: $cell_phone, Bank: $bank," ;
+		    	$sms_message 			.= " Account Number: $account_number," ;
+		    	$sms_message 			.= " Branch Code: $branch_code, Amount: R $amount" ;*/
+		    	$sms_message 					= "" ;
+
+		    	$user_details 			= User::where('id', $donar_id)->first() ;
+		    	$user_reserved_info 	= [
+		    		'to_email'			=> $user_details->email,
+		    		'subject'			=> "HHD Donations",
+		    		'to_name'			=> $user_details->first_name . " " . $user_details->last_name,
+		    		'message'			=> $message,
+		    		'cell_phone'		=> $user_details->cell_phone,
+		    		'sms_message'		=> $sms_message,
+		    	] ;
+
+
+                $job = (new SendDonationDetails( $user_reserved_info ))->onQueue('hhdDonation');
+                dispatch($job);
+
+		        $alert_donee = self::alertReceiver( 
+		        	$name, 
+		        	$email, 
+		        	$cell_phone, 
+		        	$user_details->first_name . " " . $user_details->last_name, 
+		        	$amount 
+		        ) ;
+		        return $alert_donee ;
+	    	} else {
+	    		return "Please try a different amount" ;
+	    	}
+
+		}
+
 		public static function alertReceiver( $receiver_name, $receiver_email, $receiver_cell, $sender_name, $amount ) {
 			//self::add_notification( $message, $user_id, $type ) ;
 
@@ -551,13 +629,9 @@
 	    		'cell_phone'		=> $receiver_cell,
 	    		'sms_message'		=> $sms_message,
 	    	] ;
-	        self::send_mail( 
-	            $user_reserved_info['to_email'], 
-	            $user_reserved_info['subject'], 
-	            $user_reserved_info['to_name'] , 
-	            $user_reserved_info['message'] , 
-	            "emails.confirm"
-	        ) ;
+
+            $job = (new UserMadeDonation( $user_reserved_info ))->onQueue('hhdDonationNotification');
+            dispatch($job);
 
 	        return "success" ;
 		}

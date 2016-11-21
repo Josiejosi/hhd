@@ -31,13 +31,13 @@ class UserHasRegistered extends Job implements ShouldQueue
         $verification_code       = $this->verification_code ;
         $refferal_key            = $this->refferal_key ;
 
-        $url                     = url( '/signin/' . $refferal_key ) ;
+        $url                     = url( '/signup/' . $refferal_key ) ;
 
         Helper::send_mail( 
             $this->user->email, 
-            "Welcome to HHD", 
+            "Welcome to Holding Hands Donations", 
             $this->user->first_name . " " . $this->user->last_name , 
-            "We hope your doing well, here are your".
+            "We hope your doing well, here are your login details".
             "<br />Username: " . $this->user->email . "<br />Password: " . $this->password .
             "<br /><br />Referral URL : <a href='$url'>$url</a><br /><br />", 
             "emails.confirm"

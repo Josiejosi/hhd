@@ -248,18 +248,25 @@
 		            	var user_id 	= data.user_id ;
 		            	var amount 		= data.amount ;
 
-		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>We found you a suitable donee to match your selected amount " ) ;
+		            	$("#assignment_div_big").html( "<div class='alert alert-info' style='padding: 10px; text-align center;'><br/><h5 class='text-center'>We have found a suitable donee to match your selected amount " ) ;
 		            	$("#assignment_div_big").append( "<br/>R " + amount ) ;
 		            	$("#assignment_div_big").append(
-		            		"<br /><button id='reserve_order' class='btn btn-sm btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\"><i class='fa fa-cash'></i> Cash Reserve</button><span style='padding-left:30px ;'></span><button class='btn btn-sm btn-success' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\"><i class='fa fa-btc'></i>Bitcoin Recerve</button></p><br /><br /></div>"
+		            		"<br /><h5>How would you like to fund this member?</h5><div style='margin: 5px auto;'>" +
+		            		"<button id='reserve_order' class='btn btn-sm btn-info' onclick=\"assign_me('"+tid+"','"+user_id+"','"+amount+"')\">" +
+		            		"<i class='fa fa-credit-card-alt'></i> Cash Reserve" +
+		            		"</button>" +
+		            		"<span style='padding-left:30px ;'></span>" +
+		            		"<button class='btn btn-sm btn-success' onclick=\"assign_me_bitcoin_donar('"+tid+"','"+user_id+"','"+amount+"')\">"+
+		            		"<i class='fa fa-btc'></i>Bitcoin Recerve"+
+		            		"</button></h5><br /><br /></div>"
 		            	) ;
 		            } else {
-		            	$("#assignment_div_big").html("<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>" + data.message + "</p></div>" ) ;
+		            	$("#assignment_div_big").html("<br /><div class='alert alert-info' style='padding: 10px; text-align center;'><h5 class='text-center'>" + data.message + "</h5></div>" ) ;
 		            }
 
 		        }, error: function( data ) {
 		        	var message = 'No member\'s for the selected range, please try a different range.' ;
-		        	$("#assignment_div_big").html("<div class='alert alert-info' style='padding: 10px; text-align center;'><p class='text-center'>" +message+ "</p></div>") ;
+		        	$("#assignment_div_big").html("<div class='alert alert-info' style='padding: 10px; text-align center;'><h5 class='text-center'>" +message+ "</h5></div>") ;
 		            //toast_notification('danger', message) ;
 		        }
 		    });
@@ -269,7 +276,7 @@
 		var count_countdowns = 1 ;
 
 
-        var assign_me 				= function( tid, user_id, amount ) {
+        var assign_me 						= function( tid, user_id, amount ) {
         	//var remaining_hours 	= new Date(); 
         	//remaining_hours 		= remaining_hours + 30 ;
         	//$('#reserve_order').button('loading');
@@ -312,9 +319,49 @@
 		    });
         };
 
-		var feedUpdate = function() {
+        var assign_me_bitcoin_donar 		= function( tid, user_id, amount ) {
+
+		    $.ajax({
+		        url: "/assign_bitcoin_donar",
+		        type:"POST",
+		        beforeSend: function (xhr) {
+		            var token 	= $('meta[name="csrf_token"]').attr('content') ;
+		            if (token) return xhr.setRequestHeader('X-CSRF-TOKEN', token) ;
+		        }, data: { 
+		        	tid:tid,
+		        	amount:amount,
+		        	user_id:user_id
+		        }, success: function( data ) {
+		        	console.log(data.message) ;
+		        	if ( data.message == "success" ) {
+			            $( "#assignment_div_big" ).html(  
+							"<div class='alert alert-success'><p class='text-center'>Successfully reserved, an Email will be send to you shortly with member's details," +
+        				  	" Please make a payment and send proof of payment to both user and support team" +
+        				  	" and await their approval</p></div>"
+			             ) ;
+			            //create_countdown_timer( data.bank, data.account, data.branch, 60*parseInt(expiry_hour), count_countdowns, "red" ) ;
+			            //count_countdowns++ ;
+			            //toast_notification( "info", message ) ;		        		
+		        	} else if( data == 'failed') {
+		        		var message = "This message might be because a fund was reserved before you, please try a different range" ;
+			            $( "#assignment_div_big" ).html( "<h4 class='text-center'>" + message + "</h4>" ) ;
+			            //toast_notification( "warning", message ) ;
+		        	} else {
+		        		$( "#assignment_div_big" ).html( "<h4 class='text-center'>" + data + "</h4>" ) ;
+		        	}
+		        	//$('#reserve_order').button('reset') ;
+		        }, error: function( data ) {
+		        	var message = "<h4 class='text-center'>Technical error, please try again a different range, if the error persists, contact support</h4>" ;
+		        	$("#assignment_div_big").html(data) ;
+		            //toast_notification( "danger", message ) ;
+		            //$('#reserve_order').button('reset') ;
+		        }
+		    });
+        };
+
+		var feedUpdate 						= function() {
 			clearInterval(updateFeeds) ;
-			var id = secondary_level_token ;
+			var id 							= secondary_level_token ;
 		    $.ajax({
 		        url: "/get_latest_feed",
 		        type:"POST",

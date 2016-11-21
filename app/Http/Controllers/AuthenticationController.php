@@ -107,21 +107,8 @@ class AuthenticationController extends Controller
 		    if ( Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
 
                 $url                     = url( '/signup/' . $refferal_key ) ;
-
-                Helper::send_mail( 
-                    $request->email, 
-                    "Welcome to HHD", 
-                    $request->first_name . " " . $request->last_name , 
-                    "We hope your doing well, here are your".
-                    "<br />Username: " . $request->email . "<br />Password: " . $request->password .
-                    "<br />Verification Code: " . $verification_code .
-                    "<br /><br />Referral URL : <a href='$url'>$url</a><br /><br />Warm Regards<br>holdinghandsdonations.com", 
-                    "emails.confirm"
-                ) ;
-
-/*               $sms_message = "Hi " . $request->first_name . " " . $request->last_name . ", your verification code to complete your profile is:  $verification_code" ;
-
-                Helper::send_sms( $sms_message, $request->cell_phone) ;*/
+                $job = (new UserHasRegistered($user, $verification_code, $refferal_key, $request->password))->onQueue('hhdRegister');
+                $this->dispatch($job);
 
 		    	return redirect()->intended( 'home' ) ;
 	        }

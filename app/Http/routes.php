@@ -27,6 +27,7 @@
 	Route::get(	 '/home', 					'HomeController@index') ;
 	Route::post( '/get_donar', 				'HomeController@get_donar' );
 	Route::post( '/assign_donar',			'HomeController@assign_donar' );
+	Route::post( '/assign_bitcoin_donar',	'HomeController@assign_bitcoin_donar' );
 	Route::post( '/get_latest_feed',		'HomeController@get_latest_feed' );
 	Route::get( '/pending_times',			'HomeController@pending_times' );
 	Route::get(	 '/profile', 				'ProfileController@index') ;
