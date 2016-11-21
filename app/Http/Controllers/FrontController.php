@@ -115,9 +115,9 @@ class FrontController extends Controller
         } 
 
         $contact_info                   = [
-            'to_email'                  => 'sewapetj@gmail.com',
+            'to_email'                  => 'support@holdinghandsdonations.com',
             'from_email'                => $request->email,
-            'to_name'                   => 'Hollding Hands Donations',
+            'to_name'                   => 'Holding Hands Donations',
             'message'                   => "Sender's Details<br /> Email: " . $request->email . "<br />Phone: " . $request->phone . "<br />Subject: " . $request->subject . "<br />Message: " . $request->message,
             'subject'                   => "Feedback Message",
             'balde'                     => "emails.confirm",
