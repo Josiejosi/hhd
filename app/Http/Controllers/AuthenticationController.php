@@ -40,9 +40,7 @@ class AuthenticationController extends Controller
 
 
         if ($validator->fails()) {
-            return redirect('signup')
-                        ->withErrors($validator)
-                        ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $verification_code                  = mt_rand( 111111, 999999 ) ;
