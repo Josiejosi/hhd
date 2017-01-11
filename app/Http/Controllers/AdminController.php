@@ -13,6 +13,8 @@ use App\Models\ScheduledDonation ;
 use App\Models\SystemSetting ;
 use App\Models\Account ;
 
+use App\Jobs\BlockedUser ;
+
 use App\Jobs\UserHasRegistered ;
 
 use Validator ;
@@ -216,5 +218,41 @@ class AdminController extends Controller
 
         if ( $settings ) return redirect()->back()->with('message', 'Successfully updated!') ;
         else return redirect()->back()->withInput()->with('message', 'Failed!') ;
+    }
+
+    public function block_member( $id ) {
+        if ($user = User::findOrFail($id)) {
+            $user->is_active = false ;
+            $user->save() ;
+            $info           = [
+                'to_email'  => $user->email,
+                'subject'   => "HHD Blocked Account",
+                'to_name'   => $user->first_name . " " . $user->last_name,
+                'message'   => "Hi " .$user->first_name . " " . $user->last_name . "
+                                <br/>
+                                We have blocked your account for not being part of donation process for 48 hours.
+                                <br/>
+                                <br/>
+                                Warm Regards<br />holdinghandsdonations.com
+                               "
+            ] ;
+
+            //notify user their account has been
+            $job = (new BlockedUser($info))->onQueue('BlockedUser') ;
+            dispatch($job) ;
+            return "Account blocked an email will be send to the account holder shortly." ; 
+        } else {
+            return "Unable to remove user from the system - please try again later." ;
+        }
+    }
+
+    public function unblock_member( $id ) {
+        if ($user = User::findOrFail($id)) {
+            $user->is_active = true ;
+            $user->save() ;
+            return "Account unblocked successfully." ; 
+        } else {
+            return "Unable to unblock - please try again later." ;
+        }
     }
 }

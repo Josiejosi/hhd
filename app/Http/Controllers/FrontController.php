@@ -158,7 +158,7 @@ class FrontController extends Controller
                 'is_verified'   => 1,
             ]) ;
 
-            Helper::add_notification( "Your account is verified welcome to prestigewallet.com", $user_id, 0 ) ;
+            //Helper::add_notification( "Your account is verified welcome to prestigewallet.com", $user_id, 0 ) ;
 
             return redirect()->intended( 'home' ) ;
         } else {

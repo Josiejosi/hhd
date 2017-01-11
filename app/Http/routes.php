@@ -70,3 +70,6 @@
 	Route::get( '/admin/create/elite', 		'AdminController@create_elite' ) ;
 
 	Route::post( '/admin/edit/settings', 	'AdminController@postSettings' ) ;
+	Route::get( '/admin/remove/member/{id}', 	'AdminController@remove_member' ) ;
+	Route::get( '/admin/block/member/{id}', 	'AdminController@block_member' ) ;
+	Route::get( '/admin/unblock/member/{id}', 	'AdminController@unblock_member' ) ;

@@ -21,7 +21,6 @@
 
         <link href="{{asset('css/components.min.css')}}" rel="stylesheet" id="style_components" type="text/css" />
         <link href="{{asset('css/jquery.countdown.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/layout.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/custom.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet" type="text/css" />
@@ -44,8 +43,6 @@
         @yield('css')
 
         <link rel="shortcut icon" href="imgs/favicon.ico" /> 
-
-        <script src="{{asset('js/jquery-1.11.2.min.js')}}" type="text/javascript"></script>
     </head>
     <!-- END HEAD -->
 
@@ -170,21 +167,9 @@
         <script src="../assets/global/plugins/excanvas.min.js"></script> 
         <![endif]-->
         <!-- BEGIN CORE PLUGINS -->
-        
+        <script src="{{asset('js/jquery.min.js')}}"></script>
         <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/bootstrap-hover-dropdown.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/jquery.blockui.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/jquery.uniform.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/app.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/layout.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/quick-sidebar.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/jquery.countdown.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/bootbox.min.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/modavication.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/pw_notifications.js')}}" type="text/javascript"></script>
+
         <!--        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js" type="text/javascript"></script>
         <script src="{{asset('js/push-notification.js')}}" type="text/javascript"></script> 
